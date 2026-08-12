@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBDP 問題集 — 科目を選択</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink:#1E2A22;
+  --paper:#EDE7D8;
+  --paper-card:#F8F4E9;
+  --deep:#16231C;
+  --eco:#4F7A63;
+  --anthro:#B8912E;
+  --tech:#B5602D;
+  --line: rgba(30,42,34,0.16);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans JP', sans-serif;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- Hero ---------- */
+header.hero{
+  background:var(--deep);
+  color:var(--paper-card);
+  padding:56px 20px 40px;
+  border-bottom:6px solid var(--eco);
+}
+.hero-inner{max-width:960px;margin:0 auto;}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--anthro);
+  margin-bottom:10px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:clamp(30px,5.5vw,46px);
+  margin:0 0 10px;
+  letter-spacing:-0.01em;
+}
+.hero p.sub{margin:0;color:rgba(248,244,233,0.72);font-size:15px;max-width:52ch;}
+
+/* Shelf strip — signature element: a row of coloured "spines" representing each subject's binder,
+   consistent height, only the enabled one sits flush; the rest sit slightly recessed (greyed, not yet on the shelf). */
+.shelf{
+  display:flex;
+  gap:3px;
+  margin-top:28px;
+  height:14px;
+}
+.shelf-spine{flex:1;border-radius:2px 2px 0 0;opacity:0.9;}
+
+/* ---------- Subject grid ---------- */
+.section-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(30,42,34,0.5);
+  margin:40px 0 16px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:14px;
+}
+
+.card{
+  position:relative;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:22px 20px 20px;
+  text-decoration:none;
+  color:var(--ink);
+  display:block;
+  overflow:hidden;
+  transition:transform .12s, border-color .12s;
+}
+.card.enabled{cursor:pointer;}
+.card.enabled:hover{transform:translateY(-2px);border-color:var(--tech);}
+.card.disabled{opacity:0.5;cursor:default;}
+
+.card-spine{
+  position:absolute;
+  top:0;left:0;bottom:0;
+  width:6px;
+}
+
+.card-code{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:rgba(30,42,34,0.5);
+  margin-bottom:8px;
+  padding-left:6px;
+}
+.card-name{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:19px;
+  margin:0 0 4px;
+  padding-left:6px;
+}
+.card-name-en{
+  font-family:'IBM Plex Sans JP', sans-serif;
+  font-size:12.5px;
+  color:rgba(30,42,34,0.55);
+  padding-left:6px;
+  margin-bottom:14px;
+  display:block;
+}
+.card-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-left:6px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+}
+.badge{
+  padding:3px 9px;
+  border-radius:20px;
+  font-size:10.5px;
+  letter-spacing:0.03em;
+}
+.badge.live{background:rgba(79,122,99,0.16);color:var(--eco);}
+.badge.soon{background:rgba(30,42,34,0.08);color:rgba(30,42,34,0.5);}
+.q-count{color:rgba(30,42,34,0.55);}
+
+footer.note{
+  max-width:960px;margin:44px auto 0;padding:0 20px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:rgba(30,42,34,0.42);
+  line-height:1.8;
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Y13 · 2026–2027</div>
+    <h1>IBDP 問題集</h1>
+    <p class="sub">科目ごとの演習アプリをまとめた棚。カードを選ぶとその科目の問題集に移動します。</p>
+    <div class="shelf" id="shelf"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="section-label">科目を選択</div>
+  <div class="grid" id="subjectGrid"></div>
+</div>
+
+<footer class="note">各科目は単語系・関連性形・ケーススタディ系の3形式で構成。チャプターは順次追加中。</footer>
+
+<script>
+// Extensible subject registry — add an entry here (and its own [code].html file)
+// to make a new subject appear on the shelf.
+const SUBJECTS = [
+  {code:"ESS", nameJp:"環境システムと社会", nameEn:"Environmental Systems & Societies · HL",
+   href:"ess.html", enabled:true, questionCount:425, chapterCount:16, color:"var(--eco)"},
+  {code:"JPN A", nameJp:"日本語A", nameEn:"Language A: Japanese · HL",
+   href:null, enabled:false, color:"var(--tech)"},
+  {code:"ENG B", nameJp:"英語B", nameEn:"Language B: English · SL",
+   href:null, enabled:false, color:"var(--anthro)"},
+  {code:"PHYS", nameJp:"物理", nameEn:"Physics · HL",
+   href:null, enabled:false, color:"var(--eco)"},
+  {code:"MATH AA", nameJp:"数学 AA", nameEn:"Mathematics: Analysis & Approaches · HL",
+   href:null, enabled:false, color:"var(--tech)"},
+  {code:"GEO", nameJp:"地理", nameEn:"Geography · SL",
+   href:null, enabled:false, color:"var(--anthro)"}
+];
+
+function renderShelf(){
+  const shelf = document.getElementById('shelf');
+  shelf.innerHTML = SUBJECTS.map(s =>
+    `<div class="shelf-spine" style="background:${s.color};opacity:${s.enabled ? 1 : 0.28}"></div>`
+  ).join('');
+}
+
+function renderGrid(){
+  const grid = document.getElementById('subjectGrid');
+  grid.innerHTML = SUBJECTS.map(s => {
+    const tag = s.enabled ? 'a' : 'div';
+    const hrefAttr = s.enabled ? `href="${s.href}"` : '';
+    const metaRight = s.enabled
+      ? `<span class="q-count">${s.questionCount}問 / ${s.chapterCount}章</span>`
+      : `<span class="q-count">—</span>`;
+    const badge = s.enabled
+      ? `<span class="badge live">収録中</span>`
+      : `<span class="badge soon">準備中</span>`;
+    return `
+      <${tag} class="card ${s.enabled ? 'enabled' : 'disabled'}" ${hrefAttr}>
+        <div class="card-spine" style="background:${s.color};opacity:${s.enabled ? 1 : 0.3}"></div>
+        <div class="card-code">${s.code}</div>
+        <div class="card-name">${s.nameJp}</div>
+        <span class="card-name-en">${s.nameEn}</span>
+        <div class="card-meta">${badge}${metaRight}</div>
+      </${tag}>`;
+  }).join('');
+}
+
+renderShelf();
+renderGrid();
+</script>
+</body>
+</html>
