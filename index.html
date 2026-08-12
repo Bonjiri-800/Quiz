@@ -112,17 +112,11 @@ h1{
   margin-bottom:8px;
   padding-left:6px;
 }
-.card-name{
+.card-name-en{
   font-family:'Fraunces', serif;
   font-weight:600;
   font-size:19px;
-  margin:0 0 4px;
-  padding-left:6px;
-}
-.card-name-en{
-  font-family:'IBM Plex Sans JP', sans-serif;
-  font-size:12.5px;
-  color:rgba(30,42,34,0.55);
+  color:var(--ink);
   padding-left:6px;
   margin-bottom:14px;
   display:block;
@@ -214,7 +208,6 @@ function renderGrid(){
       <${tag} class="card ${s.enabled ? 'enabled' : 'disabled'}" ${hrefAttr}>
         <div class="card-spine" style="background:${s.color};opacity:${s.enabled ? 1 : 0.3}"></div>
         <div class="card-code">${s.code}</div>
-        <div class="card-name">${s.nameJp}</div>
         <span class="card-name-en">${s.nameEn}</span>
         <div class="card-meta">${badge}${metaRight}</div>
       </${tag}>`;
