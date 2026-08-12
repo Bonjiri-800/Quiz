@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS 問題集 — Chapter 1.1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink:#1E2A22;
+  --paper:#EDE7D8;
+  --paper-card:#F8F4E9;
+  --deep:#16231C;
+  --eco:#4F7A63;
+  --anthro:#B8912E;
+  --tech:#B5602D;
+  --correct:#4F7A63;
+  --incorrect:#A63C34;
+  --line: rgba(30,42,34,0.16);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans JP', sans-serif;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- Hero ---------- */
+header.hero{
+  background:var(--deep);
+  color:var(--paper-card);
+  padding:44px 20px 30px;
+  border-bottom:6px solid var(--eco);
+}
+.hero-inner{max-width:760px;margin:0 auto;}
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--anthro);
+  margin-bottom:10px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:clamp(28px,5vw,40px);
+  margin:0 0 6px;
+  letter-spacing:-0.01em;
+}
+.hero p.sub{margin:0;color:rgba(248,244,233,0.72);font-size:14.5px;}
+
+/* Spectrum bar — signature element (EVS: ecocentric → anthropocentric → technocentric) */
+.spectrum{
+  margin-top:22px;
+  height:10px;
+  border-radius:6px;
+  background:linear-gradient(90deg, var(--eco) 0%, var(--eco) 30%, var(--anthro) 50%, var(--tech) 70%, var(--tech) 100%);
+  position:relative;
+}
+.spectrum-labels{
+  display:flex;justify-content:space-between;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.04em;
+  margin-top:6px;
+  color:rgba(248,244,233,0.6);
+  text-transform:uppercase;
+}
+
+/* ---------- Chapter tabs ---------- */
+nav.chapters{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:16px 20px 0;
+  max-width:760px;
+  margin:0 auto;
+}
+.chip{
+  flex:0 0 auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  padding:7px 13px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:var(--paper-card);
+  color:var(--ink);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.chip.active{background:var(--eco);border-color:var(--eco);color:var(--paper-card);}
+.chip.disabled{opacity:0.38;cursor:not-allowed;}
+
+/* ---------- Type tabs ---------- */
+.type-tabs{
+  display:flex;
+  margin:26px 0 4px;
+  border-bottom:2px solid var(--line);
+}
+.type-tab{
+  flex:1;
+  text-align:center;
+  padding:12px 6px;
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:15px;
+  color:rgba(30,42,34,0.45);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
+  transition:color .15s;
+}
+.type-tab .count{
+  display:block;
+  font-family:'IBM Plex Mono', monospace;
+  font-weight:400;
+  font-size:10.5px;
+  margin-top:2px;
+  letter-spacing:0.04em;
+}
+.type-tab.active{color:var(--ink);border-bottom-color:var(--tech);}
+
+/* ---------- Progress ---------- */
+.progress-row{
+  display:flex;align-items:center;gap:10px;
+  margin:18px 0 6px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:rgba(30,42,34,0.55);
+}
+.progress-track{
+  flex:1;height:5px;border-radius:3px;background:var(--line);overflow:hidden;
+}
+.progress-fill{height:100%;background:var(--tech);border-radius:3px;transition:width .25s;}
+
+/* ---------- Card ---------- */
+.card{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:26px 24px 22px;
+  margin-top:14px;
+  box-shadow:0 1px 0 rgba(30,42,34,0.04);
+}
+.q-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--tech);
+  margin-bottom:10px;
+}
+.q-text{
+  font-family:'Fraunces', serif;
+  font-size:18.5px;
+  font-weight:500;
+  line-height:1.55;
+  margin:0 0 20px;
+}
+
+.option{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:12px 14px;
+  margin-bottom:9px;
+  font-family:'IBM Plex Sans JP', sans-serif;
+  font-size:14.5px;
+  color:var(--ink);
+  cursor:pointer;
+  transition:border-color .12s, background .12s;
+}
+.option:hover:not(.locked){border-color:var(--tech);}
+.option.correct{background:rgba(79,122,99,0.18);border-color:var(--correct);}
+.option.incorrect{background:rgba(166,60,52,0.14);border-color:var(--incorrect);}
+.option.locked{cursor:default;}
+.option .tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:rgba(30,42,34,0.45);
+  margin-right:8px;
+}
+
+.explain{
+  margin-top:16px;
+  padding:14px 16px;
+  border-left:3px solid var(--eco);
+  background:rgba(79,122,99,0.08);
+  font-size:13.5px;
+  border-radius:0 3px 3px 0;
+  display:none;
+}
+.explain.show{display:block;}
+.explain b{font-family:'IBM Plex Mono', monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:5px;color:var(--eco);}
+
+.actions{display:flex;justify-content:flex-end;margin-top:18px;}
+button.next{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  letter-spacing:0.03em;
+  background:var(--deep);
+  color:var(--paper-card);
+  border:none;
+  padding:10px 20px;
+  border-radius:3px;
+  cursor:pointer;
+  display:none;
+}
+button.next.show{display:inline-block;}
+button.next:hover{background:#0f1913;}
+
+/* ---------- Result ---------- */
+.result{
+  text-align:center;
+  padding:40px 20px;
+}
+.result .score{
+  font-family:'Fraunces', serif;
+  font-size:56px;
+  font-weight:700;
+  color:var(--deep);
+}
+.result .score span{font-size:22px;color:rgba(30,42,34,0.5);}
+.result p{color:rgba(30,42,34,0.65);font-size:14px;}
+button.retry{
+  margin-top:14px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12.5px;
+  background:transparent;
+  border:1px solid var(--deep);
+  color:var(--deep);
+  padding:9px 18px;
+  border-radius:3px;
+  cursor:pointer;
+}
+
+footer.note{
+  max-width:760px;margin:36px auto 0;padding:0 20px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:rgba(30,42,34,0.42);
+  line-height:1.8;
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <a href="hub.html" style="color:rgba(248,244,233,0.6);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.04em;">← 科目選択に戻る</a>
+    <div class="eyebrow" style="margin-top:14px;">IBDP · Environmental Systems &amp; Societies</div>
+    <h1>ESS 問題集</h1>
+    <p class="sub">単語系 / 関連性形 / ケーススタディ系 — チャプターごとの演習アプリ（構築中：現在 1.1 のみ収録）</p>
+    <div class="spectrum"></div>
+    <div class="spectrum-labels"><span>Ecocentric</span><span>Anthropocentric</span><span>Technocentric</span></div>
+  </div>
+</header>
+
+<nav class="chapters" id="chapterNav"></nav>
+
+<div class="wrap">
+  <div class="type-tabs" id="typeTabs"></div>
+  <div class="progress-row">
+    <span id="progressLabel">1 / 9</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+  <div id="quizArea"></div>
+</div>
+
+<footer class="note">ESS Course Companion (Oxford, 2024) の定義に基づき作成。チャプター1.2以降は今後追加予定。</footer>
+
+<script>
+const QUESTION_BANK = {
+  "1.1": {
+    label: "1.1 環境価値観システム",
+    vocab: [
+      {q:"「Environmental value system (EVS)」の定義として最も適切なものは？",
+       opts:["環境問題解決のための技術開発プロセス","私たちの視点に影響を与える入力と、その視点から生まれる出力を示すモデル","生態系サービスの経済的価値を算出する指標","政府が定める環境規制の集合"],
+       a:1, ex:"EVSは、文化的・宗教的・経済的・社会政治的な文脈（入力）が個人の環境に対する見方（出力）を形成する、というモデルとして定義される（Oxford ESS Course Companion, p.17）。"},
+      {q:"「Ecocentric」な世界観の特徴として正しいものは？",
+       opts:["人間を中心に据え、税制や法規制による管理を重視する","自然そのものに本質的価値を置き、小規模・低技術志向の生き方を志向する","技術発展があらゆる環境問題を解決できると信じる","経済成長を最優先の指標とする"],
+       a:1, ex:"Ecocentricは生態系・自然を中心に据え、物質主義的でない小規模・低技術のアプローチを好む世界観（p.18）。"},
+      {q:"「Anthropocentric」の説明として適切なものは？",
+       opts:["自然を中心に据え、人間の介入を最小限にする","人間を存在の中心と見なし、税制・規制・法律による持続可能な管理を重視する","技術のみが唯一の解決策だと考える","政府の介入を一切認めない立場"],
+       a:1, ex:"Anthropocentricは人間中心の世界観で、人間が地球規模のシステムを持続可能に管理すべきだと考える（p.19）。"},
+      {q:"「Technocentric」の定義は？",
+       opts:["自然保護を無条件に行うべきだと考える立場","技術発展が環境問題への解決策を提供できると信じる世界観","規制には否定的だが人間中心である立場","NGOの活動方針を指す用語"],
+       a:1, ex:"Technocentricは、技術によってあらゆる環境問題が解決可能だと信じる世界観（p.19）。"},
+      {q:"「Deep ecologist」とは？",
+       opts:["極端なTechnocentrist","自然の精神的価値のために無条件の保全を信じる、極端なEcocentrist","政府機関に所属する環境管理者","環境運動の創始者を指す称号"],
+       a:1, ex:"Deep ecologistは、自然保護を人間への利益のためではなく自然そのものの精神的価値のために無条件に行うべきと考える、極端なEcocentrist（p.18, p.20）。"},
+      {q:"「Environmental manager」はEVSスペクトル上でどこに位置づけられるか？",
+       opts:["Ecocentric（生態系中心）","Technocentric（規制や技術による持続可能な管理を重視）","完全に価値中立な立場","Deep ecologistと同義"],
+       a:1, ex:"テキストでは「environmental managers are technocentrists」と明記されている。人類への財・サービス供給を持続可能な形で続けるための管理者という位置づけ（p.20, p.73）。"},
+      {q:"「Cornucopian」とは？",
+       opts:["極端なEcocentrist","極端なTechnocentrist","NGOの一種を指す用語","環境運動の別称"],
+       a:1, ex:"Cornucopianは極端なTechnocentrist（p.73）。資源は技術によって無限に代替可能だと考える立場。"},
+      {q:"「Environmental Movement」の説明として正しいものは？",
+       opts:["1960年代に公式に始まったとされる、環境保護に関する社会的・政治的運動","特定のNGO一団体の名称","京都議定書の別称","EVSモデルの構成要素の一つ"],
+       a:0, ex:"公式には1960年代に始まったとされるが、古代ローマの大気・水質汚染への言及など、人間はそれ以前から環境への影響を認識していた（p.19）。"},
+      {q:"NGO・GO・IGOの組み合わせとして正しいものは？",
+       opts:["NGO＝政府機関、GO＝非政府組織、IGO＝個人団体","NGO＝非政府の独立した圧力団体（例：WWF, Greenpeace）、GO＝政府組織、IGO＝加盟国から成る政府間組織","三者はすべて同じ意味を持つ","IGOはNGOの下部組織である"],
+       a:1, ex:"NGOは政府から独立した圧力団体（例：WWF、Greenpeace、Friends of the Earth）、GOは政府組織、IGOは加盟国から成る政府間組織（p.20）。"}
+    ],
+    relation: [
+      {q:"EVSスペクトル上で、Ecocentric・Anthropocentric・Technocentricを「自然中心度が高い順」に並べると？",
+       opts:["Ecocentric → Anthropocentric → Technocentric","Technocentric → Anthropocentric → Ecocentric","Anthropocentric → Ecocentric → Technocentric","順序は決まっていない"],
+       a:0, ex:"EVSは連続的なスペクトルであり、自然中心度が高い順にEcocentric→Anthropocentric→Technocentricと並ぶ。"},
+      {q:"「Deep ecologist」と「Ecocentric」の関係として正しいのは？",
+       opts:["Deep ecologistはEcocentricの対義語である","Deep ecologistは極端なEcocentristである","両者は無関係である","Deep ecologistの方がより中立的である"],
+       a:1, ex:"Deep ecologistはEcocentricの中でも最も極端な立場（p.18, p.20）。"},
+      {q:"「Cornucopian」と「Technocentric」の関係は？",
+       opts:["Cornucopianは極端なTechnocentristである","Cornucopianは中立的な立場である","CornucopianはEcocentricの一種である","両者は無関係である"],
+       a:0, ex:"Cornucopianは極端なTechnocentrist（p.73）。Deep ecologist（極端なEcocentric）と対をなす存在として捉えられる。"},
+      {q:"「Environmental manager」と「Technocentric」の関係として正しいものは？",
+       opts:["Environmental managerはTechnocentristの一種と位置づけられる","両者は対立する概念である","Environmental managerは常にEcocentric寄りである","両者に関係はない"],
+       a:0, ex:"テキストで明記されている通り、Environmental managerはTechnocentristに分類される。"},
+      {q:"NGO・GO・IGOを「運営主体」の違いで分類した場合、正しい関係性は？",
+       opts:["NGO＝単独の政府、GO＝独立団体、IGO＝民間企業","NGO＝独立した非政府団体、GO＝一国の政府機関、IGO＝複数国家が加盟する組織","三者はすべて国連の下部組織である","IGOはGOより規模が小さい"],
+       a:1, ex:"運営主体の違いに注目すると、NGOは独立団体、GOは一国の政府、IGOは複数国家の連合体という階層関係になる。"},
+      {q:"Ecocentric的立場とAnthropocentric的立場の最も本質的な違いは何か？",
+       opts:["前者は自然に本質的価値を置き、後者は人間中心の管理を重視する点","両者とも技術偏重である点","前者は政府主導、後者はNGO主導である点","実質的な違いはほとんどない"],
+       a:0, ex:"Ecocentricは自然そのものに内在的価値を置くのに対し、Anthropocentricは人間を中心とした持続可能な管理を志向する。"},
+      {q:"EVSモデルにおける「入力」と「出力」の関係として正しいものは？",
+       opts:["文化的・宗教的・経済的・社会政治的文脈が入力となり、個人の環境に対する視点（世界観）が出力として形成される","出力が入力に影響を与えることはない","入力は常に技術のみである","出力はNGOの活動のみを指す"],
+       a:0, ex:"EVSは、様々な文脈的要因（入力）が個人の環境に対する視点・行動（出力）を形作るというモデル（p.17）。"},
+      {q:"「Environmental Movement」の発生時期と、それ以前の人間活動の関係として正しい記述は？",
+       opts:["環境運動は1960年代に公式に始まったとされるが、それ以前にも人間による環境への影響は認識されていた（例：古代ローマの大気・水質汚染への言及）","環境運動は古代ローマ時代に公式に始まった","環境運動以前、人間は環境に全く影響を与えていなかった","環境運動とEVSの間に関係はない"],
+       a:0, ex:"環境運動そのものは1960年代の産物だが、環境への人為的影響への「気づき」自体はそれよりずっと古い（p.19）。"}
+    ],
+    case: [
+      {q:"グリーンピースが企業に対し森林破壊への抗議キャンペーンを行った。この団体はEVSの文脈でどう分類されるか？",
+       opts:["GO","NGO（Ecocentric寄りの立場を取ることが多い）","IGO","Cornucopian企業"],
+       a:1, ex:"グリーンピースは政府から独立した非政府組織（NGO）の代表例。"},
+      {q:"ある国の政府が、漁業資源の乱獲を防ぐために漁獲量規制と課税制度を導入した。この政府の姿勢はEVSスペクトル上でどれに最も近いか？",
+       opts:["Deep ecologist","Anthropocentric（規制・法整備による持続可能な管理）","完全なEcocentric","Cornucopian"],
+       a:1, ex:"税制・規制を通じた人間中心の持続可能な管理は、Anthropocentric（およびそこに含まれるEnvironmental manager的立場）の典型例。"},
+      {q:"気候変動対策として、大気中のCO2を直接回収する技術（Direct Air Capture）への大規模投資のみに頼り、ライフスタイルの変更は不要だと主張する立場は？",
+       opts:["Ecocentric","Technocentric（Cornucopian寄り）","Deep ecology","NGO的立場"],
+       a:1, ex:"技術のみで問題解決可能とする発想は、Technocentric、特にその極端形であるCornucopianに近い。"},
+      {q:"IPCC（気候変動に関する政府間パネル）は、組織分類上どれに該当するか？",
+       opts:["NGO","IGO（政府間組織）","単独の政府機関（GO）","企業連合"],
+       a:1, ex:"IPCCは複数国家の政府が参加する国連傘下の組織であり、IGOに分類される。"},
+      {q:"ある自然保護区で、人間の介入を一切排除し、自然の遷移に完全に任せる管理方針が採られている。この立場に最も近いのは？",
+       opts:["Cornucopian","Deep ecologist（極端なEcocentric）","Environmental manager","Technocentric"],
+       a:1, ex:"人間の介入を排除し自然本来のプロセスを尊重する姿勢は、極端なEcocentric＝Deep ecologistの立場に合致する。"},
+      {q:"WWF（世界自然保護基金）が各国政府に生物多様性保護の法整備を働きかけている。この活動の組織分類として正しいのは？",
+       opts:["GO","NGO","IGO","Cornucopian団体"],
+       a:1, ex:"WWFは非政府の独立した団体であり、NGOに分類される（p.20）。"},
+      {q:"ある企業が「技術革新によって資源は無限に代替可能であり、環境規制は経済成長の妨げになる」と主張している。この立場は？",
+       opts:["Ecocentric","Environmental manager","Cornucopian（極端なTechnocentric）","Deep ecologist"],
+       a:2, ex:"資源の無限代替可能性を信じ、規制に否定的な立場は、極端なTechnocentristであるCornucopianに該当する。"},
+      {q:"国連環境計画（UNEP）はEVSの文脈でどの組織分類に該当するか？",
+       opts:["NGO","GO","IGO","Cornucopian"],
+       a:2, ex:"UNEPは国連（複数加盟国から成る国際機関）の下部組織であり、IGOに分類される。"}
+    ]
+  },
+  "1.2": {
+    label: "1.2 システムとモデル",
+    vocab: [
+      {q:"「System」の定義として正しいものは？",
+       opts:["相互に関連する部分が集まり機能する全体","独立した要素の集合体","政府による規制の枠組み","生態系のみを指す用語"],
+       a:0, ex:"システムとは相互に関連する部分が集まり機能する全体（p.17）。例：家族、学校、都市、国家、地球。"},
+      {q:"「Systems approach」とは？",
+       opts:["複雑な相互作用の集合を全体として捉える、生態学的・社会的状況に応用されるホリスティックな視点","一部分のみを切り離して詳細に研究する手法","政府主導の環境政策","経済モデルの一種"],
+       a:0, ex:"p.28。対義語はReductionism（要素還元主義）で、一部分を切り離して研究する手法。"},
+      {q:"「Reductionism」の説明として適切なものは？",
+       opts:["システム全体をホリスティックに捉える手法","対象の非常に限定された一部分を切り離して調べる科学的アプローチ","生物多様性を測る指標","気候変動対策の一種"],
+       a:1, ex:"Systems approachとは対照的に、一部分だけを孤立させて研究する手法。"},
+      {q:"「Model」の定義として正しいものは？",
+       opts:["現実の単純化された表現であり、システムの働きを理解し変化への反応を予測するために使われる","実際のデータをそのまま示したもの","政府の規制文書","生態系の正式名称"],
+       a:0, ex:"p.28。モデルは常に単純化であり、完全な現実の再現ではない。"},
+      {q:"「Storage」の定義は？",
+       opts:["システムの中で物質やエネルギーを保持する、生物的または非生物的な構成要素","物質やエネルギーを移動させる過程そのもの","システム外部への流出のみを指す","政策の一種"],
+       a:0, ex:"例：池、携帯電話、緑の植物、学校（p.30）。"},
+      {q:"「Flow」の定義として正しいものは？",
+       opts:["物質やエネルギーをある貯蔵庫から別の貯蔵庫へ移動・変換する過程","変化しない静的な状態","政府の政策文書","生物種の名称"],
+       a:0, ex:"例：呼吸、降水、拡散（p.30）。"},
+      {q:"「Transfer」と「Transformation」の違いとして正しいものは？",
+       opts:["Transferは状態や化学的性質を変えずに移動する流れ、Transformationは状態や化学的性質を変える流れ","両者は全く同じ意味","Transferはエネルギーのみ、Transformationは物質のみを対象とする","Transformationの方が常に速い"],
+       a:0, ex:"Transfer例：川から海への水の流れ（状態変化なし）。Transformation例：光合成（エネルギー→物質）（p.31）。"},
+      {q:"「Open system」の定義として正しいものは？",
+       opts:["物質・エネルギーともに出入りが可能なシステム","エネルギーのみ交換可能で物質は交換しないシステム","物質もエネルギーも一切交換しないシステム","常に平衡状態にあるシステム"],
+       a:0, ex:"ほとんどのシステム（生態系を含む）はOpen system（p.32）。"},
+      {q:"「Closed system」の定義として正しいものは？",
+       opts:["物質・エネルギーともに出入り可能","エネルギーは交換するが物質は交換しない、自然界では非常にまれなシステム","物質は交換するがエネルギーは交換しない","完全に孤立したシステム"],
+       a:1, ex:"地球は「ほぼ閉じた系」とみなせる（p.32）。"},
+      {q:"「Isolated system」の定義として正しいものは？",
+       opts:["総エネルギーが一定で、物質もエネルギーも周囲と一切交換しないシステム","物質のみ交換するシステム","常に不安定なシステム","人間が作り出したシステムのみを指す"],
+       a:0, ex:"例：宇宙全体（p.141）。"},
+      {q:"「Steady-state equilibrium」の説明として正しいものは？",
+       opts:["流れは常に起きているが、入力と出力が釣り合い、正味の変化がない開放系の状態","完全に変化が止まった状態","閉鎖系にのみ見られる状態","システムが崩壊する直前の状態"],
+       a:0, ex:"例：一定速度で満ちて一定速度で排出される水槽、人の体温（p.33）。"},
+      {q:"「Negative feedback loop」の定義として正しいものは？",
+       opts:["プロセスの出力が同じプロセスを抑制・逆転させ、逸脱を打ち消してシステムを安定化させる","出力が同じ方向にさらに増幅され、システムを不安定化させる","出力が入力に一切影響しない","常にシステムを崩壊させる"],
+       a:0, ex:"p.28。システムを安定な平衡状態に保つ働きをする。"},
+      {q:"「Positive feedback loop」の定義として正しいものは？",
+       opts:["攪乱を打ち消し、システムを安定化させる","攪乱を増幅させ、システムを平衡状態からさらに遠ざけ、ティッピングポイントへと押しやる","システムに全く影響を与えない","常に望ましい結果をもたらす"],
+       a:1, ex:"p.28。正のフィードバックは不安定化・増幅の方向に働く。"},
+      {q:"「Tipping point」の定義として正しいものは？",
+       opts:["システムの一要素の小さな変化が全体に大きな変化をもたらし、新しい平衡状態へ移行する点","システムが完全に安定している状態","負のフィードバックのみが働く点","人為的介入が不可能な点"],
+       a:0, ex:"p.28。"},
+      {q:"「Resilience」の説明として正しいものは？",
+       opts:["生態系や社会システムがティッピングポイントを避け、安定性を維持しようとする傾向","システムが常に変化し続ける性質","生物多様性の逆数","経済成長率の指標"],
+       a:0, ex:"多様性や貯蔵庫の大きさがレジリエンスを高める（p.28）。"},
+      {q:"「Gaia hypothesis」の内容として正しいものは？",
+       opts:["ジェームズ・ラブロックとリン・マーギュリスが1970年代に提唱した、地球とその生物システムが単一の実体として振る舞い、負のフィードバックによって生命に適した条件を保つという仮説","チャールズ・ダーウィンが提唱した自然選択説","国連が提唱した持続可能性モデル","IPCCが提唱した気候モデル"],
+       a:0, ex:"p.39。"},
+      {q:"「Keystone species」の定義として正しいものは？",
+       opts:["個体数の割に生態系に大きな影響を与える種で、失われると生態系が大きく変化する","最も個体数が多い種","絶滅危惧種のみを指す","外来種の別称"],
+       a:0, ex:"例：ケルプ林におけるラッコ（p.40, p.133）。"}
+    ],
+    relation: [
+      {q:"「Systems approach」と「Reductionism」の関係として正しいものは？",
+       opts:["両者は対照的なアプローチであり、前者は全体を、後者は一部分を切り離して見る","両者は同じ意味","Reductionismの方が常により正確である","Systems approachは政治学専用の用語"],
+       a:0, ex:"両者は科学的探究における対照的な視点である。"},
+      {q:"「Storage」「Flow」「Transfer」「Transformation」の関係を正しく説明したものは？",
+       opts:["Storageは静的な保持要素、Flowはその間を動く過程であり、FlowはさらにTransfer（状態変化なし）とTransformation（状態変化あり）に分類される","4つはすべて同じ概念","TransferはFlowの上位概念である","Storageは常にTransformationを伴う"],
+       a:0, ex:"Flowの下位分類としてTransferとTransformationが位置づけられる（p.30-31）。"},
+      {q:"「Open system」「Closed system」「Isolated system」を、物質・エネルギーの交換可能性で分類すると？",
+       opts:["Open＝物質・エネルギーとも交換可、Closed＝エネルギーのみ交換可、Isolated＝どちらも交換不可","3つとも同じ性質を持つ","Isolatedが最も一般的な地球上のシステムである","Closedが最も交換範囲が広い"],
+       a:0, ex:"交換可能な範囲によって3種類に分類される（p.32, p.141）。"},
+      {q:"「Steady-state equilibrium」と「Negative feedback loop」の関係として正しいものは？",
+       opts:["負のフィードバックが働くことで、システムは入力と出力が釣り合うSteady-state equilibriumを維持しやすくなる","両者は無関係","Steady-stateは正のフィードバックのみで維持される","負のフィードバックは常にシステムを崩壊させる"],
+       a:0, ex:"負のフィードバックは平衡状態の維持に寄与する仕組み。"},
+      {q:"「Positive feedback loop」と「Tipping point」の関係として正しいものは？",
+       opts:["正のフィードバックが攪乱を増幅させ続けることで、システムはティッピングポイントに到達しやすくなる","正のフィードバックは常にティッピングポイントを回避させる","両者に関係はない","ティッピングポイントは負のフィードバックの結果としてのみ生じる"],
+       a:0, ex:"正のフィードバックは平衡状態からシステムを遠ざけ、ティッピングポイントへと押しやる働きを持つ（p.28）。"},
+      {q:"「Resilience」と「Tipping point」の関係として正しいものは？",
+       opts:["レジリエンスが高いシステムほど、ティッピングポイントに到達しにくい","レジリエンスが高いほどティッピングポイントに到達しやすい","両者は同じ意味である","レジリエンスはティッピングポイントと無関係な社会的概念である"],
+       a:0, ex:"レジリエンスはティッピングポイントを回避する能力として定義される。"},
+      {q:"「Keystone species」が失われた場合とPositive feedback loopの関連として正しいものは？",
+       opts:["生態系のバランスが大きく崩れ、変化が連鎖的に増幅される可能性がある（正のフィードバックを誘発しうる）","影響はほとんどない","必ず新しい安定状態にすぐ戻る","常に負のフィードバックのみが働き自動的に修復される"],
+       a:0, ex:"キーストーン種の消失は生態系に不釣り合いに大きな影響を及ぼす。"},
+      {q:"Biosphere・Lithosphere・Atmosphere・Hydrosphere・Anthroposphereの関係として正しいものは？",
+       opts:["これらは地球を構成する異なる「圏」であり、Anthroposphereは人間によって作られた・改変された部分を指し、他の圏（特にBiosphere）を侵食しうる","すべて同じ範囲を指す","Anthroposphereが最も古くから存在する圏である","Biosphereは大気のみを指す"],
+       a:0, ex:"Anthroposphereの拡大は生息地破壊を通じてBiosphereを縮小させる（p.29）。"},
+      {q:"「Model」と「Systems approach」の関係として正しいものは？",
+       opts:["Modelはシステムアプローチを用いて現実を単純化して表現する手段の一つである","Modelは常に100%正確な現実の再現である","両者は無関係である","Modelは政府機関のみが作成できる"],
+       a:0, ex:"モデルはシステムの働きの理解・予測のための単純化されたツール（p.28）。"},
+      {q:"「Gaia hypothesis」と「Negative feedback loop」の関係として正しいものは？",
+       opts:["Gaia hypothesisは、地球全体が負のフィードバックループによって生命に適した条件を自己調整しているという考えに基づく","Gaia hypothesisは正のフィードバックのみに依拠する","両者は無関係","Gaia hypothesisは人為的なシステムのみに適用される"],
+       a:0, ex:"p.39。"}
+    ],
+    case: [
+      {q:"人間の体温が37℃前後に保たれる仕組み（発汗・震えなど）は、どの概念の例として最も適切か？",
+       opts:["Positive feedback loop","Negative feedback loop（Steady-state equilibriumの維持）","Tipping point","Reductionism"],
+       a:1, ex:"体温調整は逸脱を打ち消す典型的な負のフィードバックの例。"},
+      {q:"北極の氷が融けることで太陽光の反射率（アルベド）が低下し、さらに温暖化が加速するという現象は、どの概念の典型例か？",
+       opts:["Negative feedback loop","Positive feedback loop","Steady-state equilibrium","Reductionism"],
+       a:1, ex:"温暖化がさらなる温暖化を招く自己増幅的な現象＝正のフィードバック。"},
+      {q:"サンゴ礁の白化が一定の水温上昇を超えると急激に進行し、生態系が回復不能な状態に陥る現象は？",
+       opts:["Resilience","Tipping point","Reductionism","Systems approach"],
+       a:1, ex:"閾値を超えることで新しい平衡状態へ急激に移行する典型例。"},
+      {q:"ラッコがいなくなることでウニが増加し、ケルプ林が消失するという連鎖は、どの概念の実例か？",
+       opts:["Keystone species（ラッコ）の消失による生態系への影響","Systems approachの否定","Isolated systemの例","Gaia hypothesisの反証"],
+       a:0, ex:"ラッコはケルプ林生態系のキーストーン種の代表例（p.40, p.133）。"},
+      {q:"ある研究者が、湖の富栄養化を理解するために「窒素循環」の一部分だけを切り離して詳細に分析した。このアプローチは？",
+       opts:["Systems approach","Reductionism","Gaia hypothesis","Steady-state equilibrium"],
+       a:1, ex:"全体ではなく一部分を切り離して調べる手法＝Reductionism。"},
+      {q:"森林伐採によって都市が拡大し、野生生物の生息地が減少している状況を説明するのに最も適切な概念の組み合わせは？",
+       opts:["Anthroposphereの拡大によるBiosphereの縮小","HydrosphereとLithosphereの融合","Isolated systemの形成","Gaia hypothesisの完全な崩壊"],
+       a:0, ex:"人間が改変した圏（Anthroposphere）の拡大は生物圏を圧迫する（p.29）。"},
+      {q:"熱帯魚を、光と熱のみ外部とやり取りし、水や物質は一切交換しない設計で完全密閉した水槽を作った場合、これはどのシステムに最も近いか？",
+       opts:["Open system","Closed system","Isolated system","Reductionist system"],
+       a:1, ex:"エネルギーのみ交換し物質は交換しない＝Closed system（p.32）。"},
+      {q:"ある島の生態系が、外来種の侵入によって多様性を失い、小さな環境変化にも大きく崩れやすくなった。この状態を説明する概念は？",
+       opts:["レジリエンスの低下","レジリエンスの上昇","Steady-state equilibriumの強化","Negative feedback loopの強化"],
+       a:0, ex:"多様性の低下はレジリエンス（安定性を保つ力）の低下につながる（p.28）。"},
+      {q:"地球全体を「自己調整する一つの生命体」とみなす考え方を最初に提唱したのは誰の仮説か？",
+       opts:["ダーウィンの自然選択説","ラブロックとマーギュリスのGaia hypothesis","IPCCの気候モデル","マルサスの人口論"],
+       a:1, ex:"1970年代に提唱されたGaia hypothesis（p.39）。"},
+      {q:"ある湖で藻類の異常発生（富栄養化）が魚の大量死を引き起こし、分解者の活動でさらに酸素が減少し被害が拡大した。このプロセスに最も近い概念は？",
+       opts:["Negative feedback loop","Positive feedback loop","Steady-state equilibrium","Isolated system"],
+       a:1, ex:"問題が問題をさらに悪化させる自己増幅的な連鎖＝正のフィードバック。"}
+    ]
+  },
+  "1.3": {
+    label: "1.3 持続可能性",
+    vocab: [
+      {q:"「Sustainability」の定義として正しいものは？",
+       opts:["将来世代のための条件を損なうことなく、社会・生態系を責任を持って維持する実践の度合い","経済成長のみを追求する概念","天然資源を無制限に利用すること","政府による環境規制の総称"],
+       a:0, ex:"p.44。"},
+      {q:"「Social sustainability」が焦点を当てるものは？",
+       opts:["健康・教育・公平性・コミュニティ・文化など、人間の幸福を支える構造やシステムの構築","経済成長のみ","自然資源の再生のみ","技術革新のみ"],
+       a:0, ex:"p.44-45。"},
+      {q:"「Economic sustainability」の定義は？",
+       opts:["将来にわたって人間のニーズを支える財・サービスの生産と消費の経済的構造・システムを構築すること","貧困層への一時的な援助のみ","環境規制の撤廃","自然保護区の設立のみ"],
+       a:0, ex:"p.44-45。"},
+      {q:"「Environmental sustainability」とは？",
+       opts:["資源の代替を可能にし、生態系の回復・再生を可能にする自然資源の利用と管理","経済発展を最優先すること","社会的公平性のみを追求すること","技術による問題解決のみ"],
+       a:0, ex:"p.44-45。"},
+      {q:"「Natural income」の定義として正しいものは？",
+       opts:["天然資源からの収穫・産出量","政府からの環境補助金","企業の環境関連収益","NGOの活動資金"],
+       a:0, ex:"p.45。"},
+      {q:"「Natural capital」の定義として正しいものは？",
+       opts:["地球上の天然資源のストック（岩石・土壌・水・大気・生物、および光合成や水循環などの生命維持サービスを含む）","政府の環境予算","企業が保有する土地資産","再生可能エネルギー技術のみ"],
+       a:0, ex:"p.45。"},
+      {q:"「Ecological footprint」の定義として正しいものは？",
+       opts:["ある人口の資源利用と廃棄物吸収を持続可能に支えるために必要な生物学的生産面積を推定するモデル","森林面積の実測値","二酸化炭素排出量そのもの","GDPの環境調整指標"],
+       a:0, ex:"p.21, p.53。"},
+      {q:"「Carrying capacity」の定義として正しいものは？",
+       opts:["限られた資源をめぐる競争によって決まる、ある環境が持続的に支えられる最大の個体数","Ecological footprintと同義の指標","常に無限に増加する値","政府が定める人口上限の法律"],
+       a:0, ex:"Ecological footprintの逆数として捉えられる（p.117）。"},
+      {q:"「Renewable natural capital」とは？",
+       opts:["使用される速さと同じ速さで再生・補充可能な天然資本（生物種・生態系、地下水などの非生物系を含む）","化石燃料のような有限資源","経済的資本のみ","人工的に作られた資本のみ"],
+       a:0, ex:"p.47。"},
+      {q:"「Environmental Justice」の定義として正しいものは？",
+       opts:["人種・性別・社会経済的地位・出身国にかかわらず、環境利用のリスクと便益を公平に分配される権利、および劣化のない環境への権利","環境法違反者への刑事罰","富裕国のみに適用される概念","企業の環境訴訟制度"],
+       a:0, ex:"「分配的正義」とも呼ばれる（p.50）。"},
+      {q:"「Biocapacity」の定義として正しいものは？",
+       opts:["ある生物学的生産area が再生可能資源を供給し、廃棄物を吸収し続ける能力","生物多様性指数の別名","人口増加率","二酸化炭素吸収企業の数"],
+       a:0, ex:"p.45, p.53。"},
+      {q:"「Regenerative Design」の定義として正しいものは？",
+       opts:["製品を作る際に投入された材料・エネルギーが同じまたは類似のプロセスに再投入され、新たな投入をほとんど必要としない仕組み","使い捨て製品の設計原則","政府補助金による設計支援制度","NGOの活動方針"],
+       a:0, ex:"p.63。"},
+      {q:"「Sustainable Development」の定義として正しいものは？",
+       opts:["将来世代がそのニーズを満たす能力を損なうことなく、現在のニーズを満たす発展","経済成長のみを追求する発展モデル","環境保護のためにあらゆる開発を停止すること","先進国のみが適用対象となる概念"],
+       a:0, ex:"p.44。"},
+      {q:"「Distributive design」の定義として正しいものは？",
+       opts:["ドーナツ経済モデルの中核原則の一つで、地球の環境的限界の範囲内で全ての人々のニーズが満たされるよう価値・資源を分配する経済を作るための原則","製品の物理的な流通経路のみを指す","政府の税制度","NGOの資金分配方針"],
+       a:0, ex:"p.63。"}
+    ],
+    relation: [
+      {q:"「Sustainability」を構成する3つの柱（Social・Economic・Environmental）の関係として正しいものは？",
+       opts:["3つが相互に関連し、すべてが満たされて初めて真の持続可能性が達成されるとされる","経済的持続可能性のみが重要である","3つは互いに排他的で両立しない","社会的持続可能性は環境的持続可能性と無関係"],
+       a:0, ex:"p.44-45。"},
+      {q:"「Natural capital」と「Natural income」の関係として正しいものは？",
+       opts:["Natural capitalはストック（資源の蓄え）、Natural incomeはそこから得られるフロー（収穫・産出）である","両者は同じ意味である","Natural incomeの方が常に大きい","Natural capitalは再生不可能な資源のみを指す"],
+       a:0, ex:"p.45。ストックとフローの関係。"},
+      {q:"「Ecological footprint」と「Carrying capacity（Biocapacity）」の関係として正しいものは？",
+       opts:["Ecological footprintがCarrying capacity（Biocapacity）を超えると、資源利用は持続不可能とみなされる","両者は無関係な独立した指標である","Ecological footprintは常にCarrying capacityより小さい","Carrying capacityはEcological footprintの別名である"],
+       a:0, ex:"両者を比較することで資源利用の持続可能性を評価できる。"},
+      {q:"「Biocapacity」と「Ecological footprint」を比較した際、持続可能性の観点から望ましい状態は？",
+       opts:["Ecological footprintがBiocapacityを下回っている状態","Ecological footprintがBiocapacityを上回っている状態","両者が常に等しい必要はなく無関係","Biocapacityがゼロである状態"],
+       a:0, ex:"下回っていれば、その地域の資源利用は再生能力の範囲内にある。"},
+      {q:"「Renewable natural capital」と「Sustainable Development」の関係として正しいものは？",
+       opts:["再生可能な天然資本を再生速度の範囲内で利用することは、持続可能な発展を実現する条件の一つとなる","両者は無関係","Renewable natural capitalは常に無限である","Sustainable Developmentは天然資本の概念を含まない"],
+       a:0, ex:"p.44-47。"},
+      {q:"「Regenerative Design」と「Distributive design」の関係として正しいものは？",
+       opts:["両者はドーナツ経済モデルの中核をなす2つの原則であり、前者は資源循環、後者は公平な分配に焦点を当てる","両者は対立する概念である","Regenerative Designは分配の問題を扱う概念である","両者は同じ内容を指す"],
+       a:0, ex:"p.63。"},
+      {q:"「Environmental Justice」と「Social sustainability」の関係として正しいものは？",
+       opts:["環境リスク・便益の公平な分配（Environmental Justice）は、社会的持続可能性を実現するための重要な要素の一つである","両者は無関係である","Environmental Justiceは経済的持続可能性のみに関係する","Social sustainabilityはEnvironmental Justiceと矛盾する"],
+       a:0, ex:"p.50。"},
+      {q:"「Sustainability」と「Sustainable Development」の違いとして正しいものは？",
+       opts:["Sustainabilityは長期的な状態・度合いを指す概念であり、Sustainable Developmentはその概念を社会・経済発展に応用したプロセスである","両者は完全に同じ意味を持つ","Sustainable Developmentの方がより古い概念である","Sustainabilityは環境のみ、Sustainable Developmentは経済のみを指す"],
+       a:0, ex:"p.44。"}
+    ],
+    case: [
+      {q:"「Circular Economy（循環経済）」の説明として正しいものは？",
+       opts:["「採取→製造→廃棄」ではなく、再利用・リサイクルを通じて資源を使い続けることで廃棄物をなくすことを目指す考え方","資源を一度きり使用し廃棄する経済モデル","GDP成長のみを追求する経済モデル","政府主導の計画経済モデル"],
+       a:0, ex:"弱い規制・低い認知度・限られた資金調達によって普及が妨げられているとされる。"},
+      {q:"「Doughnut Economics（ドーナツ経済学）」が統合しているのは？",
+       opts:["Planetary boundaries（地球の限界）と12の社会的ニーズを1つの図に統合したモデル","GDPのみを最大化するモデル","貧困削減のみを目的とするモデル","化石燃料使用の完全禁止を提案するモデル"],
+       a:0, ex:"GDP成長を超えた「成功」の再定義を目指すが、具体的政策というよりマインドセットを提供するものである。"},
+      {q:"「SDGs（持続可能な開発目標）」の説明として正しいものは？",
+       opts:["169のターゲットを含む17の普遍的目標であり、MDGsの後継として、途上国のみならず全ての国の経済・社会・環境の統合的進展を目指す","先進国のみに適用される目標","法的拘束力を持つ国際条約","京都議定書の別名"],
+       a:0, ex:"毎年レビューされる17の目標。"},
+      {q:"「Planetary Boundaries（プラネタリー・バウンダリー）」の説明として正しいものは？",
+       opts:["地球を安定させる9つの地球システムプロセスを特定し、「安全な活動領域」を定義する科学モデルで、境界を超えると不可逆的変化のリスクがあるとされる","各国の国境を定める地理的概念","経済成長の上限を法的に定めたもの","生物多様性条約の別名"],
+       a:0, ex:"現在9つのうち6つがすでに超過しているとされる。"},
+      {q:"ある都市が「使い捨てプラスチックを廃止し、製品修理・再利用を促進する政策」を導入した。これはどの概念の実践例か？",
+       opts:["Circular Economy","Cornucopian政策","Isolated system","Ecocentric政策のみ"],
+       a:0, ex:"再利用・リサイクルによって廃棄をなくす方向性はCircular Economyの実践。"},
+      {q:"ある国のEcological footprintがそのBiocapacityを大きく上回っている。この状況が示すこととして正しいものは？",
+       opts:["その国は自国の生物学的生産能力を超えて資源を消費しており、持続可能な水準にない","その国は非常に持続可能な資源利用を行っている","この2つの指標に関連性はない","Carrying capacityが無限であることを意味する"],
+       a:0, ex:"Ecological footprint＞Biocapacityは資源利用の持続不可能性を示す。"},
+      {q:"ある企業が製品設計時に「使用済み部品を新製品の原料として再投入する」仕組みを導入した。これは何の実践例か？",
+       opts:["Regenerative Design","Reductionism","Positive feedback loopの促進","Cornucopian的な資源観"],
+       a:0, ex:"p.63のRegenerative Designの定義に合致する。"},
+      {q:"気候変動によって最も影響を受けるのが、温室効果ガス排出量の少ない低所得国の住民であるという現状は、どの概念に照らして問題視されるか？",
+       opts:["Environmental Justice（環境的正義）の欠如","Ecological footprintの均等な分配","Steady-state equilibriumの達成","Gaia hypothesisの実証"],
+       a:0, ex:"リスクと便益の不公平な分配はEnvironmental Justiceの問題として捉えられる（p.50）。"}
+    ]
+  },
+  "2.1": {
+    label: "2.1 生態系の基礎",
+    vocab: [
+      {q:"「Ecosystem」の定義として正しいものは？",
+       opts:["異なる種が互いに、また非生物的環境と相互作用する、生息地における群集","単一種の個体群のみを指す","政府が管理する保護区域","生物多様性指数の別名"],
+       a:0, ex:"p.119。"},
+      {q:"「Niche（Ecological niche）」の定義として正しいものは？",
+       opts:["生態系における種の役割","生物の生息する物理的な場所そのもの","個体群の大きさ","食物連鎖の頂点に位置する種"],
+       a:0, ex:"p.119。二種が同じ場所・時間に同じニッチを占めることはできない。"},
+      {q:"「Biotic factors」の定義として正しいものは？",
+       opts:["生態系の生物的構成要素——すべての生物とその相互作用、資源・捕食者・競争者への反応を含む","温度やpHなどの非生物的要因","政府の環境政策","気候変動の指標"],
+       a:0, ex:"p.119。"},
+      {q:"「Abiotic factors」の定義として正しいものは？",
+       opts:["生物どうしの相互作用","温度・光・pH・塩分・溶存酸素・土壌の質感など、生物や生態系に影響を与える非生物的・物理的要因","捕食者と被食者の関係","種の個体数のみ"],
+       a:1, ex:"p.117, p.119。"},
+      {q:"「Predator」の定義として正しいものは？",
+       opts:["他の動物を捕食する（殺して食べる）消費者","植物のみを食べる消費者","死んだ生物を食べる生物","宿主から栄養を得るが殺さない生物"],
+       a:0, ex:"p.122。"},
+      {q:"「Prey」の定義として正しいものは？",
+       opts:["捕食者が殺して食べる動物","捕食者そのもの","分解者","生産者"],
+       a:0, ex:"p.122。"},
+      {q:"「Carnivores」と「Predator」の関係についての正しい説明は？",
+       opts:["すべての捕食者は肉食動物だが、他の動物を食べる動物すべてが厳密な意味での捕食者とは限らない","両者は完全に同義である","肉食動物は植物のみを食べる","捕食者は肉食動物に含まれない"],
+       a:0, ex:"p.30, p.122。"},
+      {q:"「Herbivores」の定義として正しいものは？",
+       opts:["植物を食べる消費者（従属栄養生物）","他の動物を食べる消費者","死骸を食べる生物","光合成を行う生物"],
+       a:0, ex:"p.123, p.30。"},
+      {q:"「Parasites」の定義として正しいものは？",
+       opts:["生きた宿主の上または中に生息し、宿主から栄養を得る生物で、捕食とは異なり通常は宿主を殺さない","宿主を必ず殺す生物","死んだ有機物のみを食べる生物","光合成を行う生物"],
+       a:0, ex:"p.123。ただし高密度の寄生は宿主の死につながることもある。"},
+      {q:"「Saprotrophs」の定義として正しいものは？",
+       opts:["死んだ・腐敗した生物の上に生息し、酵素を分泌して体外で有機物を分解してから栄養を得る生物","生きた宿主に寄生する生物","他の動物を捕食する生物","光合成を行う生産者"],
+       a:0, ex:"p.124, p.145。"},
+      {q:"「Scavengers」の定義として正しいものは？",
+       opts:["死肉（Carrion）を食べる動物（例：ハゲワシ、ハイエナ、アライグマ）","生きた植物のみを食べる動物","体内で分解を行う微生物","光合成を行う生物"],
+       a:0, ex:"p.124。"},
+      {q:"「Detritivores」と「Decomposers（Saprotrophs）」の違いとして正しいものは？",
+       opts:["Detritivoresは食物を体内に取り込んでから分解するのに対し、Decomposersは体外で酵素により分解してから吸収する","両者は完全に同じ働きをする","Detritivoresは光合成を行う","Decomposersは動物のみを指す"],
+       a:0, ex:"Detritivores例：ミミズ、カニ、ハエ。Decomposers例：細菌、菌類（p.124, p.145）。"},
+      {q:"「Limiting factors」の定義として正しいものは？",
+       opts:["群集・個体群・生物が無限に成長することを妨げ、最終的に個体数をCarrying capacityに制限する要因","個体数を無限に増加させる要因","生物多様性の指標","政府の環境規制"],
+       a:0, ex:"p.125。"},
+      {q:"「Population（生態学における）」の定義として正しいものは？",
+       opts:["同じ地域に同時に生息し、交配可能な同種の生物の集まり","異なる種の集まり","生態系全体を指す用語","非生物的要因の集合"],
+       a:0, ex:"p.117。"},
+      {q:"「Community（生態学における）」の定義として正しいものは？",
+       opts:["同じ地域に同時に生息する2つ以上の異なる種の個体群の集まりで、互いに相互作用しうる","単一種の個体群のみを指す","非生物的要因のみを指す","政府が管理する保護区"],
+       a:0, ex:"p.119, p.134。"},
+      {q:"「Intraspecific competition」の定義として正しいものは？",
+       opts:["同種の個体間で資源をめぐって起こる競争で、個体数を安定化させS字型（ロジスティック）の成長曲線を生み出す傾向がある","異なる種の間の競争","捕食者と被食者の関係","常に個体数を無限に増加させる"],
+       a:0, ex:"p.121。"},
+      {q:"「Interspecific competition」の定義として正しいものは？",
+       opts:["異なる種の間で同じ限られた資源をめぐって起こる競争で、両種が資源を分け合う均衡に至ることも、一方が他方を排除すること（競争的排除）もある","同種内でのみ起こる競争","捕食のみを指す","常に片方の種の絶滅を意味する"],
+       a:0, ex:"p.121。"}
+    ],
+    relation: [
+      {q:"「Biotic factors」と「Abiotic factors」の関係として正しいものは？",
+       opts:["両者は生態系を構成する2つの異なる側面であり、Bioticは生物的要因、Abioticは非生物的・物理的要因を指す","両者は同じ意味","Abiotic factorsは常にBiotic factorsより重要である","Biotic factorsのみが個体数に影響する"],
+       a:0, ex:"生態系はこの2種類の要因の相互作用として成り立つ。"},
+      {q:"「Predator」「Prey」「Carnivores」の関係として正しいものは？",
+       opts:["捕食者は被食者を殺して食べる存在であり、すべての捕食者は肉食動物に含まれるが、肉食動物のすべてが厳密な捕食者とは限らない","被食者は常に捕食者より大きい","Carnivoresは植物食のみを指す","3つはすべて同義である"],
+       a:0, ex:"p.30, p.122。"},
+      {q:"「Predation」と「Parasitism」の違いとして正しいものは？",
+       opts:["捕食は通常宿主（被食者）を即座に殺すのに対し、寄生は通常宿主を殺さずに栄養を得続ける","両者は完全に同じ関係である","寄生の方が必ず宿主を早く殺す","捕食は非生物的要因の一種である"],
+       a:0, ex:"p.122-123。"},
+      {q:"「Saprotrophs」と「Detritivores」の役割の違いとして正しいものは？",
+       opts:["Saprotrophsは体外消化（酵素分泌後に吸収）、Detritivoresは体内消化（摂取後に分解）という異なるプロセスで、ともに死んだ有機物から栄養を得る点は共通する","Saprotrophsは光合成を行う生産者である","Detritivoresは肉食動物にのみ分類される","両者は捕食者に分類される"],
+       a:0, ex:"p.124, p.145。"},
+      {q:"「Limiting factors」と「Carrying capacity」の関係として正しいものは？",
+       opts:["限られた資源などのLimiting factorsが働くことで、個体群のサイズは最終的にCarrying capacityに達し、それ以上増加しにくくなる","両者は無関係な独立した概念である","Limiting factorsは常に個体数を無限に増加させる","Carrying capacityはLimiting factorsを排除した後にのみ決まる"],
+       a:0, ex:"p.125, p.117。"},
+      {q:"「Population」と「Community」の階層関係として正しいものは？",
+       opts:["Populationは単一種の集団を指し、複数のPopulationが集まってCommunityを構成する","CommunityはPopulationの一部である","両者は同義である","Populationは複数種を含む"],
+       a:0, ex:"p.117, p.119。"},
+      {q:"「Intraspecific competition」と「Interspecific competition」の違いとして正しいものは？",
+       opts:["前者は同種内、後者は異種間で起こる資源をめぐる競争である","両者は同じ現象を指す","Intraspecific competitionは異なる種の間でのみ起こる","Interspecific competitionは個体数に影響しない"],
+       a:0, ex:"p.121。"},
+      {q:"「Niche」と「Interspecific competition」の関係として正しいものは？",
+       opts:["2種が全く同じニッチを同じ場所・時間に占めることはできないため、ニッチが重なる場合は種間競争が生じやすい","ニッチが完全に一致する種同士は競争を避けられる","ニッチはInterspecific competitionと無関係","ニッチが異なる種は必ず競争する"],
+       a:0, ex:"p.119, p.121。"}
+    ],
+    case: [
+      {q:"サバンナで、ライオンがシマウマを狩って食べる関係は、どの生態学的関係の例か？",
+       opts:["捕食（Predator-Prey）","寄生（Parasitism）","腐食（Scavenging）","分解（Decomposition）"],
+       a:0, ex:"ライオンが直接シマウマを殺して食べる典型的な捕食関係。"},
+      {q:"ノミが犬の血を吸って生きるが、犬を通常殺すことはない関係は？",
+       opts:["捕食","寄生（Parasitism）","腐食","種間競争"],
+       a:1, ex:"宿主を通常殺さずに栄養を得続ける関係＝寄生（p.123）。"},
+      {q:"ハゲワシが交通事故で死んだ動物の死骸を食べる行動は？",
+       opts:["Predation","Parasitism","Scavenging","Nitrogen fixation"],
+       a:2, ex:"死肉を食べる行動＝Scavenging（p.124）。"},
+      {q:"ミミズが土の中の落ち葉を食べて体内で分解する過程は、どの生物群の働きの例か？",
+       opts:["Detritivores（体内消化型）","Saprotrophs（体外消化型）","Predators","Producers"],
+       a:0, ex:"ミミズは摂取後に体内で分解するDetritivoresの代表例（p.124, p.145）。"},
+      {q:"同じ池に生息する2種の魚が、限られた酸素と餌資源をめぐって競い合い、最終的に一方の種が姿を消した。この現象は？",
+       opts:["Intraspecific competitionによる安定化","Interspecific competitionによる競争的排除","Predationの結果","Nitrogen fixationの結果"],
+       a:1, ex:"異種間の資源競争で一方が排除される＝競争的排除（p.121）。"},
+      {q:"ある森林で、シカの個体数が食料資源（草木）の不足によってこれ以上増えなくなった。この現象を説明する概念は？",
+       opts:["Limiting factorsによるCarrying capacityへの到達","Interspecific competitionの欠如","Predationの完全な消失","Biotic factorsの消滅"],
+       a:0, ex:"食料という限られた資源（Limiting factor）が個体数の上限を決めている（p.125）。"},
+      {q:"砂漠に生息するサボテンが、高温・乾燥・強い日射という条件に適応して生育している。この条件はどの分類に該当するか？",
+       opts:["Biotic factors","Abiotic factors","Interspecific competition","Population"],
+       a:1, ex:"温度・水分・日射はいずれも非生物的要因（p.117, p.119）。"},
+      {q:"ある湖の同じ深さの水域に生息する2種の魚が、餌の種類・活動時間帯を微妙にずらすことで共存している。これは何を避けるための適応と考えられるか？",
+       opts:["ニッチの完全な重複による種間競争","捕食の回避のみ","Abiotic factorsの回避","個体群密度の増加"],
+       a:0, ex:"ニッチを分けることで種間競争（Interspecific competition）を回避する典型例（p.119, p.121）。"}
+    ]
+  },
+  "2.2": {
+    label: "2.2 エネルギーの流れ",
+    vocab: [
+      {q:"「First law of thermodynamics」の内容として正しいものは？",
+       opts:["エネルギーは形を変えるが、生成も消滅もしない（エネルギー保存則）","エネルギーは常に増加し続ける","エネルギーは使うたびに消滅する","生態系ではエネルギーは循環し続ける"],
+       a:0, ex:"p.141。"},
+      {q:"「Second law of thermodynamics」の内容として正しいものは？",
+       opts:["システム内でエネルギーが移動・変換される際、熱などのより使いにくい形に劣化し、エントロピー（無秩序さ）が増加する","エネルギーは常に完全に保存され劣化しない","生態系ではエネルギーが循環し再利用される","光合成にのみ適用される法則"],
+       a:0, ex:"p.143。"},
+      {q:"「Photosynthesis」の定義として正しいものは？",
+       opts:["光エネルギーをグルコースという化学エネルギーに変換する過程で、一部は独立栄養生物によりバイオマスとして貯蔵される","グルコースを分解してエネルギーを放出する過程","消費者が行う栄養摂取過程","分解者による有機物分解過程"],
+       a:0, ex:"p.140。"},
+      {q:"「Cellular respiration」の定義として正しいものは？",
+       opts:["生命活動のためのエネルギーを放出するためにグルコースが分解される過程","光エネルギーを化学エネルギーに変換する過程","栄養段階間のエネルギー移動そのもの","バイオマスの蓄積過程"],
+       a:0, ex:"p.142。"},
+      {q:"「Producer」と「Consumer」の違いとして正しいものは？",
+       opts:["Producerは光合成によって自ら栄養を作る独立栄養生物、Consumerは他の生物から栄養を得る従属栄養生物","両者は同じ意味","Consumerは常に光合成を行う","Producerは常に肉食である"],
+       a:0, ex:"p.144。"},
+      {q:"「Trophic level」の定義として正しいものは？",
+       opts:["食物連鎖における生物の位置、または同じ位置を占める生物群","生態系の面積","生物多様性の指標","個体群密度"],
+       a:0, ex:"p.144。"},
+      {q:"「Productivity」の定義として正しいものは？",
+       opts:["時間当たりのエネルギーからバイオマスへの変換率（植物では単位面積・単位時間あたりの質量で測定）","生態系全体の面積","生物多様性の指標","トロフィックレベルの数"],
+       a:0, ex:"p.149。"},
+      {q:"「Gross productivity (GP)」と「Net productivity (NP)」の関係式として正しいものは？",
+       opts:["NP = GP − R（Rは呼吸による損失）","NP = GP + R","GP = NP × R","両者に関係式は存在しない"],
+       a:0, ex:"p.149。"},
+      {q:"「Bioaccumulation」の定義として正しいものは？",
+       opts:["分解されにくい有害物質（DDT・PCB・水銀など）が排出されずに生物の体内に蓄積していくこと","栄養段階を上がるごとに毒物濃度が増加すること","光合成による物質の蓄積","個体群サイズの増加"],
+       a:0, ex:"p.140, p.153。"},
+      {q:"「Biomagnification」の定義として正しいものは？",
+       opts:["生物濃縮された毒物が、食物連鎖を上がるごとにその濃度がより高くなっていくこと","毒物が一つの個体内でのみ蓄積すること","個体群密度の増加を指す用語","光合成の効率化を指す用語"],
+       a:0, ex:"p.140, p.153。"}
+    ],
+    relation: [
+      {q:"「Producer」「Consumer」「Trophic level」の関係として正しいものは？",
+       opts:["ProducerとConsumerはそれぞれ食物連鎖の異なるTrophic levelに位置づけられる","3つは無関係","Consumerは常に最上位のTrophic levelに位置する","ProducerはTrophic levelの概念に含まれない"],
+       a:0, ex:"p.144。"},
+      {q:"「Photosynthesis」と「Cellular respiration」の関係として正しいものは？",
+       opts:["Photosynthesisは光エネルギーを化学エネルギーへ変換して蓄え、Cellular respirationはそのエネルギーを分解して利用可能にする、対をなす過程","両者は同じ過程を指す","Cellular respirationは光合成生物のみが行う","Photosynthesisはエネルギーを消費するだけの過程"],
+       a:0, ex:"p.140, p.142。"},
+      {q:"「Gross productivity」と「Net productivity」を隔てる要因として正しいものは？",
+       opts:["呼吸（Respiration）による損失分","光合成の効率のみ","トロフィックレベルの数","生物多様性の高さ"],
+       a:0, ex:"p.149。"},
+      {q:"「Bioaccumulation」と「Biomagnification」の関係として正しいものは？",
+       opts:["Bioaccumulationは個体レベルでの毒物蓄積、Biomagnificationはその蓄積が食物連鎖を通じて栄養段階ごとに濃縮されていく現象であり、両者は連続した過程である","両者は無関係な独立した現象","BiomagnificationはBioaccumulationより前の段階で起こる","両者は同じ現象を指す言い換えにすぎない"],
+       a:0, ex:"p.140, p.153。"},
+      {q:"「Second law of thermodynamics」とエネルギーが栄養段階を上がるごとに減少する現象の関係として正しいものは？",
+       opts:["エネルギー移動のたびに一部が熱として失われるため（エントロピー増加）、上位のTrophic levelほど利用可能なエネルギーは少なくなる","エネルギーは栄養段階を上がるごとに増加する","両者は無関係","この現象はFirst law of thermodynamicsのみで説明される"],
+       a:0, ex:"p.143-144。"},
+      {q:"「Pesticides」と「Biomagnification」の関係として正しいものは？",
+       opts:["分解されにくい農薬（Pesticides）は食物網を通じて移動し、Biomagnificationによって上位捕食者ほど高濃度で蓄積されやすい","農薬は常に速やかに分解されBiomagnificationは起こらない","両者は無関係","Biomagnificationは農薬にのみ適用される現象"],
+       a:0, ex:"p.155。"}
+    ],
+    case: [
+      {q:"DDTという殺虫剤が海に流れ込み、プランクトン→小魚→大型の魚→猛禽類（ワシなど）と食物連鎖を上がるごとに体内濃度が高くなり、頂点捕食者に深刻な影響を与えた。この現象は？",
+       opts:["Bioaccumulationのみ","Biomagnification","Photosynthesisの阻害","Nitrogen fixationの阻害"],
+       a:1, ex:"栄養段階を上がるごとの濃縮＝Biomagnification（p.140, p.153）。"},
+      {q:"ある湖の生態系で、生産者（藻類）の総光合成量から、藻類自身の呼吸によるエネルギー消費分を差し引いた値を測定した。これは何を求めていることになるか？",
+       opts:["Gross productivity (GP)","Net productivity (NP)","Trophic levelの数","Bioaccumulationの量"],
+       a:1, ex:"NP = GP − Rの式に一致（p.149）。"},
+      {q:"ライオンがシマウマを食べる際、シマウマの体内エネルギーの多くが熱として失われ、ライオンに実際に取り込まれるエネルギーはごく一部にとどまる。この現象を説明する法則は？",
+       opts:["First law of thermodynamicsのみ","Second law of thermodynamics（エネルギーの劣化・エントロピー増加）","Nitrogen fixationの法則","Carrying capacityの法則"],
+       a:1, ex:"p.143。"},
+      {q:"ある工場排水に含まれる水銀が、魚の体内に蓄積し続け、排出されずに濃度が上昇していった。この個体レベルでの現象は？",
+       opts:["Bioaccumulation","Biomagnification","Productivity","Trophic cascade"],
+       a:0, ex:"個体内での蓄積＝Bioaccumulation（p.140, p.153）。"},
+      {q:"植物が太陽光を使ってグルコースを合成し、そのグルコースの一部を成長のために体内に蓄積した。この過程を説明する組み合わせとして正しいものは？",
+       opts:["Photosynthesis（合成）とGross productivity（蓄積量の測定）","Cellular respirationとBiomagnification","Nitrogen fixationとDenitrification","BioaccumulationとPesticides"],
+       a:0, ex:"p.140, p.149。"},
+      {q:"ある農薬が「速やかに分解され、体内に蓄積しない」性質を持つ場合、Biomagnificationのリスクはどうなると考えられるか？",
+       opts:["リスクは低くなる（蓄積・濃縮が起こりにくいため）","リスクは常に高くなる","リスクとは無関係である","必ずBiomagnificationが起こる"],
+       a:0, ex:"蓄積されにくい物質は生物濃縮・生物拡大の連鎖に乗りにくい。"}
+    ]
+  },
+  "2.3": {
+    label: "2.3 物質循環",
+    vocab: [
+      {q:"「Biogeochemical cycle」の定義として正しいものは？",
+       opts:["生物的・地質学的な貯蔵庫の間で化学物質が循環すること。有機的段階と無機的段階を持ち、化学元素が生物にとって継続的に利用可能であることを保証する","生物多様性の指標","エネルギーが一方向にのみ流れる過程","気候変動対策の政策枠組み"],
+       a:0, ex:"p.165-166。"},
+      {q:"「Stores」の定義として正しいものは？",
+       opts:["生物地球化学的循環の中で、物質が一定期間留まる貯蔵庫（リザーバー・プール）","物質が瞬時に移動する過程","政府の環境政策文書","生物多様性を測る指標"],
+       a:0, ex:"p.166。"},
+      {q:"「Sinks」の定義として正しいものは？",
+       opts:["放出するより多くの物質（例：炭素）を現在吸収している貯蔵庫（例：海洋、生物圏、水圏、岩石圏）","吸収するより多くの物質を放出している貯蔵庫","完全に閉じた孤立系","政府による排出規制"],
+       a:0, ex:"p.165, p.364。"},
+      {q:"「Sources」の定義として正しいものは？",
+       opts:["吸収するより多くの物質を現在放出している貯蔵庫（例：燃焼時の化石燃料）","放出するより多くの物質を吸収している貯蔵庫","循環の起点となる生物のみを指す","政府機関の名称"],
+       a:0, ex:"p.165。"},
+      {q:"「Carbon fixation」の定義として正しいものは？",
+       opts:["生物が光合成を通じて大気中の炭素をグルコースなどの大きな分子として体内に「固定」する過程","炭素が大気中に放出される過程","炭素が化石燃料として堆積する過程のみ","炭素循環における人為的排出のみ"],
+       a:0, ex:"p.167。"},
+      {q:"「Carbon sequestration」の定義として正しいものは？",
+       opts:["気体の大気中の二酸化炭素を捕捉し、森林バイオマス・死んだ有機物・土壌などの固体または液体の形で貯蔵する過程","二酸化炭素を大気中に放出する過程","化石燃料の燃焼過程","窒素を固定する過程"],
+       a:0, ex:"p.165, p.171。"},
+      {q:"「Nitrogen fixation」の定義として正しいものは？",
+       opts:["マメ科植物の根粒に共生する根粒菌（Rhizobiumなど）のような窒素固定細菌によって、大気中の窒素ガスが生物が利用可能な形に変換される過程","硝酸塩が窒素ガスに戻る過程","死んだ有機物がアンモニウムに変換される過程","植物が窒素化合物を取り込む過程"],
+       a:0, ex:"p.123, p.177。"},
+      {q:"「Assimilation（窒素循環における）」の定義として正しいものは？",
+       opts:["生産者・植物が窒素化合物などの栄養分を取り込み、体内に組み込む過程","窒素ガスが大気中に放出される過程","有機物が分解される過程","動物が植物を食べる過程"],
+       a:0, ex:"p.177。"},
+      {q:"「Denitrification」の定義として正しいものは？",
+       opts:["水浸しで嫌気性（低酸素）の条件下で、脱窒細菌（Pseudomonas denitrificansなど）によって硝酸塩が窒素ガスに戻され、大気中に放出される過程","大気中の窒素ガスを固定する過程","死んだ有機物をアンモニウムに変換する過程","植物が窒素を吸収する過程"],
+       a:0, ex:"p.178。"},
+      {q:"「Ammonification」の定義として正しいものは？",
+       opts:["腐敗細菌・分解者細菌によって、死んだ有機物（アミノ酸）がアンモニウムに変換される過程","窒素ガスが硝酸塩に変換される過程","植物が窒素を吸収する過程","炭素が固定される過程"],
+       a:0, ex:"p.178-179。"}
+    ],
+    relation: [
+      {q:"「Sinks」と「Sources」の関係として正しいものは？",
+       opts:["同じ貯蔵庫でも、吸収量が放出量を上回ればSink、放出量が吸収量を上回ればSourceとして機能する（状況により変化しうる）","SinkとSourceは常に固定的で変化しない","両者は同じ意味である","Sinkは常に人為的な貯蔵庫を指す"],
+       a:0, ex:"p.165。"},
+      {q:"「Nitrogen fixation」と「Denitrification」の関係として正しいものは？",
+       opts:["両者は窒素循環における逆方向の過程であり、前者は窒素ガスを利用可能な形に変換し、後者はそれを再び窒素ガスに戻す","両者は同じ過程を指す","Denitrificationは窒素を固定する過程である","両者は炭素循環に属する"],
+       a:0, ex:"p.177-178。"},
+      {q:"「Ammonification」と「Nitrogen fixation」の違いとして正しいものは？",
+       opts:["Ammonificationは死んだ有機物由来のアミノ酸をアンモニウムに変換する過程、Nitrogen fixationは大気中の窒素ガスを直接利用可能な形に変換する過程である","両者は同じ過程の言い換えである","Ammonificationは大気中の窒素ガスのみを扱う","Nitrogen fixationは有機物の分解過程である"],
+       a:0, ex:"p.177-179。"},
+      {q:"「Carbon fixation」と「Carbon sequestration」の関係として正しいものは？",
+       opts:["Carbon fixationは光合成による生物学的な炭素の取り込みを指し、Carbon sequestrationはより広く、森林・土壌などに炭素を固体・液体として貯蔵する過程全体を指す","両者は完全に同義である","Carbon sequestrationは化石燃料の燃焼を指す","Carbon fixationは炭素の放出を指す"],
+       a:0, ex:"p.165-171。"},
+      {q:"「Biogeochemical cycle」と「Stores」「Sinks」「Sources」の関係として正しいものは？",
+       opts:["Biogeochemical cycleは物質が複数のStores（そのうちSinkやSourceとして機能するもの）の間を循環する全体のプロセスである","StoresはBiogeochemical cycleと無関係である","Sinkは循環の外側に存在する","Sourceは常にSinkより多くの物質を吸収する"],
+       a:0, ex:"p.165-166。"},
+      {q:"化石燃料の燃焼（炭素循環におけるSourceの典型例）と、森林の炭素固定（Sinkの典型例）の関係として正しいものは？",
+       opts:["燃焼はCarbon sequestrationされていた炭素を大気中に急速に放出し、森林はCarbon fixationを通じて大気中の炭素を再び貯蔵する、逆方向のプロセスである","両者は全く同じ方向のプロセスである","燃焼は炭素をSequestrationするプロセスである","森林はSourceとしてのみ機能する"],
+       a:0, ex:"p.165, p.171。"}
+    ],
+    case: [
+      {q:"マメ科植物（大豆やクローバーなど）の根に共生する根粒菌が大気中の窒素を植物が利用できる形に変える現象は？",
+       opts:["Denitrification","Nitrogen fixation","Ammonification","Carbon sequestration"],
+       a:1, ex:"p.123, p.177。"},
+      {q:"熱帯雨林が大量の二酸化炭素を吸収し、バイオマスとして貯蔵している状態は、炭素循環においてどのように分類されるか？",
+       opts:["Carbon source","Carbon sink","Nitrogen sink","Denitrification zone"],
+       a:1, ex:"吸収量が放出量を上回る貯蔵庫＝Sink（p.165, p.364）。"},
+      {q:"化石燃料を大量に燃焼させることで、長期間地中に貯蔵されていた炭素が急速に大気中へ放出されている状態は？",
+       opts:["Carbon sink","Carbon source","Nitrogen fixation","Ammonification"],
+       a:1, ex:"放出量が吸収量を上回る＝Source（p.165）。"},
+      {q:"水浸しの水田のような嫌気性環境で、微生物によって土壌中の硝酸塩が窒素ガスとして大気中に戻される現象は？",
+       opts:["Nitrogen fixation","Denitrification","Assimilation","Carbon fixation"],
+       a:1, ex:"p.178。"},
+      {q:"落ち葉や動物の死骸が分解細菌によってアンモニウムへと変換される森林の土壌中のプロセスは？",
+       opts:["Ammonification","Nitrogen fixation","Carbon sequestration","Denitrification"],
+       a:0, ex:"p.178-179。"},
+      {q:"森林伐採によって炭素を貯蔵していた森林（Sink）が失われ、さらに焼却によって蓄えられていた炭素が放出される場合、その土地は炭素循環上どう変化すると考えられるか？",
+       opts:["Sinkとしての機能を失い、一時的にSourceとして働く可能性がある","常に完全なSinkのまま機能し続ける","炭素循環に一切影響しない","Nitrogen sinkに変化する"],
+       a:0, ex:"p.165, p.171。"}
+    ]
+  },
+  "2.4": {
+    label: "2.4 気候とバイオーム",
+    vocab: [
+      {q:"「Biome」の定義として正しいものは？",
+       opts:["世界のどこにあっても、似た気候条件のもとで発達した比較可能な生態系の集まり","単一の生態系のみを指す用語","政府が定める保護区域","気象の短期的変化"],
+       a:0, ex:"p.186。"},
+      {q:"「Climate」の定義として正しいものは？",
+       opts:["比較的長期間にわたる大気の状態で、主に気温と降水量によって決まる一般的な気象パターン・季節・極端現象から成る","短期間の大気の状態","海流の動きのみを指す","生物多様性の指標"],
+       a:0, ex:"p.186-187。"},
+      {q:"「Weather」の定義として正しいものは？",
+       opts:["短期間における大気の状態","長期間にわたる大気の平均的傾向","バイオームの分類基準","海洋循環のパターン"],
+       a:0, ex:"p.186-187。"},
+      {q:"「Specific heat capacity」の説明として正しいものは？",
+       opts:["ある物質の温度を1℃上げるために必要な熱量。水は陸地より比熱容量が高いため、水域は陸地よりゆっくり温まり、ゆっくり冷える","生態系の生産性の指標","気象の短期的変動を示す指標","海流の速度を表す単位"],
+       a:0, ex:"p.206。"},
+      {q:"「Cyclone」の定義として正しいものは？",
+       opts:["熱帯で発生する低気圧を中心とした急速に回転する嵐で、強風を伴う。大西洋・北東太平洋ではハリケーン、北西太平洋では台風、南太平洋・インド洋ではサイクロンと呼ばれる","温帯低気圧の別名","海洋の深層循環を指す用語","大気汚染の指標"],
+       a:0, ex:"p.186, p.212。"},
+      {q:"「Upwelling」の定義として正しいものは？",
+       opts:["冷たく栄養豊富な深層の海水が表層へ上昇し、暖かい表層水と入れ替わる現象","表層水が強制的に沈降する現象","大気中の熱が海洋に吸収される現象","海水の塩分濃度が上昇する現象"],
+       a:0, ex:"p.205。"},
+      {q:"「Downwelling」の定義として正しいものは？",
+       opts:["表層水が下方へ押しやられ、酸素を深層水へ運ぶことがある現象","深層水が表層へ上昇する現象","海水温が上昇する現象のみ","大気循環の一種で降水を増加させる現象"],
+       a:0, ex:"p.205。"},
+      {q:"「ENSO（エルニーニョ南方振動）」の説明として正しいものは？",
+       opts:["赤道太平洋における風向と海面水温の変動で、中立・エルニーニョ（暖相）・ラニーニャ（寒相）の3段階から成る","大西洋のみで発生する現象","常に一定のパターンで変化しない気候現象","北極圏特有の気候現象"],
+       a:0, ex:"p.207。"},
+      {q:"「El Niño」の説明として正しいものは？",
+       opts:["貿易風が弱まる、または逆転し、暖かい海水が太平洋を東へ広がることで、南米沖の冷たく栄養豊富な水の通常の湧昇（Upwelling）が抑制される、ENSOの「暖相」","貿易風が強まり、寒冷化をもたらすENSOの段階","大西洋で発生する台風の別名","恒常的な気候パターンで変動しない"],
+       a:0, ex:"p.207。"},
+      {q:"「Walker circulation」の定義として正しいものは？",
+       opts:["赤道太平洋を横断する東西方向の大気循環で、三細胞モデルの南北循環と並んで存在する","南北方向にのみ働く海流","極地方限定の大気循環","生物地球化学的循環の一種"],
+       a:0, ex:"p.207。"}
+    ],
+    relation: [
+      {q:"「Climate」と「Weather」の関係として正しいものは？",
+       opts:["Weatherは短期的な大気の状態、Climateはそれらが長期間にわたって平均化・パターン化されたもの","両者は同じ意味","Climateの方が短期的である","Weatherは温度のみを扱う"],
+       a:0, ex:"p.186-187。"},
+      {q:"「Specific heat capacity」と海洋の気候緩和作用の関係として正しいものは？",
+       opts:["水の比熱容量が高いため、海洋は陸地よりゆっくり熱を吸収・放出し、沿岸地域の気候を安定化させる働きを持つ","比熱容量は気候と無関係である","陸地の方が常に比熱容量が高い","比熱容量は降水量のみに影響する"],
+       a:0, ex:"p.206。"},
+      {q:"「Upwelling」と海洋生産性の関係として正しいものは？",
+       opts:["Upwellingは栄養豊富な深層水を表層へ運び、植物プランクトンの光合成を促進し海洋生産性を高める","Upwellingは海洋生産性を低下させる","両者は無関係","Upwellingは常に生物を死滅させる"],
+       a:0, ex:"p.205。"},
+      {q:"「ENSO」と「El Niño」「La Niña」の関係として正しいものは？",
+       opts:["ENSOは全体の振動現象を指し、El Niñoはその暖相、La Niñaはその寒相にあたる","El NiñoとLa Niñaは無関係の別々の現象である","ENSOはEl Niñoの別名にすぎない","La NiñaはENSOに含まれない"],
+       a:0, ex:"p.207。"},
+      {q:"「El Niño」とUpwellingの関係として正しいものは？",
+       opts:["El Niño期には貿易風が弱まり、南米沖の通常のUpwellingが抑制され、栄養豊富な水の供給が減少する","El Niño期にはUpwellingが通常より強化される","両者は無関係","El NiñoはUpwellingを引き起こす直接的な原因である"],
+       a:0, ex:"p.207。"},
+      {q:"「Biome」と「Climate」の関係として正しいものは？",
+       opts:["Biomeは類似した気候条件のもとで発達した生態系の集まりであり、その分布は主にClimate（特に気温・降水量）によって規定される","Biomeは気候と無関係に決まる","Climateはbiome内の一時的な現象にすぎない","1つのBiomeは常に1つの気候帯にのみ存在する"],
+       a:0, ex:"p.186-187。"}
+    ],
+    case: [
+      {q:"熱帯雨林・サバンナ・砂漠・ツンドラといった分類は、世界中のどこにあっても類似した気候条件下で発達する生態系群を指す。この分類概念は？",
+       opts:["Ecosystem","Biome","Population","Community"],
+       a:1, ex:"p.186。"},
+      {q:"南米沖でエルニーニョが発生し、通常の栄養豊富な湧昇が抑制されたことで、その海域の漁獲量が激減した。この現象を説明する組み合わせは？",
+       opts:["El NiñoによるUpwellingの抑制","La NiñaによるUpwellingの強化","Denitrificationの結果","Biomeの変化のみ"],
+       a:0, ex:"p.207。"},
+      {q:"沿岸都市が内陸の都市よりも夏は涼しく冬は温暖な気候を持つ理由として最も適切な説明は？",
+       opts:["水の高いSpecific heat capacityにより、海洋がゆっくり温度変化するため","海洋は陸地より比熱容量が低いため","海流が常に一定の温度を保つため","気候とは無関係な地形要因のみによる"],
+       a:0, ex:"p.206。"},
+      {q:"太平洋沿岸で強力な熱帯低気圧が発生し、北西太平洋側では「台風」、大西洋側では別の名前で呼ばれた。この気象現象の分類は？",
+       opts:["Cyclone（地域によって呼び名が異なる）","Biome","ENSO","Downwelling"],
+       a:0, ex:"p.186, p.212。"},
+      {q:"ある年、貿易風が弱まり、太平洋東部で海面水温が異常に上昇し、世界各地で異常気象が観測された。この現象は？",
+       opts:["La Niña（寒相）","El Niño（暖相）","Denitrification","Downwelling単独の現象"],
+       a:1, ex:"p.207。"},
+      {q:"北極付近の海域で、冷たく高密度の表層水が沈み込み、深層循環の駆動力の一つとなっている現象は？",
+       opts:["Upwelling","Downwelling","El Niño","Walker circulation"],
+       a:1, ex:"p.205。"}
+    ]
+  },
+  "2.5": {
+    label: "2.5 遷移とゾーネーション",
+    vocab: [
+      {q:"「Succession」の定義として正しいものは？",
+       opts:["生物的・非生物的変数の変化により、時間の経過とともにある地域の生態学的群集が別の群集に置き換わっていく過程で、先駆・中間（Seral）・極相群集を含む","空間的な勾配に沿った群集の変化","個体群の急激な減少","生物多様性指数の計算方法"],
+       a:0, ex:"p.215-216。"},
+      {q:"「Zonation」の定義として正しいものは？",
+       opts:["標高・緯度・潮位・土壌・水源からの距離などの環境勾配に沿った植生群集の変化","時間経過に伴う群集の変化","種の絶滅過程","気候変動の指標"],
+       a:0, ex:"p.215-216。"},
+      {q:"「Primary succession」の定義として正しいものは？",
+       opts:["新しく形成された火山岩や後退する氷河のモレーンなど、土壌や生物が全く存在しない裸地・岩盤上で始まる遷移","既に土壌が形成されている場所で植生が除去された後に起こる遷移","人為的に維持される遷移","海洋でのみ起こる遷移"],
+       a:0, ex:"p.215, p.218。"},
+      {q:"「Secondary succession」の定義として正しいものは？",
+       opts:["火災・洪水・耕作・森林伐採などによって植生が除去されたが、既に土壌が形成されている場所で起こる遷移で、土壌や休眠種子が既に存在するため一次遷移より速く進行する","土壌形成から始まる遷移","極相群集の別名","ゾーネーションの一種"],
+       a:0, ex:"p.218, p.220。"},
+      {q:"「Seral community」の定義として正しいものは？",
+       opts:["遷移における一つの段階（Sere）で、各Seral communityは環境条件を変化させ、競争を通じて次のSeral段階への置き換えを可能にし、最終的に安定した極相群集に至る","遷移の最終段階のみを指す","人為的に維持された植生","火災の直後の状態のみを指す"],
+       a:0, ex:"p.215, p.218。"},
+      {q:"「Climax community」の定義として正しいものは？",
+       opts:["遷移の最終的で安定した段階であり、環境（気温・光・降水量）のもとで到達可能な最大限の発展を遂げ、その環境と動的平衡にある","遷移の初期段階のみを指す","人間の介入によってのみ維持される群集","非生物的要因のみで構成される群集"],
+       a:0, ex:"p.218-219。"},
+      {q:"「Plagioclimax」の定義として正しいものは？",
+       opts:["放牧などの人間活動によって発展が停止または方向転換させられ、安定してはいるが本来の気候的極相植生には到達していない群集","完全な自然状態で到達する極相群集","一次遷移の初期段階","火山活動によってのみ形成される群集"],
+       a:0, ex:"p.195, p.220。"}
+    ],
+    relation: [
+      {q:"「Primary succession」と「Secondary succession」の違いとして正しいものは？",
+       opts:["Primary successionは土壌のない裸地から始まりより時間がかかるのに対し、Secondary successionは既に土壌が存在する場所で起こるためより速く進行する","両者の速度に違いはない","Secondary successionの方が常に遅い","Primary successionは人為的攪乱の後にのみ起こる"],
+       a:0, ex:"p.218, p.220。"},
+      {q:"「Seral community」と「Climax community」の関係として正しいものは？",
+       opts:["複数のSeral communityを経て、最終的に安定したClimax communityに到達する、遷移の連続的な段階の関係","Seral communityはClimax communityの後に来る","両者は同じ意味である","Climax communityは常に最初の段階である"],
+       a:0, ex:"p.215-219。"},
+      {q:"「Succession」と「Zonation」の違いとして正しいものは？",
+       opts:["Successionは時間経過に伴う群集の変化、Zonationは空間的な環境勾配に沿った群集の変化である","両者は完全に同じ現象を指す","Zonationは時間経過のみに関係する","Successionは空間的勾配のみに関係する"],
+       a:0, ex:"p.215-216。"},
+      {q:"「Plagioclimax」と「Climax community」の関係として正しいものは？",
+       opts:["Plagioclimaxは人間活動によって自然の気候的極相に到達できず安定した状態であり、真のClimax communityとは異なる","両者は完全に同義である","Plagioclimaxの方が常により発展した状態である","Climax communityは人間活動によってのみ形成される"],
+       a:0, ex:"p.195, p.220。"},
+      {q:"「Secondary succession」と攪乱（火災・伐採など）の関係として正しいものは？",
+       opts:["攪乱によって植生が失われても土壌が残っている場合にSecondary successionが始まる","攪乱は常にPrimary successionを引き起こす","攪乱がなければSecondary successionは起こらない","攪乱とSuccessionは無関係"],
+       a:0, ex:"p.218, p.220。"},
+      {q:"高山の異なる標高帯で見られる植生の違い（例：山麓の森林から山頂の高山植生への変化）は、どの概念で説明されるか？",
+       opts:["Succession","Zonation（標高という環境勾配に沿った変化）","Plagioclimax","Primary successionのみ"],
+       a:1, ex:"p.215-216。"}
+    ],
+    case: [
+      {q:"新しく噴火してできた溶岩台地に、地衣類・コケ→草本→低木→森林という順に植生が発達していく過程は？",
+       opts:["Secondary succession","Primary succession","Zonation","Plagioclimax"],
+       a:1, ex:"土壌のない裸地からの遷移＝Primary succession（p.215, p.218）。"},
+      {q:"森林火災で焼失した森林地帯に、既存の土壌と休眠種子から比較的速く植生が回復していく過程は？",
+       opts:["Primary succession","Secondary succession","Zonation","Climax communityの消失"],
+       a:1, ex:"土壌が既に存在するためSecondary succession（p.218, p.220）。"},
+      {q:"長年放牧が続けられている草原が、本来なら森林になるはずの気候条件下でも低木・草原の状態のまま安定している。この状態は？",
+       opts:["Climax community（自然の極相）","Plagioclimax（人為的に維持された準極相）","Primary succession中の状態","Zonationの一例"],
+       a:1, ex:"人間活動によって発展が停止した状態＝Plagioclimax。"},
+      {q:"海岸から内陸に向かって、砂浜植物→草地→低木林→森林という順に植生帯が並んでいるのを観察した。この現象は？",
+       opts:["Succession（時間経過）","Zonation（空間的勾配）","Plagioclimax","Primary successionのみ"],
+       a:1, ex:"空間的な勾配に沿った変化＝Zonation（p.215-216）。"},
+      {q:"ある地域の森林が、数百年にわたり大きな攪乱を受けず、気候条件のもとで到達可能な最大限の発展段階に達し安定している。この段階は？",
+       opts:["Seral community","Climax community","Plagioclimax","Primary succession"],
+       a:1, ex:"p.218-219。"},
+      {q:"氷河が後退した跡地に、まず地衣類やコケなどの先駆種が定着し、徐々に土壌が形成され、より複雑な植生へと置き換わっていく一連の段階は？",
+       opts:["複数のSeral communityを経るPrimary succession","Zonationのみ","Plagioclimaxの形成過程","Climax communityの崩壊過程"],
+       a:0, ex:"p.215, p.218。"}
+    ]
+  },
+  "3.1": {
+    label: "3.1 生物多様性",
+    vocab: [
+      {q:"「Biodiversity」の定義として正しいものは？",
+       opts:["遺伝的・種・生態系の複数レベルで存在する生物システム全体の多様性で、生態系のレジリエンスに寄与する","単一種の個体数のみを指す","気候の多様性を指す用語","政府の環境政策の総称"],
+       a:0, ex:"p.263。"},
+      {q:"「Species richness」の定義として正しいものは？",
+       opts:["生態系に存在する種の数や種類で、各種の希少さ・多さは考慮しない","各種の相対的な個体数の均等さ","遺伝子の多様性","生態系の数そのもの"],
+       a:0, ex:"p.264。"},
+      {q:"「Species evenness」の定義として正しいものは？",
+       opts:["生態系における各種の相対的な個体数の均等さで、0から1で測定され、1が最も均等な状態","種の数そのもの","遺伝的多様性の指標","生態系の面積"],
+       a:0, ex:"p.264。"},
+      {q:"「Species diversity」の定義として正しいものは？",
+       opts:["生態系における種の数（Richness）とその相対的な割合（Evenness）の両方の関数","RichnessのみでEvennessは含まない","Evennessのみを指す","遺伝的多様性と同義"],
+       a:0, ex:"p.264。"},
+      {q:"「Genetic diversity」の定義として正しいものは？",
+       opts:["ある種の遺伝子プールや個体群内に存在する遺伝物質の範囲で、遺伝的多様性が高いほど種のレジリエンスが高まる","生態系の数を指す","種の個体数を指す","気候条件の多様性を指す"],
+       a:0, ex:"p.41, p.265。"},
+      {q:"「Ecosystem diversity」の定義として正しいものは？",
+       opts:["ある地域内に存在する異なる生態系・生息地の数と種類","単一の生態系内の種の数","遺伝的多様性の別名","気候変動の指標"],
+       a:0, ex:"例：森林・湿地・草原を含む地域は、森林のみの地域よりEcosystem diversityが高い。"},
+      {q:"「Simpson's Reciprocal Index」の説明として正しいものは？",
+       opts:["種の豊かさと均等さを合わせて測定する数値指標で、値が高いほど種多様性が高く、生態系間や時間経過での比較に使われる","種の数のみを数える単純な指標","遺伝的多様性のみを測定する指標","気候の変動を測定する指標"],
+       a:0, ex:"p.244, p.265。"},
+      {q:"「Natural selection」の定義として正しいものは？",
+       opts:["環境により適応した個体がより多く生存・繁殖し、その形質を次世代に伝えることで、生物の個体群が時間とともに適応・変化していく過程（「適者生存」）","人為的な品種改良の過程のみを指す","種の絶滅過程のみを指す","生態系の遷移過程"],
+       a:0, ex:"p.270。"},
+      {q:"「Indigenous knowledge」の定義として正しいものは？",
+       opts:["西洋的な枠組みとは異なり、しばしば人間と自然、あるいはAnthropocentricとEcocentricという環境価値観の区別を認めない伝統的知識体系","政府による公式な環境政策","科学者のみが持つ専門知識","特定の宗教にのみ基づく知識"],
+       a:0, ex:"p.95。"}
+    ],
+    relation: [
+      {q:"「Species richness」と「Species evenness」の関係として正しいものは？",
+       opts:["両者は組み合わさって「Species diversity」を構成する、異なる側面の指標である","両者は同じ意味である","Species richnessが高ければ必ずEvennessも高い","Evennessは種の数のみを測定する"],
+       a:0, ex:"p.264。"},
+      {q:"「Genetic diversity」「Species diversity」「Ecosystem diversity」の関係として正しいものは？",
+       opts:["これら3つは、それぞれ遺伝子・種・生態系という異なるレベルでの多様性を表し、合わせて「Biodiversity（生物多様性）」を構成する","3つはすべて同じレベルの多様性を指す","Ecosystem diversityはGenetic diversityの下位概念である","Species diversityのみが真の生物多様性である"],
+       a:0, ex:"p.263。"},
+      {q:"「Simpson's Reciprocal Index」と「Species richness」「Species evenness」の関係として正しいものは？",
+       opts:["Simpson's Reciprocal Indexは、RichnessとEvennessの両方を組み合わせて種多様性を数値化した指標である","Simpson's Reciprocal IndexはRichnessのみを測定する","EvennessはSimpson's Reciprocal Indexと無関係である","Simpson's Reciprocal Indexは遺伝的多様性のみを測定する"],
+       a:0, ex:"p.244, p.265。"},
+      {q:"「Genetic diversity」とレジリエンスの関係として正しいものは？",
+       opts:["遺伝的多様性が高い個体群ほど、環境変化や病気への耐性が高く、レジリエンスが高まる傾向がある","遺伝的多様性はレジリエンスと無関係である","遺伝的多様性が低いほどレジリエンスは高まる","レジリエンスは常に一定でGenetic diversityの影響を受けない"],
+       a:0, ex:"p.41, p.265。"},
+      {q:"「Natural selection」と「Genetic diversity」の関係として正しいものは？",
+       opts:["遺伝的多様性が高い個体群ほど、環境変化に対して自然選択が働く材料（多様な形質）が豊富にあり、適応の可能性が高まる","自然選択は遺伝的多様性と無関係に起こる","遺伝的多様性は自然選択の結果としてのみ減少する","自然選択は常に遺伝的多様性をゼロにする"],
+       a:0, ex:"p.270。"},
+      {q:"「Indigenous knowledge」とEVS（Environmental value system）の関係として正しいものは？",
+       opts:["Indigenous knowledgeは、西洋的なAnthropocentric・Ecocentricという二分法とは異なる形で人間と自然の関係を捉えることが多い","Indigenous knowledgeは常にTechnocentricな立場と一致する","Indigenous knowledgeとEVSは無関係である","Indigenous knowledgeは常にAnthropocentricに分類される"],
+       a:0, ex:"p.95。"}
+    ],
+    case: [
+      {q:"ある森林に10種の木がほぼ均等な割合で存在する場合と、同じく10種存在するが1種が99%を占める場合を比較すると、どちらがSpecies evennessが高いか？",
+       opts:["ほぼ均等な割合で存在する森林の方が高い","1種が99%を占める森林の方が高い","両者は同じである","Species richnessが同じなので比較できない"],
+       a:0, ex:"p.264。均等さが高いほどEvennessは1に近づく。"},
+      {q:"ある島に生息するある種の個体群が、遺伝的に非常に均質（近親交配が進んでいる）である場合、将来的なリスクとして最も適切なものは？",
+       opts:["病気や環境変化に対する耐性が低下し、レジリエンスが下がる可能性がある","常により強靭な個体群になる","Species richnessが自動的に上昇する","リスクは全くない"],
+       a:0, ex:"p.41, p.265。"},
+      {q:"ある地域が、森林・湿地・草原・河川という複数の異なる生態系タイプを含んでいる場合、この地域はどの多様性が高いといえるか？",
+       opts:["Genetic diversity","Ecosystem diversity","Species evennessのみ","Natural selectionの速度"],
+       a:1, ex:"複数の異なる生態系の存在＝Ecosystem diversity。"},
+      {q:"特定の病害虫に対して一部の個体だけが偶然抵抗力を持っており、その個体が生き残って繁殖し、次第に抵抗力のある個体群に置き換わっていった。この現象は？",
+       opts:["Natural selection","Species evennessの上昇","Ecosystem diversityの喪失","Zonation"],
+       a:0, ex:"p.270。「適者生存」の典型例。"},
+      {q:"ある先住民コミュニティが、森林を「利用する対象」ではなく「共に生きる存在」として捉え、西洋的な人間中心・自然中心の二分法とは異なる形で自然と関わってきた。この知識体系は？",
+       opts:["Indigenous knowledge","Technocentric worldview","Cornucopian worldview","完全にAnthropocentricな体系"],
+       a:0, ex:"p.95。"},
+      {q:"2つの熱帯林を比較したところ、A林は種数が多いが1種に極端に偏っており、B林は種数はやや少ないが各種がほぼ均等に分布していた。Simpson's Reciprocal Indexで両者を比較する際に考慮すべきことは？",
+       opts:["Simpson's Reciprocal IndexはRichnessとEvennessの両方を組み合わせて計算されるため、種数だけでなく分布の均等さも結果に影響する","この指標はRichnessのみで決まるため種数の多いA林が必ず高くなる","この指標はEvennessのみで決まるため種数は無視してよい","この指標は遺伝的多様性のみを反映するため両林とも比較不可能"],
+       a:0, ex:"p.244, p.265。"}
+    ]
+  },
+  "3.2": {
+    label: "3.2 生物多様性への人為的脅威",
+    vocab: [
+      {q:"「Biodiversity Loss」の定義として正しいものは？",
+       opts:["人間による生態系・社会システムへの直接的・間接的な影響によって引き起こされる、生物多様性の減少","自然現象のみによる多様性の減少","種の数が増加すること","気候の多様性の減少"],
+       a:0, ex:"p.289。"},
+      {q:"「Direct Threats」と「Indirect Threats」の違いとして正しいものは？",
+       opts:["Direct Threatsは種や生息地に直接的に影響を及ぼす要因（乱獲・生息地破壊など）、Indirect Threatsは間接的な要因（気候変動・経済活動の構造など）を通じて生物多様性に影響を与える","両者は同じ意味である","Direct Threatsは常に自然要因のみを指す","Indirect Threatsは常に人為的要因を含まない"],
+       a:0, ex:"生物多様性の脅威を分類する枠組み。"},
+      {q:"「Overharvesting」の定義として正しいものは？",
+       opts:["特に大規模な群れで生活する種（バイソンの群れや魚群など）を急速に絶滅させうる、過剰な狩猟・採取","資源を全く採取しないこと","養殖業のみを指す用語","政府による狩猟規制"],
+       a:0, ex:"p.299。"},
+      {q:"「Poaching」の定義として正しいものは？",
+       opts:["野生生物の違法な取引や殺害で、年間200億〜2160億米ドル規模と推定される生物多様性への主要な脅威","合法的な狩猟許可制度","動物園での繁殖活動","漁業における合法的な漁獲"],
+       a:0, ex:"p.295。"},
+      {q:"「Illegal Pet Trade」の定義として正しいものは？",
+       opts:["主に密猟によって供給される野生捕獲動物のペットとしての違法取引で、年間230億米ドル規模と推定される","合法的なペットショップでの販売","動物園間の合法的な種の交換","家畜の売買"],
+       a:0, ex:"p.296。"},
+      {q:"「Habitat Fragmentation」の定義として正しいものは？",
+       opts:["単一で連続していた生息地が、道路・都市・工場・フェンス・送電線・パイプライン・農地などによって分断され、パッチ状の断片になること","生息地が完全に消滅すること","生息地の質が向上すること","生息地が拡大すること"],
+       a:0, ex:"p.291。"},
+      {q:"「Invasive Species」の定義として正しいものは？",
+       opts:["ある地域に導入された非在来種で、その環境に適応していない在来種と激しく競合する種（例：オーストラリアのウサギ）","その地域に元々生息していた在来種","絶滅危惧種のみを指す用語","家畜化された種"],
+       a:0, ex:"p.294。"},
+      {q:"「Disease Introduction」の定義として正しいものは？",
+       opts:["侵入種や野生生物と人間の接触などを通じて、個体群や生態系に新たな病気が持ち込まれることで、在来の生物多様性に深刻な脅威となりうる","病気が自然に消滅する過程","ワクチン開発のプロセス","動物園での健康管理"],
+       a:0, ex:"p.295。"},
+      {q:"「Habitat Destruction」と「Habitat Degradation」の違いとして正しいものは？",
+       opts:["Habitat Destructionは重機などによる生息地の物理的な除去、Habitat Degradationは生息地を必ずしも除去せずに汚染・気候変動・侵入種の導入などによって質を低下させることを指す","両者は同じ意味である","Habitat Degradationの方が常により深刻な影響を及ぼす","Habitat Destructionは自然現象のみを指す"],
+       a:0, ex:"p.291。"},
+      {q:"「IUCN Red List」の説明として正しいものは？",
+       opts:["国際自然保護連合が発行する、個体数・増減率・繁殖可能性・地理的範囲・既知の脅威に基づいて種の保全状況を評価するリスト","動物園の飼育種リスト","絶滅した種のみを記録するリスト","CITESの附属書の別名"],
+       a:0, ex:"p.289, p.301。"},
+      {q:"「Conservation Status」の定義として正しいものは？",
+       opts:["個体数・特殊化の程度・分布・繁殖可能性・地理的範囲などの基準に基づいて、IUCN Red Listが決定する種の絶滅リスクの分類","保護区の面積を示す指標","動物園の飼育頭数","生態系サービスの経済的価値"],
+       a:0, ex:"p.302。"},
+      {q:"「Endangered Species」と「Vulnerable Species」の違いとして正しいものは？",
+       opts:["Endangered SpeciesはIUCN Red Listにおいて野生での絶滅リスクが非常に高いと分類される種、Vulnerable Speciesは絶滅リスクが高いと分類される種であり、Endangeredの方がより深刻なカテゴリーである","両者は同じ分類である","Vulnerable Speciesの方がより深刻なカテゴリーである","両者はIUCNとは無関係な分類である"],
+       a:0, ex:"p.301-302, p.305。"},
+      {q:"「Flagship Species」の定義として正しいものは？",
+       opts:["それ自体は重要な生態学的役割を持たない場合もあるが、大衆の関心を引き資金調達に利用される種で、集めた資金はより広い生息地や他の種の保護に使われる","生態系に最も大きな影響を与えるキーストーン種の別名","絶滅した種のみを指す","侵入種の別名"],
+       a:0, ex:"p.328。"},
+      {q:"「Tragedy of the Commons」の説明として正しいものは？",
+       opts:["資源がみんなのものと見なされる場合、個人が資源を利用する個人的利益が共有される負担を上回るため、個々人がその資源を過剰利用しがちになるという、共有の利益と個人のニーズの間の緊張を示す比喩","政府所有の資源は常に持続可能に管理されるという理論","私有財産のみが乱獲を引き起こすという理論","資源の共有が常に持続可能性を高めるという理論"],
+       a:0, ex:"p.309。"},
+      {q:"「Overexploitation」の定義として正しいものは？",
+       opts:["ある種や資源を持続可能な水準を超えて利用すること。人口密度が低かった時代は伝統的慣習によって抑えられていたが、人口増加とより効率的な狩猟・採取技術により現在は広く見られる","資源を全く利用しないこと","政府による資源管理の成功例","養殖業にのみ適用される概念"],
+       a:0, ex:"p.293。"},
+      {q:"「Species Extinction」の定義として正しいものは？",
+       opts:["ある種の永久的な喪失で、自然的原因、あるいは近年はますます人為的な原因によって引き起こされる","一時的な個体数の減少","種の保護状態が改善すること","新種が発見されること"],
+       a:0, ex:"p.289。"}
+    ],
+    relation: [
+      {q:"「Habitat Destruction」「Habitat Degradation」「Habitat Fragmentation」の関係として正しいものは？",
+       opts:["いずれも生息地に対する異なる種類の脅威であり、それぞれ物理的除去・質の低下・分断化という異なるメカニズムで生物多様性を脅かす","3つは完全に同じ現象を指す","Habitat Fragmentationのみが生物多様性に影響する","これらは互いに排他的で同時には起こらない"],
+       a:0, ex:"p.291。"},
+      {q:"「Poaching」と「Illegal Pet Trade」の関係として正しいものは？",
+       opts:["Illegal Pet Tradeは主にPoaching（密猟）によって供給されており、両者は密接に関連した違法行為である","両者は無関係な独立した活動である","Illegal Pet Tradeは常に合法的な取引のみで構成される","Poachingは合法的な狩猟許可を伴う"],
+       a:0, ex:"p.295-296。"},
+      {q:"「IUCN Red List」と「Conservation Status」「Endangered/Vulnerable Species」の関係として正しいものは？",
+       opts:["IUCN Red Listが評価基準に基づいてConservation Statusを決定し、その結果としてEndangeredやVulnerableといった具体的な分類が種に付与される","Conservation StatusはIUCN Red Listとは独立して決定される","Endangered SpeciesはVulnerable Speciesより軽度な分類である","IUCN Red Listは絶滅した種のみを扱う"],
+       a:0, ex:"p.301-302。"},
+      {q:"「Invasive Species」と「Disease Introduction」の関係として正しいものは？",
+       opts:["侵入種はしばしば新たな病気を生態系に持ち込む媒介となり、Disease Introductionの一因となることがある","両者は無関係である","Disease Introductionは常に侵入種と無関係に発生する","侵入種は病気の拡散を常に防ぐ"],
+       a:0, ex:"p.294-295。"},
+      {q:"「Tragedy of the Commons」と「Overexploitation」の関係として正しいものは？",
+       opts:["Tragedy of the Commonsが説明する共有資源における個人の合理的行動が、結果としてOverexploitation（資源の乱獲・過剰利用）を引き起こすメカニズムとなる","両者は無関係である","Tragedy of the CommonsはOverexploitationを防ぐ仕組みである","Overexploitationは私有財産にのみ起こる現象である"],
+       a:0, ex:"p.309, p.293。"},
+      {q:"「Flagship Species」と保全資金の関係として正しいものは？",
+       opts:["Flagship Speciesは大衆の関心を集めることで資金調達に有効に機能し、その資金はその種自体だけでなく、より広い生息地や他の種の保護にも活用される","Flagship Speciesの保護資金は他の種の保護には一切使われない","Flagship Speciesは常に生態学的に最重要な種である","Flagship Speciesと資金調達は無関係である"],
+       a:0, ex:"p.328。"},
+      {q:"「Deforestation」と「Habitat Destruction」の関係として正しいものは？",
+       opts:["Deforestation（森林伐採）は森林生態系に依存する種にとってのHabitat Destructionの具体的な一形態である","両者は無関係な独立した概念である","DeforestationはHabitat Degradationにのみ分類される","Deforestationは常に生息地の質を向上させる"],
+       a:0, ex:"p.303, p.291。"},
+      {q:"「Unsustainable Practices」と「Ecological Services」の関係として正しいものは？",
+       opts:["Unsustainable Practicesが続くと、生態系が提供するEcological Services（花粉媒介・水質浄化・気候調整など）の持続的な供給が損なわれるリスクが高まる","両者は無関係である","Unsustainable PracticesはEcological Servicesを常に強化する","Ecological Servicesは人間の活動と無関係に決定される"],
+       a:0, ex:"p.324, p.311。"}
+    ],
+    case: [
+      {q:"象牙を目的として違法にゾウが殺され、国際的な闇市場で取引されている。この行為は？",
+       opts:["Poaching（密猟）","Overharvesting","Habitat Fragmentation","Disease Introduction"],
+       a:0, ex:"p.295。"},
+      {q:"熱帯魚が違法に野生から捕獲され、ペットとして海外に高額で販売されている。この現象は？",
+       opts:["Illegal Pet Trade","Conservation biologyの実践","Ex situ保全の合法的手段","CITESによる合法取引"],
+       a:0, ex:"p.296。"},
+      {q:"道路建設によって、かつて広大だった森林が複数の孤立したパッチに分断され、動物の移動や遺伝的交流が困難になった。この現象は？",
+       opts:["Habitat Fragmentation","Habitat Degradationのみ","Species Extinctionそのもの","Overexploitation"],
+       a:0, ex:"p.291, p.304。"},
+      {q:"オーストラリアに持ち込まれたウサギが爆発的に増加し、在来の植生や動物種と激しく競合し生態系を大きく変化させた。この現象は？",
+       opts:["Invasive Speciesによる生態系への影響","Poachingの結果","Habitat Degradationのみ","Overharvestingの結果"],
+       a:0, ex:"p.294。"},
+      {q:"ある湖が公共の共有資源とみなされていたため、複数の漁業者がそれぞれ個人的利益を優先して漁獲を続けた結果、魚の個体群が崩壊した。この現象を説明する概念は？",
+       opts:["Tragedy of the Commons","Conservation biologyの成功例","Sustainable water managementの成功例","Rewildingの結果"],
+       a:0, ex:"p.309。"},
+      {q:"特定の魚種の乱獲が続いた結果、その種の絶滅リスクが「危急種（Vulnerable）」から「絶滅危惧種（Endangered）」へと引き上げられた。この分類の変化を決定する組織は？",
+       opts:["IUCN（国際自然保護連合）","CITES事務局","UNFAO","WWF単独"],
+       a:0, ex:"p.289, p.301-302。"},
+      {q:"パンダは生態学的役割が限定的であるとの指摘もあるが、その愛らしさから世界的な保全キャンペーンの象徴として使われ、集められた資金は広範な生息地保護に活用されている。この役割を果たす種は？",
+       opts:["Flagship Species","Keystone species","Invasive Species","Endemic Speciesのみ"],
+       a:0, ex:"p.328。"},
+      {q:"大規模な木材伐採により熱帯雨林が消失し、そこに依存していた多くの固有種が生息地を失った。この現象は？",
+       opts:["DeforestationによるHabitat Destruction","Rewildingの成功例","Ex situ保全の実践","Aquacultureの拡大"],
+       a:0, ex:"p.303, p.291。"}
+    ]
+  },
+  "3.3": {
+    label: "3.3 保全生物学",
+    vocab: [
+      {q:"「In situ」保全の定義として正しいものは？",
+       opts:["種をその自然生息地内で保護する保全戦略","種を自然生息地の外（動物園・水族館・種子銀行など）で保護する戦略","絶滅危惧種の取引を禁止する条約","生態系サービスの経済評価手法"],
+       a:0, ex:"p.319。"},
+      {q:"「Ex situ」保全の定義として正しいものは？",
+       opts:["自然生息地内での保全","動物園・水族館・種子銀行など、自然生息地の外で種を保護する保全戦略","生息地の破壊を防ぐ法律","気候変動対策のみを指す"],
+       a:1, ex:"p.319。"},
+      {q:"「Conservation biology」の定義として正しいものは？",
+       opts:["生物多様性の喪失を懸念する様々な分野の専門家が協力し、種や群集を絶滅から救うために行動する比較的新しい学問分野","動物園経営学の一分野","気候学の一分野","農業経済学の一種"],
+       a:0, ex:"p.319。"},
+      {q:"「CBD（生物多様性条約）」の説明として正しいものは？",
+       opts:["「生物多様性の保全、その構成要素の持続可能な利用、遺伝資源の利用から生じる利益の公正で公平な配分」のための国際的な法的枠組みで、196カ国が批准","絶滅危惧種の国際取引を規制する条約","気候変動対策のための条約","水資源管理のための条約"],
+       a:0, ex:"p.332。"},
+      {q:"「CITES」の説明として正しいものは？",
+       opts:["野生生物とその製品の国際取引を規制する国際協定","生物多様性保全のための資金提供機関","種子銀行のネットワーク","動物園の国際認証制度"],
+       a:0, ex:"p.320。"},
+      {q:"「Preservation biology」の説明として正しいものは？",
+       opts:["人間がまだ手を付けていない地域での人間活動を排除しようとするアプローチで、自然を人間のための資源としてではなく本質的価値を持つものとして捉えるEcocentric的視点に基づく","人間の利用を最大化するアプローチ","動物園での繁殖プログラムのみを指す","絶滅危惧種の取引規制"],
+       a:0, ex:"p.323。"},
+      {q:"「Seed bank」の定義として正しいものは？",
+       opts:["冷凍・乾燥させた種子を長期間保存する施設で、世界の植物種の遺伝子バンクおよび絶滅への保険として機能する","銀行が発行する環境債券","動物の繁殖記録を管理するデータベース","森林の炭素貯蔵量を測定する施設"],
+       a:0, ex:"p.328。"},
+      {q:"「Zoo」と「Captive breeding」の関係として正しいものは？",
+       opts:["動物園は多くの種を飼育・展示する施設で、遺伝的記録を維持しながらCaptive breeding（飼育下繁殖）プログラムを支援するが、すべての種を飼育できるわけではない","動物園は野生の生息地内保全のみを行う","Captive breedingは常に容易で全ての種で成功する","両者は無関係"],
+       a:0, ex:"p.326。"},
+      {q:"「Reintroduction」の定義として正しいものは？",
+       opts:["飼育下繁殖された、あるいは移送された動物を野生に放して個体群を再確立させること（例：ゴールデンライオンタマリン、アラビアオリックス、ハイイロオオカミの例）","種を動物園に永久に留める措置","絶滅危惧種の取引を許可する制度","生息地を完全に破壊する行為"],
+       a:0, ex:"p.327。"},
+      {q:"「SLOSS」の説明として正しいものは？",
+       opts:["生物多様性を保全する上で、1つの大きな保護区が良いか、複数の小さな保護区が良いかをめぐる議論（Single Large Or Several Small）","種子銀行の国際規格","生態系サービスの評価手法","絶滅危惧種のリスト分類法"],
+       a:0, ex:"p.330。"},
+      {q:"「Corridors（保全における）」の定義として正しいものは？",
+       opts:["保護区同士をつなぐ保護された土地の帯で、個体の移動を可能にし遺伝子プールを増やしたり季節的な移動を助けたりするが、病気や侵入種の拡散も許してしまう可能性がある","保護区の中心部のみを指す","動物園内の通路","気候帯の境界線"],
+       a:0, ex:"p.331。"},
+      {q:"「Ecotones」と「Edge effect」の関係として正しいものは？",
+       opts:["Ecotonesは2つの生息地が接する境界地域を指し、そこではEdge effect（種数の増加、捕食・競争の増加、非生物的要因の変化など）が生じやすい","両者は無関係な独立した概念である","Edge effectはEcotonesの外側でのみ生じる","Ecotonesは常に生物多様性を減少させる"],
+       a:0, ex:"p.330-331。"}
+    ],
+    relation: [
+      {q:"「In situ」と「Ex situ」保全の違いとして正しいものは？",
+       opts:["In situは自然生息地内での保全、Ex situは自然生息地外（動物園・種子銀行など）での保全である","両者は同じ意味である","In situは常に動物園を利用する","Ex situは常に生息地保護のみを行う"],
+       a:0, ex:"p.319。"},
+      {q:"「Habitat-based」アプローチと「In situ」保全の関係として正しいものは？",
+       opts:["Habitat-basedアプローチは通常In situ戦略を伴い、種の自然環境そのものを保護することを重視する","Habitat-basedは常にEx situ戦略を伴う","両者は対立する概念である","Habitat-basedは動物園保全のみを指す"],
+       a:0, ex:"p.319, p.324, p.329。"},
+      {q:"「Zoo」「Seed bank」「Botanical garden」の共通点として正しいものは？",
+       opts:["いずれもEx situ保全の手段であり、種を自然生息地の外で保護・維持する","いずれもIn situ保全の手段である","いずれも国際条約の名称である","いずれも保護区の設計手法を指す"],
+       a:0, ex:"p.319, p.326-328。"},
+      {q:"「Corridors」と遺伝的多様性の関係として正しいものは？",
+       opts:["保護区間をつなぐCorridorsは個体の移動を可能にし、個体群間の交配を促進することで遺伝的多様性の維持に貢献しうる","Corridorsは遺伝的多様性を常に低下させる","両者は無関係である","Corridorsは病気の拡散を完全に防ぐ"],
+       a:0, ex:"p.331。"},
+      {q:"「SLOSS」の議論と「Edge effect」の関係として正しいものは？",
+       opts:["小さな保護区を複数作る場合、境界（エッジ）の総延長が増え、Edge effectの影響を受けやすくなる可能性があるため、SLOSS論争で考慮される要因の一つとなる","両者は無関係である","大きな保護区の方が常にEdge effectの影響を強く受ける","Edge effectはSLOSSの議論に一切関係しない"],
+       a:0, ex:"p.330-331。"},
+      {q:"「CBD」と「CITES」の役割の違いとして正しいものは？",
+       opts:["CBDは生物多様性の保全・持続可能な利用・利益配分を包括的に扱う条約であり、CITESは野生生物の国際取引を具体的に規制する条約である","両者は完全に同じ内容を扱う条約である","CITESの方がより広範な生物多様性全般を扱う","CBDは取引規制のみに特化した条約である"],
+       a:0, ex:"p.320, p.332。"}
+    ],
+    case: [
+      {q:"絶滅危惧種のサイの角の国際取引を禁止する国際的な枠組みは？",
+       opts:["CBD","CITES","SLOSS","In situ保全"],
+       a:1, ex:"p.320。"},
+      {q:"ある国が、絶滅危惧植物の種子を将来のために冷凍保存する施設を建設した。この取り組みは？",
+       opts:["In situ保全（Seed bank）","Ex situ保全（Seed bank）","Habitat-based保全","Rewilding"],
+       a:1, ex:"p.328。生息地外での保全＝Ex situ。"},
+      {q:"野生に絶滅したアラビアオリックスを、動物園での繁殖プログラムを経て自然の生息地に再び放した取り組みは？",
+       opts:["Reintroduction","Extinction","Fragmentation","Overexploitation"],
+       a:0, ex:"p.327。"},
+      {q:"イエローストーン国立公園でオオカミを再導入した結果、生態系のバランスが回復し始めたという事例は、どの概念の実例として最も適切か？",
+       opts:["Rewilding（キーストーン種の再導入による生態系プロセスの回復）","Ex situ保全のみ","SLOSSの実例","CITESの適用例"],
+       a:0, ex:"p.319, p.335。"},
+      {q:"森林と農地が接する境界地帯で、両方の生息地由来の種に加え、機会主義的な種も多く見られ、捕食・競争が活発になっている。この地帯は？",
+       opts:["Ecotone（Edge effectが生じている境界地域）","Bioreserveの中心部","Ex situ保全区域","Corridor"],
+       a:0, ex:"p.330-331。"},
+      {q:"ある地域で、1つの大きな自然保護区を作るべきか、複数の小さな保護区に分けるべきかについて生態学者の間で議論が続いている。この論争は？",
+       opts:["SLOSS論争","CBDの条項","CITESの適用範囲","Preservation biologyの定義問題"],
+       a:0, ex:"p.330。"}
+    ]
+  },
+  "4.1": {
+    label: "4.1 水文循環",
+    vocab: [
+      {q:"「Hydrological cycle」の定義として正しいものは？",
+       opts:["太陽放射と重力によって駆動される、地球の貯蔵庫（海洋・氷冠・地下水・地表水・大気・生物）間を蒸発・降水・流出などの流れを通じて水が絶えず移動する循環","炭素が循環するプロセス","窒素が循環するプロセス","生物多様性の測定手法"],
+       a:0, ex:"p.353。"},
+      {q:"「Water budget」の定義として正しいものは？",
+       opts:["水文循環の貯蔵庫と流れにおける水量の定量的な見積もり","政府の水関連予算","家庭の水道料金の計算方法","降水量の予測モデル"],
+       a:0, ex:"p.353。"},
+      {q:"「Aquifer」の定義として正しいものは？",
+       opts:["地下水で飽和した多孔質の岩石・堆積物の層で、抽出された水の補充には人の一生よりも長い時間がかかることがある","地表を流れる河川","海洋の深層循環","蒸発によって形成される雲"],
+       a:0, ex:"p.354。"},
+      {q:"「Evaporation」の定義として正しいものは？",
+       opts:["太陽放射によって駆動される、液体の水から水蒸気（気体）への変化","水蒸気から液体の水への変化","固体の氷から液体の水への変化","植物の気孔からの水蒸気の放出"],
+       a:0, ex:"p.356。"},
+      {q:"「Condensation」の定義として正しいものは？",
+       opts:["水蒸気（気体）から液体の水への変化で、水文循環の主要な流れの一つ","液体の水から気体への変化","固体から気体への直接的な変化","地下水の浸透過程"],
+       a:0, ex:"p.356-357。"},
+      {q:"「Transpiration」の定義として正しいものは？",
+       opts:["植物が気孔から水蒸気を失う過程","土壌中の水分が地下へ浸透する過程","河川水が海へ流れ込む過程","氷が直接水蒸気に変化する過程"],
+       a:0, ex:"p.356。"},
+      {q:"「Evapotranspiration」の定義として正しいものは？",
+       opts:["蒸発と蒸散を組み合わせたもので、どちらも地表から大気へ水を移動させるためしばしば合わせて測定される","蒸発のみを指す用語","蒸散のみを指す用語","地下水の流出のみを指す"],
+       a:0, ex:"p.355-356。"},
+      {q:"「Percolation」の定義として正しいものは？",
+       opts:["重力によって水が土壌や透水性の岩石を通ってゆっくりと下方へ移動し、地下水を涵養しうる過程","水が地表を流れる過程","水が蒸発する過程","水が凍結する過程"],
+       a:0, ex:"p.355, p.358。"},
+      {q:"「Groundwater」の定義として正しいものは？",
+       opts:["土壌や岩石（帯水層）の隙間に地下に貯蔵された水で、地表からの浸透によって補充される","地表を流れる河川水","大気中の水蒸気","海洋の表層水"],
+       a:0, ex:"p.354, p.356。"},
+      {q:"「Surface runoff」の定義として正しいものは？",
+       opts:["土壌が飽和しているか降水が浸透しきれないほど強い場合に生じる、地表を（水路を通らずに）流れる水","地下水路を通る水の流れ","蒸発した水蒸気の流れ","河川の流量そのもの"],
+       a:0, ex:"水文循環における主要な地表流。"},
+      {q:"「Watershed」の定義として正しいものは？",
+       opts:["特定の河川・湖・水域に流れ込む土地の範囲で、水資源を保護するための管理アプローチにも使われる概念","分水嶺の反対側の地域","貯水池の別名","地下水のみを指す用語"],
+       a:0, ex:"p.346。"},
+      {q:"「Salinization」の定義として正しいものは？",
+       opts:["灌漑後に水が蒸発し塩分が残る、あるいは塩水が淡水源に侵入することなどによる、土壌や水中への塩分の蓄積","水の淡水化プロセス","水の浄化プロセス","地下水の枯渇"],
+       a:0, ex:"p.194, p.377, p.471。"},
+      {q:"「Thermohaline circulation」の定義として正しいものは？",
+       opts:["温度と塩分濃度の差によって駆動される地球規模の海洋循環システムで、「海洋のコンベアベルト」として熱を世界中に分配する","表層のみで起こる風driven循環","大気循環の一種","河川の流れのパターン"],
+       a:0, ex:"p.353, p.369。"},
+      {q:"「Fresh water」と「Salt water」の違いとして正しいものは？",
+       opts:["Fresh waterは溶存塩分濃度が低く河川・湖・地下水・氷冠に見られ、Salt waterは溶存塩分濃度が高く海洋に見られる","両者は同じ塩分濃度を持つ","Fresh waterは海洋のみに存在する","Salt waterは人間が利用可能な水のみを指す"],
+       a:0, ex:"p.354, p.365。"}
+    ],
+    relation: [
+      {q:"「Evaporation」「Condensation」「Precipitation」の水文循環における関係として正しいものは？",
+       opts:["Evaporationで水が気体化し、Condensationで凝結して雲になり、最終的にPrecipitation（降水）として地表に戻るという連続した流れを構成する","3つは無関係な独立した過程である","Condensationの後にEvaporationが必ず起こる","Precipitationは常にEvaporationより先に起こる"],
+       a:0, ex:"p.356-357。"},
+      {q:"「Evapotranspiration」と「Evaporation」「Transpiration」の関係として正しいものは？",
+       opts:["EvapotranspirationはEvaporation（地表からの蒸発）とTranspiration（植物からの蒸散）を合わせた総称である","Evapotranspirationは蒸発のみを指す","Evapotranspirationは蒸散のみを指す","3つは無関係である"],
+       a:0, ex:"p.355-356。"},
+      {q:"「Percolation」と「Groundwater」の関係として正しいものは？",
+       opts:["水がPercolation（浸透）を通じて土壌・岩石を下方へ移動することで、Groundwater（地下水）が涵養される","Groundwaterが先に存在し、その後Percolationが起こる","両者は無関係である","Percolationは地下水を枯渇させるだけの過程である"],
+       a:0, ex:"p.354-358。"},
+      {q:"「Watershed」と「Surface runoff」の関係として正しいものは？",
+       opts:["特定のWatershed（流域）内で生じたSurface runoffは、最終的にその流域に対応する河川・湖などに集まる","両者は無関係である","Surface runoffは常にWatershedの外に流れる","Watershedは地下水にのみ関係する概念である"],
+       a:0, ex:"p.346。"},
+      {q:"「Thermohaline circulation」と深層海流の関係として正しいものは？",
+       opts:["Thermohaline circulationは温度と塩分の差によって駆動される深層海流の主要な駆動メカニズムである","両者は無関係である","Thermohaline circulationは表層海流のみを指す","深層海流は常に一定で変化しない"],
+       a:0, ex:"p.369。"},
+      {q:"「Salinization」と灌漑農業の関係として正しいものは？",
+       opts:["灌漑によって土壌に供給された水が蒸発すると、水に含まれていた塩分が土壌に残留し、Salinizationが進行することがある","灌漑は常にSalinizationを防止する","両者は無関係である","Salinizationは灌漑のない地域でのみ起こる"],
+       a:0, ex:"p.194, p.377。"}
+    ],
+    case: [
+      {q:"沿岸の帯水層に海水が浸入し、地下水の塩分濃度が上昇して農業用水として使えなくなった。この現象は？",
+       opts:["Percolation","Salinization","Evapotranspiration","Thermohaline circulation"],
+       a:1, ex:"p.377, p.471。"},
+      {q:"ある乾燥地域で、長年にわたる灌漑農業の結果、土壌表面に白い塩の結晶が現れ、作物の生育が悪化した。この現象は？",
+       opts:["Salinization（灌漑水の蒸発による塩分残留）","Percolationの促進","Thermohaline circulationの変化","Watershedの拡大"],
+       a:0, ex:"p.194, p.377。"},
+      {q:"ある地域で地下水の汲み上げ量が、降水による涵養量（Percolationによる補充）を大きく上回っている。この状況が続くとどうなると考えられるか？",
+       opts:["地下水位が持続的に低下し、資源が枯渇するリスクが高まる","地下水は常に無限に補充される","問題は生じない","地表水量が増加する"],
+       a:0, ex:"p.354。帯水層の補充には長い時間がかかる。"},
+      {q:"大西洋を流れる暖流（メキシコ湾流）が、ヨーロッパの気候を温暖に保つ役割を果たしている。この海流の駆動メカニズムに関連する概念は？",
+       opts:["Thermohaline circulation（温度・塩分差による深層循環）と表層の風driven循環の組み合わせ","Percolationのみ","Salinizationの結果","蒸発のみによる駆動"],
+       a:0, ex:"p.353, p.369。"},
+      {q:"熱帯雨林において、植物の葉から大量の水蒸気が放出され、地域の湿度と降雨パターンに大きく影響を与えている。この過程は？",
+       opts:["Transpiration（蒸散）","Percolation","Salinization","Thermohaline circulation"],
+       a:0, ex:"p.356。"},
+      {q:"ある都市が特定の河川流域内に位置しており、その流域内の降水・土地利用がすべてその河川の水質・水量に影響を与える。この流域という概念は？",
+       opts:["Watershed","Aquifer","Thermohaline circulation","Salinization zone"],
+       a:0, ex:"p.346。"}
+    ]
+  },
+  "4.2": {
+    label: "4.2 水の安全保障",
+    vocab: [
+      {q:"「Water security」の定義として正しいものは？",
+       opts:["持続可能に生活するために十分な量の清潔な水にアクセスできること","水関連の軍事施設の警備","水道料金の支払い能力","洪水を完全に防ぐインフラ"],
+       a:0, ex:"p.372, p.375。"},
+      {q:"「Safe drinking water」の定義として正しいものは？",
+       opts:["有害な細菌・有毒物質・化学物質を含まない水","すべての天然水源からの水","塩分を含む水","灌漑用に処理された水のみ"],
+       a:0, ex:"p.372-400。"},
+      {q:"「Sanitation」の定義として正しいものは？",
+       opts:["建物から汚水や他の廃棄物を運び去り人々の健康を守るためのシステムで、これへの不公平なアクセスは世界的な人道的課題となっている","飲料水を供給するシステムのみ","水力発電施設","灌漑用水路"],
+       a:0, ex:"p.372-399。"},
+      {q:"「Sustainable water management」の定義として正しいものは？",
+       opts:["将来の水需要を満たす能力を損なうことなく、現在の水需要を満たすプロセス","水を無制限に利用すること","政府による水の完全な独占管理","水力発電のみを推進すること"],
+       a:0, ex:"持続可能性の概念を水資源管理に応用したもの。"},
+      {q:"「Water treatment」の定義として正しいものは？",
+       opts:["通常政府の責任で行われる、有害な汚染物質を除去し味・匂い・見た目を改善するプロセスで、予備・二次・三次処理の段階を含む","水を凍結させるプロセス","水を海に排出するプロセス","塩分を人為的に追加するプロセス"],
+       a:0, ex:"p.398。"},
+      {q:"「Aquaponics」の定義として正しいものは？",
+       opts:["魚を循環式養殖タンクで育て、その栄養豊富な水で土を使わずに野菜を栽培し、植物が水を浄化して魚に戻す、魚と野菜を組み合わせた農法","海水を淡水化する技術","灌漑専用の水路システム","地下水のみを利用する農法"],
+       a:0, ex:"p.386。"},
+      {q:"「Drought-resistant crops」の定義として正しいものは？",
+       opts:["従来の交配や遺伝子組み換えによって、必要な収量を保ちながらより少ない水で済むよう改良された作物（例：豆類、ブロッコリー、トウモロコシ、キュウリ）","完全に水を必要としない作物","塩水でのみ育つ作物","常に人工照明下でのみ育つ作物"],
+       a:0, ex:"p.385。"},
+      {q:"「Desalination plants」の定義として正しいものは？",
+       opts:["海水から塩分を除去して飲料水を作る施設（例：カタールの淡水化施設は同国の水需要の99%を供給）","淡水に塩分を加える施設","地下水を汲み上げるだけの施設","廃水を河川に放流する施設"],
+       a:0, ex:"p.395。"},
+      {q:"「Water transfer systems」の定義として正しいものは？",
+       opts:["パイプラインや運河、ダムや貯水池などの大規模インフラを通じて、水源（提供側）流域から水ストレスを受けている（受け取り側）流域へ水を物理的に移送する仕組み","家庭内の給水管のみを指す","海水淡水化のみを指す","農業用灌漑水路のみを指す"],
+       a:0, ex:"p.396-397。"},
+      {q:"国連の分類によると、水インフラ（Water infrastructure）の特徴として正しいものは？",
+       opts:["一般に資本集約的で耐用年数が長く、初期投資（サンクコスト）が大きく、投資回収期間も長い","常に低コストで即座に建設可能","政府の関与を必要としない","民間企業のみが運営する"],
+       a:0, ex:"p.379。"}
+    ],
+    relation: [
+      {q:"「Water security」と「Sanitation」の関係として正しいものは？",
+       opts:["十分な量の清潔な水へのアクセス（Water security）と、汚水を適切に処理するシステム（Sanitation）は、ともに人々の健康と福祉を支える相互に関連した要素である","両者は無関係である","Sanitationのみが水の安全保障を決定する","Water securityはSanitationの対義語である"],
+       a:0, ex:"p.372-400。"},
+      {q:"「Desalination plants」と「Water security」の関係として正しいものは？",
+       opts:["淡水資源が乏しい地域では、淡水化施設がWater securityを高める手段の一つとなりうる","淡水化施設は常にWater securityを低下させる","両者は無関係である","淡水化施設は飲料水の生産には使われない"],
+       a:0, ex:"p.395。"},
+      {q:"「Aquaponics」と「Sustainable water management」の関係として正しいものは？",
+       opts:["Aquaponicsは水を循環利用し、魚の排泄物由来の栄養分を植物が浄化に利用する仕組みであり、水資源の効率的な利用というSustainable water managementの目標に合致する","Aquaponicsは水を大量に浪費する非効率な農法である","両者は無関係である","Aquaponicsは常に海水でのみ行われる"],
+       a:0, ex:"p.386。"},
+      {q:"「Drought-resistant crops」と「Water security」の関係として正しいものは？",
+       opts:["より少ない水で栽培可能な作物を導入することで、限られた水資源の中でも食料生産を維持しやすくなり、間接的にWater securityの向上に寄与しうる","両者は無関係である","Drought-resistant cropsは常に収量を犠牲にする","この作物は水を必要としない"],
+       a:0, ex:"p.385。"},
+      {q:"「Water transfer systems」と地域間の水資源格差の関係として正しいものは？",
+       opts:["水が豊富な流域から水ストレスを受ける流域へ水を移送することで、地域間の水資源の不均衡を緩和する試みである","常に水資源格差を拡大させる","両者は無関係である","Water transfer systemsは地下水のみを対象とする"],
+       a:0, ex:"p.396-397。"},
+      {q:"「Water treatment」と「Safe drinking water」の関係として正しいものは？",
+       opts:["Water treatmentのプロセス（予備・二次・三次処理）を経ることで、原水はSafe drinking waterの基準を満たすようになる","両者は無関係である","Water treatmentは味・匂いの改善のみを目的とし安全性には関係しない","Safe drinking waterは処理を経ていない天然水のみを指す"],
+       a:0, ex:"p.398。"}
+    ],
+    case: [
+      {q:"カタールが淡水資源に乏しいにもかかわらず、国内水需要のほぼ全量を賄えている理由として最も適切なものは？",
+       opts:["大規模なDesalination plants（淡水化施設）への投資","豊富な河川資源の存在","大規模なThermohaline circulationの利用","完全な水の輸入のみに依存"],
+       a:0, ex:"p.395。"},
+      {q:"ある乾燥地域の農家が、従来のトウモロコシから、より少ない水で同等の収量が得られる改良品種に切り替えた。この取り組みは？",
+       opts:["Drought-resistant cropsの導入","Salinizationの促進","Water transfer systemsの構築","Desalination plantsの建設"],
+       a:0, ex:"p.385。"},
+      {q:"ある都市で、魚の養殖タンクの排水を野菜栽培に再利用し、植物がその水を浄化して再び魚のタンクに戻す循環型農業システムを導入した。これは何の実践例か？",
+       opts:["Aquaponics","Salinization","Thermohaline circulation","Desalination"],
+       a:0, ex:"p.386。"},
+      {q:"ある地域では下水処理システムが整っておらず、汚水が生活用水源に混入し、感染症の発生率が高い。この状況が示す欠如は？",
+       opts:["Sanitationの欠如","Desalinationの欠如","Thermohaline circulationの欠如","Aquaponicsの欠如"],
+       a:0, ex:"p.372-399。"},
+      {q:"水資源が豊富な北部の流域から、水不足に悩む南部の都市へ、大規模なパイプラインと貯水池を建設して水を送る国家プロジェクトが実施された。これは？",
+       opts:["Water transfer system","Aquaponics system","Desalination plant","Sanitation system"],
+       a:0, ex:"p.396-397。"},
+      {q:"ある国が、水道インフラ整備に多額の初期投資を行い、その投資の回収に数十年を要する見込みであるという課題に直面している。この特徴はどの概念に合致するか？",
+       opts:["国連が指摘するWater infrastructureの資本集約性・長い投資回収期間という特徴","Aquaponicsの特徴","Drought-resistant cropsの特徴","Sanitationの即時的な特徴"],
+       a:0, ex:"p.379。"}
+    ]
+  },
+  "4.3": {
+    label: "4.3 漁業と水産養殖",
+    vocab: [
+      {q:"「Wild Fish」の定義として正しいものは？",
+       opts:["自然環境から捕獲された魚（漁業）で、養殖された魚とは区別される","養殖施設で育てられた魚","絶滅危惧種の魚のみを指す","淡水魚のみを指す"],
+       a:0, ex:"p.407。"},
+      {q:"「Fish Stock」の定義として正しいものは？",
+       opts:["定義された海域内のある魚種の個体群で、管理目的の資源単位として扱われ、世界の海洋漁業資源の約90%が完全利用または乱獲状態にある","養殖場の在庫魚のみを指す","絶滅した魚種のリスト","漁業に関する政府統計のみ"],
+       a:0, ex:"p.409。"},
+      {q:"「Maximum Sustainable Yield（最大持続可能漁獲量）」の定義として正しいものは？",
+       opts:["個体群が自己再生し成長し続けられる範囲内で、毎年ある漁業資源から取ることができる最大の漁獲量。実際にはMSYでの漁獲は個体群減少や漁業の持続不可能化につながることが多い","常に安全に持続可能な漁獲量","養殖業のみに適用される概念","漁獲禁止水準を指す"],
+       a:0, ex:"p.416-417。"},
+      {q:"「Total Allowable Catches（TAC）」の定義として正しいものは？",
+       opts:["ある期間内にある漁業資源から捕獲してよい最大量を設定する、乱獲を防ぐための漁業管理手法","養殖魚の総生産量","漁業従事者の総数","海洋保護区の総面積"],
+       a:0, ex:"乱獲防止のための漁業管理ツール。"},
+      {q:"「Trawling」の定義として正しいものは？",
+       opts:["大きな網を水中または海底に沿って引きずって魚を捕獲する漁法で、しばしば無差別的で生息地破壊や高い混獲を引き起こす","釣り糸を使う漁法","養殖池での漁法","素手での採取漁法"],
+       a:0, ex:"p.410, p.415。"},
+      {q:"「Gillnets」の定義として正しいものは？",
+       opts:["水中に垂らして魚がエラを網目に引っ掛けて捕らえられる漁網で、対象外の種の高い混獲と関連する","底引き網の別名","養殖用の生け簀","爆発物を使う漁法"],
+       a:0, ex:"混獲（Bycatch）のリスクが高い漁法。"},
+      {q:"「Ocean Acidification」の定義として正しいものは？",
+       opts:["大気中の二酸化炭素増加の吸収によって引き起こされる海洋pHの低下（産業革命前平均8.2から現在約8.1へ）で、プランクトンや殻を持つ生物が殻や骨格を作りにくくなる","海水の塩分濃度が上昇する現象","海水温が低下する現象","海洋のアルカリ化現象"],
+       a:0, ex:"p.364, p.419。"},
+      {q:"「Coral Reef」の定義として正しいものは？",
+       opts:["サンゴの群体によって作られる生物多様性の高い海洋生態系で、多くの種にとって重要な生息地・育成場所となるが、海洋酸性化やサンゴの白化に対して脆弱である","人工的に作られた漁礁のみを指す","深海のみに存在する生態系","淡水生態系の一種"],
+       a:0, ex:"p.404, p.413, p.419。"},
+      {q:"「Estuaries（河口）」の定義として正しいものは？",
+       opts:["河川からの淡水が海水と混ざり合う半閉鎖的な沿岸水域で、非常に生産性が高く生物多様性に富む海洋生態系","完全に淡水のみの生態系","深海の生態系","人工的な貯水池"],
+       a:0, ex:"p.404。"},
+      {q:"「Continental Shelf」の定義として正しいものは？",
+       opts:["大陸が海底へと延長された部分で、光合成に十分な光が届く浅い水と栄養豊富な湧昇があり、海域の15%の面積で海洋生産性の50%を占める最も豊かな漁場を持つ","深海底の平坦な部分","サンゴ礁の別名","河口域の別名"],
+       a:0, ex:"p.431。"},
+      {q:"「Raceway」と「Hatchery」の違いとして正しいものは？",
+       opts:["Racewayは水が絶えず流れる細長い養殖水路で高密度養殖に使われ、Hatcheryは魚や貝の卵を孵化させ稚魚を管理された条件下で育てる施設である","両者は同じ施設を指す","Racewayは孵化専用施設である","Hatcheryは天然の生息地のみを指す"],
+       a:0, ex:"養殖業における異なる役割の施設。"},
+      {q:"「UNFAO」の役割として正しいものは？",
+       opts:["国連食糧農業機関で、世界の漁業・養殖業の生産を監視・報告し、Common Oceansプログラムなどの取り組みを主導している","漁業取引を規制する条約機関","海洋酸性化を測定する唯一の機関","淡水化技術の開発機関"],
+       a:0, ex:"p.407, p.421。"},
+      {q:"「Biorights」の定義として正しいものは？",
+       opts:["各種が人間にとっての有用性とは無関係に、存在する権利を持つという概念","漁業権を売買する経済的権利","水産養殖業者の知的財産権","政府による漁獲割当の権利"],
+       a:0, ex:"p.322。"}
+    ],
+    relation: [
+      {q:"「Maximum Sustainable Yield」と乱獲との関係として正しいものは？",
+       opts:["実際にはMSYで漁獲を続けることが、個体群減少や漁業自体の持続不可能化につながることが多く、Fish Stockの乱獲の一因となっている","MSYで漁獲すれば常にFish Stockは無限に増加する","両者は無関係である","MSYは乱獲を完全に防ぐ保証された基準である"],
+       a:0, ex:"p.416-417。"},
+      {q:"「Total Allowable Catches」と「Tragedy of the Commons」の関係として正しいものは？",
+       opts:["TACは、共有資源が個々人によって過剰利用される「共有地の悲劇」を防ぐための管理手段として導入される","TACは共有地の悲劇を助長する制度である","両者は無関係である","TACは養殖業にのみ適用される"],
+       a:0, ex:"p.309。"},
+      {q:"「Trawling」「Gillnets」と混獲（Bycatch）の関係として正しいものは？",
+       opts:["両漁法とも対象外の種を意図せず捕獲する混獲のリスクが高いことで知られている","両漁法とも混獲を完全に排除できる選択的な漁法である","混獲は養殖業でのみ発生する問題である","両者は混獲と無関係である"],
+       a:0, ex:"p.410, p.415。"},
+      {q:"「Ocean Acidification」と「Coral Reef」の関係として正しいものは？",
+       opts:["海洋酸性化はサンゴが炭酸カルシウムの骨格を形成する能力を低下させ、サンゴ礁生態系を脅かす要因の一つとなる","両者は無関係である","海洋酸性化はサンゴ礁の成長を促進する","サンゴ礁は酸性化の影響を受けない唯一の生態系である"],
+       a:0, ex:"p.364, p.419。"},
+      {q:"「Continental Shelf」と海洋生産性の関係として正しいものは？",
+       opts:["大陸棚は浅い水深と栄養豊富な湧昇により、海域面積のわずか15%で世界の海洋生産性の50%を占めるほど高い生産性を持つ","大陸棚は海洋生産性が最も低い海域である","両者は無関係である","大陸棚の生産性は深海と同程度である"],
+       a:0, ex:"p.431。"},
+      {q:"「Raceway」「Hatchery」などの養殖インフラと「Wild Fish」の漁獲との関係として正しいものは？",
+       opts:["養殖（Aquaculture）インフラは天然の漁獲（Wild Fish）に対する代替的な水産物供給源として機能しうる","養殖は天然漁獲と全く同じものを指す","養殖インフラはWild Fishの捕獲量を増やすためだけに使われる","両者は無関係である"],
+       a:0, ex:"p.407。"}
+    ],
+    case: [
+      {q:"ある海域で、政府が毎年の漁獲量に上限を設定し、それを超える漁獲を禁止する制度を導入した。この管理手法は？",
+       opts:["Total Allowable Catches","Maximum Sustainable Yield単独の放置","Trawlingの推進","Ocean Acidificationの緩和策"],
+       a:0, ex:"乱獲防止のための漁獲量上限設定。"},
+      {q:"ある漁船団が大きな網を海底に沿って引きずり、対象の魚だけでなく多くの非対象種やサンゴも一緒に破壊しながら漁獲を行っている。この漁法は？",
+       opts:["Gillnets","Trawling（特にBottom trawling）","Aquaponics","Hatchery方式"],
+       a:1, ex:"p.410, p.415。"},
+      {q:"大気中のCO2増加によって海水のpHが徐々に低下し、貝類やサンゴが殻・骨格を形成しにくくなっている現象は？",
+       opts:["Salinization","Ocean Acidification","Eutrophication","Thermohaline circulationの変化"],
+       a:1, ex:"p.364, p.419。"},
+      {q:"河川の淡水と海水が混ざり合う沿岸域で、多くの稚魚の育成場として機能し、非常に高い生物生産性を示す生態系は？",
+       opts:["Continental Shelf","Estuaries（河口）","Coral Reef","Intertidal Zones"],
+       a:1, ex:"p.404。"},
+      {q:"ある水産養殖施設で、水が絶えず流れる細長い水路に高密度で魚を飼育し、良好な水循環を維持している。この施設の形式は？",
+       opts:["Raceway","Hatcheryのみ","Estuary","Continental Shelf"],
+       a:0, ex:"連続した水流を利用する養殖水路。"},
+      {q:"ある国際機関が世界の漁業・養殖生産データを収集・報告し、持続可能な海洋利用のためのプログラムを主導している。この機関は？",
+       opts:["UNFAO（国連食糧農業機関）","CITES","CBD","IUCN"],
+       a:0, ex:"p.407, p.421。"}
+    ]
+  },
+  "5.1": {
+    label: "5.1 土壌システム",
+    vocab: [
+      {q:"「Soil」の定義として正しいものは？",
+       opts:["より大きな生態系の中にある動的なシステムで、独自の入力・出力・貯蔵・流れを持ち、無機的・有機的成分、水、空気から構成され、典型的には固体と間隙が50:50の割合を占める","岩石のみで構成される物質","水のみを含む層","大気の一部"],
+       a:0, ex:"p.463-464。"},
+      {q:"「Parent material」の定義として正しいものは？",
+       opts:["風化を通じて土壌の鉱物成分の源となる下層の岩石（母岩）や他の媒体で、土壌の鉱物や植物の栄養素の大部分の供給源となる","土壌の有機物成分のみを指す","土壌中の生物のみを指す","表土の別名"],
+       a:0, ex:"p.463, p.471, p.476。石灰質の母材はアルカリ性土壌を、火山性母材は肥沃なアンディソルを生む。"},
+      {q:"「Weathering」の定義として正しいものは？",
+       opts:["母岩が物理的（凍結・融解など）または化学的（溶解・酸化など）に分解され、土壌の無機成分を形成する過程","有機物が分解される過程","水が土壌に浸透する過程","土壌中の栄養分が流亡する過程"],
+       a:0, ex:"p.464, p.476。"},
+      {q:"「Bedrock」の定義として正しいものは？",
+       opts:["土壌断面の下に横たわる硬く固い岩盤で、R層として表され、その上の土壌の母材となる","表土（トップソイル）の別名","腐植質の層","地下水面のこと"],
+       a:0, ex:"p.467, p.471。"},
+      {q:"「Soil profile」の定義として正しいものは？",
+       opts:["トレンチを掘った際に見られる土壌の断面で、上部により多くの有機物、下部に向かって無機的な岩石が見られる、明確な層（O・A・B・C・R層）を示し、土壌形成過程の記録となる","土壌の化学組成表","農地の面積図","気候区分図"],
+       a:0, ex:"p.467, p.471。"},
+      {q:"「Soil horizon」の定義として正しいものは？",
+       opts:["土壌断面内の明確な水平層（O・A・B・C・R）で、それぞれ特徴的な組成を持つ（例：O層は有機物のリター、A層は腐植質に富む表土、B層は堆積した粘土・鉱物が集積、C層は風化した岩石）","土壌の水平方向の広がりを示す地図","農業に適した土地の範囲","土壌のpH値"],
+       a:0, ex:"p.463, p.467, p.471。"},
+      {q:"「Sand」の定義として正しいものは？",
+       opts:["直径0.05〜2.00mmの最大の鉱物土壌粒子で、排水性・通気性に優れるが保水力・鉱物含有量は低い","直径0.002mm未満の最小の粒子","有機物のみで構成される粒子","常に肥沃度が最も高い粒子"],
+       a:0, ex:"p.468, p.470。"},
+      {q:"「Clay」の定義として正しいものは？",
+       opts:["直径0.002mm未満の最小の鉱物土壌粒子で、水や養分をよく保持し粘着性があるが、透水性が低く鉱物含有量が高いにもかかわらず肥沃度が低くなることがある","最大の鉱物粒子","有機物の別名","常に排水性に優れる粒子"],
+       a:0, ex:"p.468, p.479。"},
+      {q:"「Silt」の定義として正しいものは？",
+       opts:["砂と粘土の中間の大きさ（0.002〜0.05mm）の鉱物土壌粒子で、濡れたタルカムパウダーのような滑らかな感触を持ち、砂質土よりもまとまりやすい","最大の粒子","最小の粒子","有機物のみを指す"],
+       a:0, ex:"p.468-469。"},
+      {q:"「Loam」の定義として正しいものは？",
+       opts:["砂・シルト・粘土がほぼ均等な割合で含まれる土壌で、排水・通気性（砂）、保水・保肥力（粘土）、粒子の結合（シルト）のバランスが良く、農業に理想的とされる","砂のみで構成される土壌","粘土のみで構成される土壌","有機物を含まない土壌"],
+       a:0, ex:"p.469。"},
+      {q:"「Soil texture」の定義として正しいものは？",
+       opts:["砂・シルト・粘土（および腐植質）の相対的な割合によって決まる鉱物土壌の構成で、土壌の肥沃度と一次生産性を決定する重要な特性","土壌の色のみを指す","土壌のpH値のみを指す","土壌の温度のみを指す"],
+       a:0, ex:"p.463, p.469。"},
+      {q:"「Porosity」の定義として正しいものは？",
+       opts:["土壌粒子間の間隙の量で、非常に細かい粘土質の土壌は微小な間隙（マイクロポア）が多く総間隙量は大きいが、水分子が粘土表面に強く保持されるため透水性は低い","土壌の色の濃淡","土壌に含まれる生物の量","土壌の温度変化"],
+       a:0, ex:"p.478。"},
+      {q:"「Permeability」の定義として正しいものは？",
+       opts:["気体や液体が土壌を通過できる容易さで、土壌の質感の特徴であり、間隙率（総間隙量）は大きくても、きめの細かい粘土質の土壌では低くなる","土壌の間隙の総量そのもの","土壌の色","土壌の栄養分含有量"],
+       a:0, ex:"p.476, p.478。"},
+      {q:"「Infiltration」の定義として正しいものは？",
+       opts:["地表から土壌への水の下方への移動","土壌から地表への水の移動","大気中の水蒸気の凝結","河川水が海へ流れる過程"],
+       a:0, ex:"p.463, p.478。"},
+      {q:"「Leaching」の定義として正しいものは？",
+       opts:["水が土壌を浸透する際に溶解した鉱物や有機物が下方へ移動する現象で、降水が蒸発を上回る（P>E）寒冷湿潤な気候で特に顕著であり、急速なLeachingは表土から養分を失わせる","土壌に養分が蓄積する現象","土壌が乾燥する現象","岩石が風化する過程"],
+       a:0, ex:"p.465, p.471。"},
+      {q:"「Decomposition（土壌における）」の定義として正しいものは？",
+       opts:["分解者による死んだ有機物の分解で、鉱物栄養素を土壌に還元する過程。その速度は温度と水分に依存し、寒冷な条件や嫌気性（水浸し）の条件では遅くなる","岩石が風化する過程","水が土壌に浸透する過程","土壌粒子が結合する過程"],
+       a:0, ex:"p.465。"},
+      {q:"「Biota（土壌における）」の定義として正しいものは？",
+       opts:["土壌中に存在する生物（ミミズや微生物など）で、その量は土壌タイプによって異なり、砂質・粘土質よりもロームで多い傾向がある","土壌の無機成分のみを指す","岩盤の別名","土壌の透水性を示す指標"],
+       a:0, ex:"p.470。"}
+    ],
+    relation: [
+      {q:"「Weathering」と「Parent material」の関係として正しいものは？",
+       opts:["Parent material（母岩）がWeathering（風化）を受けることで、土壌の無機的な鉱物成分が形成される","Weatheringが先に起こり、その後Parent materialが形成される","両者は無関係である","Weatheringは有機物のみに作用する"],
+       a:0, ex:"p.463-464, p.476。"},
+      {q:"「Sand」「Silt」「Clay」と「Loam」の関係として正しいものは？",
+       opts:["Loamはこの3種類の粒子がほぼ均等な割合で混ざった土壌であり、それぞれの利点（排水性・結合力・保水力）を併せ持つため農業に適している","Loamは砂のみで構成される","Loamは粘土のみで構成される土壌の別名である","4つは無関係な独立した概念である"],
+       a:0, ex:"p.468-469。"},
+      {q:"「Porosity」と「Permeability」の関係として正しいものは？",
+       opts:["粘土質の土壌はPorosity（総間隙量）が大きくても、水分子が粒子表面に強く保持されるためPermeability（透水性）は低くなることがある、両者は必ずしも比例しない関係にある","Porosityが高ければ常にPermeabilityも高い","両者は同じ意味である","Permeabilityは常にPorosityより大きい"],
+       a:0, ex:"p.478。"},
+      {q:"「Leaching」と気候（降水量と蒸発量の関係）の関係として正しいものは？",
+       opts:["降水が蒸発を上回る（P>E）寒冷湿潤な気候ではLeachingが顕著になり、表土から養分が失われやすい","乾燥した気候ほどLeachingが顕著になる","両者は無関係である","Leachingは気温にのみ依存し降水量とは無関係である"],
+       a:0, ex:"p.465, p.471。"},
+      {q:"「Decomposition」と「Soil horizon（特にA層）」の関係として正しいものは？",
+       opts:["分解者によるDecompositionが進むことで有機物が腐植質となり、腐植質に富むA層（表土）が形成される","DecompositionはB層でのみ起こる","両者は無関係である","Decompositionは常にC層で起こる"],
+       a:0, ex:"p.465, p.467, p.471。"},
+      {q:"「Soil texture」と土壌の肥沃度の関係として正しいものは？",
+       opts:["砂・シルト・粘土の割合（Soil texture）は、保水力・通気性・養分保持力に影響し、結果として土壌の肥沃度を左右する","Soil textureは肥沃度と無関係である","砂の割合が高いほど常に肥沃度が高い","粘土の割合が高いほど常に肥沃度が高い"],
+       a:0, ex:"p.463, p.469。"},
+      {q:"「Bedrock」と「Soil profile」の関係として正しいものは？",
+       opts:["Bedrock（岩盤）はSoil profileの最下層（R層）を構成し、土壌全体の母材となる","BedrockはSoil profileの最上層を構成する","両者は無関係である","BedrockはSoil profileには含まれない"],
+       a:0, ex:"p.467, p.471。"},
+      {q:"「Infiltration」と「Leaching」の関係として正しいものは？",
+       opts:["水がまずInfiltration（浸透）によって土壌に入り、その後さらに下方へ移動する過程でLeaching（溶脱）が起こりうる","Leachingが先に起こり、その後Infiltrationが起こる","両者は同じ過程を指す","両者は無関係である"],
+       a:0, ex:"p.463, p.465, p.478。"}
+    ],
+    case: [
+      {q:"寒冷で降水量の多い地域の土壌を調べたところ、表土の養分濃度が低く、下層に鉱物が集積していた。この現象を説明する概念は？",
+       opts:["Leaching（溶脱）による養分の下方移動","Weatheringの欠如","Decompositionの促進のみ","Porosityの低下"],
+       a:0, ex:"p.465, p.471。"},
+      {q:"ある農家が、排水性・保水力・肥沃度のバランスが良い土壌を求めて、砂・シルト・粘土がほぼ均等に混ざった土を選んだ。この土壌タイプは？",
+       opts:["Sand単独","Clay単独","Loam","Bedrock"],
+       a:2, ex:"p.469。"},
+      {q:"ある土壌サンプルは、非常に細かい粒子で構成され、水を大量に保持できる間隙が多いにもかかわらず、実際には水はけが非常に悪く、根腐れが起きやすかった。この矛盾を説明する概念の組み合わせは？",
+       opts:["高いPorosity（総間隙量）と低いPermeability（透水性）が両立する粘土質土壌の特徴","低いPorosityと高いPermeabilityの組み合わせ","両者は矛盾しておりありえない","Sand質土壌に特有の現象"],
+       a:0, ex:"p.478。"},
+      {q:"火山活動によって形成された玄武岩が長期間風化を受け、その上に肥沃な土壌（アンディソル）が形成された。この土壌形成の出発点となった岩石は？",
+       opts:["Parent material（母材）としてのBedrock","Humusのみ","Biotaのみ","Loamそのもの"],
+       a:0, ex:"火山性母材は肥沃なアンディソルを生む例（p.463, p.471, p.476）。"},
+      {q:"ある森林土壌の断面を掘ったところ、最上部に落ち葉のリター（O層）、その下に腐植質に富む黒い層（A層）、さらに下に粘土や鉱物が集積した層（B層）、そして風化した岩石（C層）が確認された。この断面全体を何と呼ぶか？",
+       opts:["Soil profile（Soil horizonの連続）","Parent materialのみ","Weatheringの記録のみ","Porosityの測定結果"],
+       a:0, ex:"p.463, p.467, p.471。"},
+      {q:"熱帯多雨地域の土壌で、降水量が非常に多いため養分が急速に下層・地下水へ流されてしまい、表土の肥沃度が低くなっている。この現象は？",
+       opts:["急速なLeachingによる養分損失","Porosityの完全な欠如","Weatheringの停止","Decompositionの完全な停止"],
+       a:0, ex:"p.465, p.471。"},
+      {q:"ある土壌の間隙に多くのミミズや微生物が生息し、有機物の分解と栄養循環を活発に行っている。このような生物的構成要素は何と呼ばれるか？",
+       opts:["Biota","Bedrock","Parent material","Permeability"],
+       a:0, ex:"p.470。"},
+      {q:"乾燥した砂漠地帯の土壌を調べたところ、粒子が粗く排水性は良いが、水や養分をほとんど保持できず、植物の生育に適さなかった。この土壌の特徴を説明する概念は？",
+       opts:["Sand質土壌の低い水分保持力（Water holding capacity）と低い鉱物含有量","Clay質土壌の特徴","Loamの特徴","高いLeachingのみが原因"],
+       a:0, ex:"p.468, p.470。"}
+    ]
+  },
+  "5.2": {
+    label: "5.2 農業と食料",
+    vocab: [
+      {q:"「Monoculture」の定義として正しいものは？",
+       opts:["単一の作物を広い面積で栽培する農法で、効率は最大化されるが生物多様性が低下し病害への脆弱性が高まる","複数の作物を同じ場所で栽培する農法","家畜のみを育てる農法","森林を全く伐採しない農法"],
+       a:0, ex:"IB ESS 5.2シラバスの標準的定義。"},
+      {q:"「Polyculture（Diverse cropping）」の定義として正しいものは？",
+       opts:["複数の作物を組み合わせて栽培する農法で、一般的にモノカルチャーより回復力があり土壌の健康にも良いとされる","単一作物のみを栽培する農法","家畜のみを飼育する農法","完全に自動化された農法"],
+       a:0, ex:"Monocultureと対照的な農法。"},
+      {q:"「Intensive farming」の定義として正しいものは？",
+       opts:["単位面積あたりに労働力・機械・肥料・農薬などの投入を多くして収量を最大化する農法","単位面積あたりの投入を最小限にする農法","家族の食料のためだけに行う農法","完全に有機的な農法のみを指す"],
+       a:0, ex:"高投入・高収量型の農業。"},
+      {q:"「Extensive farming」の定義として正しいものは？",
+       opts:["広い土地に対し単位面積あたりの投入（労働・資本）が少なく、単位面積あたりの収量が低い農法","単位面積あたりの投入を最大化する農法","温室でのみ行われる農法","水産養殖の一種"],
+       a:0, ex:"低投入・広面積型の農業。"},
+      {q:"「Subsistence farming」の定義として正しいものは？",
+       opts:["主に農家自身の家族を養うことを目的とし、販売用の余剰がほとんどまたは全くない生産形態","輸出のみを目的とする大規模農業","政府が管理する農業形態","家畜のみを対象とする農業"],
+       a:0, ex:"自給自足型の農業。"},
+      {q:"「Arable farming」の定義として正しいものは？",
+       opts:["直接食用にする、または家畜の飼料にするために、良質な土地で作物を栽培すること","作物に適さない土地で家畜を放牧すること","水産物を養殖すること","森林を伐採して木材を生産すること"],
+       a:0, ex:"耕作農業。"},
+      {q:"「Pastoral farming」の定義として正しいものは？",
+       opts:["通常、作物栽培に適さない土地で、主に牧草を利用して家畜を育てること","良質な農地で穀物を栽培すること","温室内で野菜を栽培すること","水産養殖の一種"],
+       a:0, ex:"牧畜農業。"},
+      {q:"「Mixed farming」の定義として正しいものは？",
+       opts:["作物栽培と家畜飼育の両方を組み合わせた農業で、家畜の排泄物が肥料として、一部の作物が家畜の飼料として利用される","作物栽培のみを行う農業","家畜飼育のみを行う農業","水産養殖と林業を組み合わせた形態"],
+       a:0, ex:"複合農業。"},
+      {q:"「Organic farming」の特徴として正しいものは？",
+       opts:["合成肥料や合成農薬を使用せず、自然のプロセス（堆肥化など）に依拠する農法","合成肥料・農薬を最大限使用する農法","遺伝子組み換え作物のみを対象とする農法","水耕栽培のみを指す用語"],
+       a:0, ex:"有機農業。"},
+      {q:"「Food miles」の定義として正しいものは？",
+       opts:["食料が生産地から消費者に届くまでに輸送される距離","農地の総面積","食料の栄養価を測る指標","農業従事者の人数"],
+       a:0, ex:"フードマイレージ。ただし環境負荷は生産方法など他の要因にも左右される。"},
+      {q:"「Agroecology」の定義として正しいものは？",
+       opts:["生態学的な原理を農業システムに応用し、持続可能性と環境との調和を重視するアプローチ","農業を完全に機械化する手法","単一作物のみを推奨する考え方","農薬の使用を最大化する手法"],
+       a:0, ex:"生態農業。"},
+      {q:"「Permaculture」の定義として正しいものは？",
+       opts:["自然の生態系を模倣し、持続可能性と自給自足を重視して農業システムを設計する手法で、堆肥化や多品種栽培などの自然のプロセスに依拠する","単一作物の大規模栽培のみを指す用語","家畜飼育のみを指す用語","遺伝子組み換え技術の別名"],
+       a:0, ex:"パーマカルチャー。"},
+      {q:"「Integrated Pest Management（IPM）」の定義として正しいものは？",
+       opts:["化学農薬への依存を減らし、生物的防除・輪作・耕作技術などを組み合わせて害虫を管理する総合的なアプローチ","農薬のみに依存する害虫駆除法","全ての害虫を根絶することを目的とする手法","単一の農薬を継続使用する手法"],
+       a:0, ex:"総合的病害虫管理。"},
+      {q:"「Agroforestry」の定義として正しいものは？",
+       opts:["樹木や低木を作物や家畜と組み合わせて同じ土地で育てる土地利用システムで、土壌保全や生物多様性の向上に寄与しうる","森林を完全に伐採して農地に転換する手法","単一樹種のみを植林する手法","水産養殖と林業を混同した用語"],
+       a:0, ex:"アグロフォレストリー。"},
+      {q:"土壌保全（Soil conservation）の手法として挙げられる「Contour ploughing（等高線耕作）」「Terracing（段々畑）」「Crop rotation（輪作）」に共通する目的として正しいものは？",
+       opts:["土壌侵食を防ぎ、土壌の肥沃度と構造を維持すること","収量を短期的に最大化すること","農薬の使用量を増やすこと","単一作物の連作を促進すること"],
+       a:0, ex:"いずれも土壌保全のための代表的手法。"},
+      {q:"「Malnutrition」の定義として正しいものは？",
+       opts:["特定の栄養素が多すぎる、または不足しているなど、バランスの取れていない食事状態（「不良な栄養状態」）","十分な食料が全くない状態のみを指す","過剰な運動による健康被害","農業生産性の低下"],
+       a:0, ex:"栄養不良（過剰・不足いずれも含む）。"}
+    ],
+    relation: [
+      {q:"「Intensive farming」と「Extensive farming」の違いとして正しいものは？",
+       opts:["Intensiveは単位面積あたりの投入・収量が高く、Extensiveは単位面積あたりの投入・収量が低いが、より広い土地を必要とする傾向がある","両者は同じ意味である","Extensiveの方が常に高収量である","Intensiveは常に有機農法のみを指す"],
+       a:0, ex:"投入量と収量の対照。"},
+      {q:"「Monoculture」と生物多様性・病害リスクの関係として正しいものは？",
+       opts:["Monocultureは効率を高める一方で、生物多様性を低下させ、単一の病害・害虫に対する脆弱性を高める","Monocultureは常に生物多様性を高める","両者は無関係である","Monocultureは病害リスクを常にゼロにする"],
+       a:0, ex:"効率と脆弱性のトレードオフ。"},
+      {q:"「Polyculture」「Agroecology」「Permaculture」の共通点として正しいものは？",
+       opts:["いずれも生態学的な原理や多様性を重視し、単一作物への依存を減らすことで持続可能性とレジリエンスを高めようとするアプローチである","いずれも単一作物の大規模生産を推奨する","いずれも化学肥料の使用量を最大化する","いずれも家畜飼育のみを対象とする"],
+       a:0, ex:"多様性重視の持続可能な農法群。"},
+      {q:"「Arable farming」「Pastoral farming」「Mixed farming」の関係として正しいものは？",
+       opts:["Arableは作物栽培、Pastoralは家畜飼育に特化し、Mixedは両方を組み合わせた形態である","3つはすべて同じ農法を指す","Mixed farmingは家畜飼育のみを指す","Pastoral farmingは作物栽培のみを指す"],
+       a:0, ex:"農業形態の分類。"},
+      {q:"「Food miles」と食料の環境フットプリントの関係として正しいものは？",
+       opts:["Food milesは環境フットプリントに影響する要因の一つだが、生産方法や貯蔵方法など他の要因も総フットプリントに影響するため、food milesだけで環境負荷を判断することはできない","Food milesのみが環境フットプリントを決定する唯一の要因である","両者は無関係である","Food milesが短いほど常に環境負荷は増加する"],
+       a:0, ex:"環境負荷は複数要因の組み合わせで決まる。"},
+      {q:"「Trophic efficiency（栄養段階間のエネルギー転送効率、約10%）」と食生活の環境負荷の関係として正しいものは？",
+       opts:["栄養段階を経るごとにエネルギーの大部分が失われるため、一般的に植物性食品中心の食生活は肉食中心の食生活より環境フットプリントが低い傾向がある","栄養段階とは無関係に食生活の環境負荷は一定である","肉食中心の食生活の方が常に環境負荷が低い","栄養段階の転送効率は100%である"],
+       a:0, ex:"p.143-144の熱力学第二法則とも関連。"},
+      {q:"「Soil conservation」の諸手法（輪作・等高線耕作・被覆作物など）と「Monoculture」の関係として正しいものは？",
+       opts:["大規模なMonoculture農場では、経済的・機械的な制約からSoil conservation手法の導入が難しい場合がある","Monocultureは常にSoil conservationを自動的に実現する","両者は無関係である","Soil conservationはMonocultureでのみ可能である"],
+       a:0, ex:"実務上の制約が指摘されている。"},
+      {q:"「Integrated Pest Management」と従来の化学農薬依存型の害虫駆除の違いとして正しいものは？",
+       opts:["IPMは生物的防除・輪作など複数の手法を組み合わせて化学農薬への依存を減らすのに対し、従来型は化学農薬のみに依存する傾向がある","両者は完全に同じ手法である","IPMは化学農薬の使用を禁止する","従来型の方が環境への影響が常に少ない"],
+       a:0, ex:"総合的アプローチと単一依存の違い。"}
+    ],
+    case: [
+      {q:"ある地域で、単一品種のバナナのみを広大な農地で栽培していたところ、新種の病害が発生し、地域全体の作物が壊滅的な被害を受けた。この事例が示す農法上のリスクは？",
+       opts:["Monocultureの生物多様性低下による病害脆弱性","Polycultureのリスク","Pastoral farmingのリスク","Agroforestryのリスク"],
+       a:0, ex:"単一作物への依存が病害の連鎖的被害を招いた典型例。"},
+      {q:"ある農家が、化学肥料や農薬を使わず、堆肥や自然のプロセスに依拠して野菜を栽培している。この農法は？",
+       opts:["Organic farming","Intensive farmingの典型","Monocultureの典型","Pastoral farmingの典型"],
+       a:0, ex:"合成資材に依存しない農法＝Organic farming。"},
+      {q:"地中海地域で生産された食材が、日本の食卓まで輸送される際の総距離を示す指標は？",
+       opts:["Food miles","Carrying capacity","Trophic level","Biocapacity"],
+       a:0, ex:"生産地から消費地までの輸送距離。"},
+      {q:"ある斜面の畑で、雨水による土壌侵食を防ぐために階段状の畑（段々畑）を作った。この手法は？",
+       opts:["Terracing（Soil conservationの一手法）","Monocultureの促進","Trawling","Salinizationの促進"],
+       a:0, ex:"傾斜地での土壌保全の代表的手法。"},
+      {q:"ある地域で、害虫の天敵となる昆虫を導入し、化学農薬の使用を最小限に抑えながら輪作も組み合わせて害虫を管理している。この総合的アプローチは？",
+       opts:["Integrated Pest Management（IPM）","Monocultureの徹底","化学農薬への完全依存","Aquaponics"],
+       a:0, ex:"複数手法を組み合わせた害虫管理。"},
+      {q:"モンゴルの遊牧民が、作物栽培に適さない草原で家畜（羊や馬）を放牧しながら生計を立てている。この農業形態は？",
+       opts:["Arable farming","Pastoral farming","Aquaculture","Agroforestry"],
+       a:1, ex:"牧草地での家畜飼育＝Pastoral farming。"},
+      {q:"ある農園で、果樹の間に作物を植え、さらに家畜も同じ土地で飼育することで、土壌保全と収入源の多様化を図っている。この土地利用システムは？",
+       opts:["Agroforestryの要素を含む複合的な土地利用","Monocultureの徹底","完全な放棄地","水産養殖のみ"],
+       a:0, ex:"樹木・作物・家畜を組み合わせた複合的システム。"},
+      {q:"世界の食料生産は80億人を養うのに十分な量があるとされるが、分配の不平等や流通過程での損失・廃棄により、多くの人々が栄養不足や栄養過多といった問題を抱えている。この状態を表す用語は？",
+       opts:["Malnutrition（栄養不良）","Food securityの完全な達成","Biocapacityの余剰","Carrying capacityの上昇"],
+       a:0, ex:"世界の食料は量として足りていても分配が不平等であるという指摘に基づく。"}
+    ]
+  }
+};
+
+const TYPE_META = {
+  vocab:{label:"単語系", tag:"VOCAB"},
+  relation:{label:"関連性形", tag:"RELATION"},
+  case:{label:"ケーススタディ系", tag:"CASE"}
+};
+
+let state = { chapter:"1.1", type:"vocab", idx:0, correctCount:0, answered:false, finished:false };
+
+function renderChapterNav(){
+  const nav = document.getElementById('chapterNav');
+  nav.innerHTML = '';
+  // Reflects the actual ESS Course Companion subtopic structure covered in the project's notes
+  const shown = ["1.1","1.2","1.3","2.1","2.2","2.3","2.4","2.5","3.1","3.2","3.3","4.1","4.2","4.3","5.1","5.2"];
+  shown.forEach(ch=>{
+    const chip = document.createElement('div');
+    const available = !!QUESTION_BANK[ch];
+    chip.className = 'chip' + (ch===state.chapter?' active':'') + (!available?' disabled':'');
+    chip.textContent = ch + (available?'':' ・準備中');
+    if(available){
+      chip.onclick = () => { state.chapter = ch; resetQuiz(); render(); };
+    }
+    nav.appendChild(chip);
+  });
+}
+
+function renderTypeTabs(){
+  const wrap = document.getElementById('typeTabs');
+  wrap.innerHTML = '';
+  const bank = QUESTION_BANK[state.chapter];
+  Object.keys(TYPE_META).forEach(t=>{
+    const tab = document.createElement('div');
+    tab.className = 'type-tab' + (t===state.type?' active':'');
+    const n = bank[t] ? bank[t].length : 0;
+    tab.innerHTML = TYPE_META[t].label + '<span class="count">'+n+' 問</span>';
+    tab.onclick = () => { state.type = t; resetQuiz(); render(); };
+    wrap.appendChild(tab);
+  });
+}
+
+function resetQuiz(){
+  state.idx = 0; state.correctCount = 0; state.answered = false; state.finished = false;
+}
+
+function currentQuestions(){
+  return QUESTION_BANK[state.chapter][state.type];
+}
+
+function renderProgress(){
+  const qs = currentQuestions();
+  const total = qs.length;
+  const shown = Math.min(state.idx+1, total);
+  document.getElementById('progressLabel').textContent = state.finished ? (total+' / '+total) : (shown+' / '+total);
+  const pct = state.finished ? 100 : Math.round((state.idx/total)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+function renderQuiz(){
+  const area = document.getElementById('quizArea');
+  const qs = currentQuestions();
+
+  if(state.finished){
+    const pct = Math.round((state.correctCount/qs.length)*100);
+    area.innerHTML = `
+      <div class="card result">
+        <div class="score">${state.correctCount}<span> / ${qs.length}</span></div>
+        <p>正答率 ${pct}% — ${TYPE_META[state.type].label} / Chapter ${state.chapter}</p>
+        <button class="retry" onclick="resetQuiz();render();">もう一度解く</button>
+      </div>`;
+    renderProgress();
+    return;
+  }
+
+  const q = qs[state.idx];
+  const optsHtml = q.opts.map((opt,i)=>{
+    let cls = 'option';
+    if(state.answered){
+      cls += ' locked';
+      if(i===q.a) cls += ' correct';
+      else if(i===state.selected) cls += ' incorrect';
+    }
+    return `<button class="${cls}" onclick="selectOption(${i})"><span class="tag">${String.fromCharCode(65+i)}</span>${opt}</button>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="card">
+      <div class="q-label">${TYPE_META[state.type].tag} — Q${state.idx+1}</div>
+      <p class="q-text">${q.q}</p>
+      ${optsHtml}
+      <div class="explain ${state.answered?'show':''}"><b>解説</b>${q.ex}</div>
+      <div class="actions"><button class="next ${state.answered?'show':''}" onclick="nextQuestion()">${state.idx+1===qs.length?'結果を見る':'次の問題'}</button></div>
+    </div>`;
+  renderProgress();
+}
+
+function selectOption(i){
+  if(state.answered) return;
+  const q = currentQuestions()[state.idx];
+  state.selected = i;
+  state.answered = true;
+  if(i===q.a) state.correctCount++;
+  renderQuiz();
+}
+
+function nextQuestion(){
+  const qs = currentQuestions();
+  if(state.idx+1 >= qs.length){
+    state.finished = true;
+  } else {
+    state.idx++;
+    state.answered = false;
+    state.selected = null;
+  }
+  renderQuiz();
+}
+
+function render(){
+  renderChapterNav();
+  renderTypeTabs();
+  renderQuiz();
+}
+
+render();
+</script>
+</body>
+</html>
