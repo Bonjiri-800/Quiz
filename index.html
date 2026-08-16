@@ -6,7 +6,6 @@
 <title>IBDP 問題集 — 科目を選択</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 :root{
   --ink:#1E2A22;
   --paper:#EDE7D8;
@@ -17,7 +16,6 @@
   --tech:#B5602D;
   --line: rgba(30,42,34,0.16);
 }
-
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
 body{
@@ -30,44 +28,40 @@ body{
   -webkit-tap-highlight-color:transparent;
   overscroll-behavior-y:none;
 }
-
 .wrap{max-width:960px;margin:0 auto;padding:0 20px calc(80px + env(safe-area-inset-bottom));}
-
 /* ---------- Hero ---------- */
 header.hero{
   background:var(--deep);
   color:var(--paper-card);
-  padding:calc(56px + env(safe-area-inset-top)) 20px 40px;
-  border-bottom:6px solid var(--eco);
+  padding:calc(18px + env(safe-area-inset-top)) 20px 14px;
+  border-bottom:3px solid var(--eco);
 }
 .hero-inner{max-width:960px;margin:0 auto;}
 .eyebrow{
   font-family:'IBM Plex Mono', monospace;
-  font-size:12px;
-  letter-spacing:0.14em;
+  font-size:10.5px;
+  letter-spacing:0.12em;
   text-transform:uppercase;
   color:var(--anthro);
-  margin-bottom:10px;
+  margin-bottom:4px;
 }
 h1{
   font-family:'Fraunces', serif;
   font-weight:600;
-  font-size:clamp(30px,5.5vw,46px);
-  margin:0 0 10px;
+  font-size:clamp(20px,3vw,26px);
+  margin:0 0 3px;
   letter-spacing:-0.01em;
 }
-.hero p.sub{margin:0;color:rgba(248,244,233,0.72);font-size:15px;max-width:52ch;}
-
+.hero p.sub{margin:0;color:rgba(248,244,233,0.72);font-size:12px;max-width:52ch;line-height:1.4;}
 /* Shelf strip — signature element: a row of coloured "spines" representing each subject's binder,
    consistent height, only the enabled one sits flush; the rest sit slightly recessed (greyed, not yet on the shelf). */
 .shelf{
   display:flex;
   gap:3px;
-  margin-top:28px;
-  height:14px;
+  margin-top:10px;
+  height:8px;
 }
 .shelf-spine{flex:1;border-radius:2px 2px 0 0;opacity:0.9;}
-
 /* ---------- Subject grid ---------- */
 .section-label{
   font-family:'IBM Plex Mono', monospace;
@@ -77,13 +71,11 @@ h1{
   color:rgba(30,42,34,0.5);
   margin:40px 0 16px;
 }
-
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:14px;
 }
-
 .card{
   position:relative;
   background:var(--paper-card);
@@ -102,13 +94,11 @@ h1{
 @media (hover:hover) and (pointer:fine){
   .card.enabled:hover{transform:translateY(-2px);border-color:var(--tech);}
 }
-
 .card-spine{
   position:absolute;
   top:0;left:0;bottom:0;
   width:6px;
 }
-
 .card-code{
   font-family:'IBM Plex Mono', monospace;
   font-size:11px;
@@ -144,7 +134,6 @@ h1{
 .badge.live{background:rgba(79,122,99,0.16);color:var(--eco);}
 .badge.soon{background:rgba(30,42,34,0.08);color:rgba(30,42,34,0.5);}
 .q-count{color:rgba(30,42,34,0.55);}
-
 footer.note{
   max-width:960px;margin:44px auto 0;padding:0 20px calc(20px + env(safe-area-inset-bottom));
   font-family:'IBM Plex Mono', monospace;
@@ -152,36 +141,30 @@ footer.note{
   color:rgba(30,42,34,0.42);
   line-height:1.8;
 }
-
 /* ---------- Mobile (iPhone) ---------- */
 @media (max-width:480px){
-  header.hero{padding:calc(36px + env(safe-area-inset-top)) 16px 28px;}
-  .eyebrow{font-size:10.5px;letter-spacing:0.12em;margin-bottom:8px;}
-  h1{font-size:28px;margin:0 0 8px;}
-  .hero p.sub{font-size:13.5px;max-width:none;}
-  .shelf{margin-top:22px;height:11px;}
-
+  header.hero{padding:calc(14px + env(safe-area-inset-top)) 16px 10px;}
+  .eyebrow{font-size:9px;letter-spacing:0.1em;margin-bottom:3px;}
+  h1{font-size:18px;margin:0 0 3px;}
+  .hero p.sub{font-size:11px;max-width:none;}
+  .shelf{margin-top:8px;height:6px;}
   .wrap{padding:0 16px calc(56px + env(safe-area-inset-bottom));}
   .section-label{margin:28px 0 12px;font-size:10.5px;}
-
   .grid{grid-template-columns:1fr;gap:10px;}
   .card{padding:18px 16px 16px;}
   .card-code{font-size:10.5px;margin-bottom:6px;}
   .card-name-en{font-size:17px;margin-bottom:12px;}
   .card-meta{font-size:10.5px;}
   .badge{padding:4px 10px;font-size:10px;}
-
   footer.note{margin-top:32px;font-size:10.5px;line-height:1.7;}
 }
-
 @media (max-width:360px){
-  h1{font-size:25px;}
-  .hero p.sub{font-size:13px;}
+  h1{font-size:17px;}
+  .hero p.sub{font-size:10.5px;}
 }
 </style>
 </head>
 <body>
-
 <header class="hero">
   <div class="hero-inner">
     <div class="eyebrow">Y13 · 2026–2027</div>
@@ -190,14 +173,11 @@ footer.note{
     <div class="shelf" id="shelf"></div>
   </div>
 </header>
-
 <div class="wrap">
   <div class="section-label">科目を選択</div>
   <div class="grid" id="subjectGrid"></div>
 </div>
-
 <footer class="note">各科目は単語系・関連性形・ケーススタディ系（英語は語句→意味／意味→語句／例文）の3形式で構成。チャプターは順次追加中。</footer>
-
 <script>
 // Extensible subject registry — add an entry here (and its own [code].html file)
 // to make a new subject appear on the shelf.
@@ -219,14 +199,12 @@ const SUBJECTS = [
   {code:"TOK", nameJp:"知の理論", nameEn:"Theory of Knowledge",
    href:"tok.html", enabled:true, questionCount:75, chapterCount:5, color:"#7A4E6B"}
 ];
-
 function renderShelf(){
   const shelf = document.getElementById('shelf');
   shelf.innerHTML = SUBJECTS.map(s =>
     `<div class="shelf-spine" style="background:${s.color};opacity:${s.enabled ? 1 : 0.28}"></div>`
   ).join('');
 }
-
 function renderGrid(){
   const grid = document.getElementById('subjectGrid');
   grid.innerHTML = SUBJECTS.map(s => {
@@ -247,7 +225,6 @@ function renderGrid(){
       </${tag}>`;
   }).join('');
 }
-
 renderShelf();
 renderGrid();
 </script>
