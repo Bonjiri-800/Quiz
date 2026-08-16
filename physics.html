@@ -6,7 +6,6 @@
 <title>物理 公式問題集</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 :root{
   --ink:#1A2233;
   --paper:#E6E9EE;
@@ -18,67 +17,54 @@
   --incorrect:#A63C34;
   --line: rgba(26,34,51,0.16);
 }
-
 *{box-sizing:border-box;}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans JP', sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
 .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
-
-header.hero{background:var(--deep);color:var(--paper-card);padding:44px 20px 30px;border-bottom:6px solid var(--a1);}
+header.hero{background:var(--deep);color:var(--paper-card);padding:14px 20px 12px;border-bottom:3px solid var(--a1);}
 .hero-inner{max-width:760px;margin:0 auto;}
-.back-link{color:rgba(245,247,250,0.6);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.04em;}
-.eyebrow{font-family:'IBM Plex Mono', monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--a2);margin-top:14px;margin-bottom:10px;}
-h1{font-family:'Fraunces', serif;font-weight:600;font-size:clamp(28px,5vw,40px);margin:0 0 6px;letter-spacing:-0.01em;}
-.hero p.sub{margin:0;color:rgba(245,247,250,0.72);font-size:14.5px;}
-
+.back-link{color:rgba(245,247,250,0.6);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.04em;}
+.eyebrow{font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--a2);margin-top:6px;margin-bottom:3px;}
+h1{font-family:'Fraunces', serif;font-weight:600;font-size:clamp(19px,2.6vw,24px);margin:0 0 2px;letter-spacing:-0.01em;}
+.hero p.sub{margin:0;color:rgba(245,247,250,0.72);font-size:11.5px;line-height:1.4;}
 /* Signature: an orbit-like dial marking the 5 theme groups A-E */
-.spectrum{margin-top:22px;height:10px;border-radius:6px;background:linear-gradient(90deg, var(--a1) 0%, var(--a1) 20%, #6B8FAE 40%, #A8896B 60%, var(--a2) 80%, var(--a2) 100%);}
-.spectrum-labels{display:flex;justify-content:space-between;font-family:'IBM Plex Mono', monospace;font-size:10.5px;letter-spacing:0.04em;margin-top:6px;color:rgba(245,247,250,0.6);text-transform:uppercase;}
-
+.spectrum{margin-top:8px;height:6px;border-radius:4px;background:linear-gradient(90deg, var(--a1) 0%, var(--a1) 20%, #6B8FAE 40%, #A8896B 60%, var(--a2) 80%, var(--a2) 100%);}
+.spectrum-labels{display:flex;justify-content:space-between;font-family:'IBM Plex Mono', monospace;font-size:9px;letter-spacing:0.03em;margin-top:3px;color:rgba(245,247,250,0.6);text-transform:uppercase;}
 nav.chapters{display:flex;gap:6px;overflow-x:auto;padding:16px 20px 0;max-width:760px;margin:0 auto;}
 .chip{flex:0 0 auto;font-family:'IBM Plex Mono', monospace;font-size:12.5px;padding:7px 13px;border-radius:20px;border:1px solid var(--line);background:var(--paper-card);color:var(--ink);cursor:pointer;white-space:nowrap;}
 .chip.active{background:var(--a1);border-color:var(--a1);color:var(--paper-card);}
-
 .type-tabs{display:flex;margin:26px 0 4px;border-bottom:2px solid var(--line);}
 .type-tab{flex:1;text-align:center;padding:12px 6px;font-family:'Fraunces', serif;font-weight:600;font-size:15px;color:rgba(26,34,51,0.45);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;}
 .type-tab .count{display:block;font-family:'IBM Plex Mono', monospace;font-weight:400;font-size:10.5px;margin-top:2px;letter-spacing:0.04em;}
 .type-tab.active{color:var(--ink);border-bottom-color:var(--a2);}
-
 .progress-row{display:flex;align-items:center;gap:10px;margin:18px 0 6px;font-family:'IBM Plex Mono', monospace;font-size:12px;color:rgba(26,34,51,0.55);}
 .progress-track{flex:1;height:5px;border-radius:3px;background:var(--line);overflow:hidden;}
 .progress-fill{height:100%;background:var(--a2);border-radius:3px;transition:width .25s;}
-
 .card{background:var(--paper-card);border:1px solid var(--line);border-radius:4px;padding:26px 24px 22px;margin-top:14px;box-shadow:0 1px 0 rgba(26,34,51,0.04);}
 .q-label{font-family:'IBM Plex Mono', monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--a2);margin-bottom:10px;}
 .q-text{font-family:'Fraunces', serif;font-size:18.5px;font-weight:500;line-height:1.6;margin:0 0 20px;}
 .formula-display{font-family:'IBM Plex Mono', monospace;font-size:17px;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:-8px 0 18px;text-align:center;letter-spacing:0.02em;}
-
 .option{display:block;width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:12px 14px;margin-bottom:9px;font-family:'IBM Plex Sans JP', sans-serif;font-size:14.5px;color:var(--ink);cursor:pointer;transition:border-color .12s, background .12s;}
 .option:hover:not(.locked){border-color:var(--a2);}
 .option.correct{background:rgba(62,107,156,0.16);border-color:var(--correct);}
 .option.incorrect{background:rgba(166,60,52,0.14);border-color:var(--incorrect);}
 .option.locked{cursor:default;}
 .option .tag{font-family:'IBM Plex Mono', monospace;font-size:11px;color:rgba(26,34,51,0.45);margin-right:8px;}
-
 .explain{margin-top:16px;padding:14px 16px;border-left:3px solid var(--a1);background:rgba(62,107,156,0.08);font-size:13.5px;border-radius:0 3px 3px 0;display:none;}
 .explain.show{display:block;}
 .explain b{font-family:'IBM Plex Mono', monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:5px;color:var(--a1);}
-
 .actions{display:flex;justify-content:flex-end;margin-top:18px;}
 button.next{font-family:'IBM Plex Mono', monospace;font-size:12.5px;letter-spacing:0.03em;background:var(--deep);color:var(--paper-card);border:none;padding:10px 20px;border-radius:3px;cursor:pointer;display:none;}
 button.next.show{display:inline-block;}
 button.next:hover{background:#0a0e19;}
-
 .result{text-align:center;padding:40px 20px;}
 .result .score{font-family:'Fraunces', serif;font-size:56px;font-weight:700;color:var(--deep);}
 .result .score span{font-size:22px;color:rgba(26,34,51,0.5);}
 .result p{color:rgba(26,34,51,0.65);font-size:14px;}
 button.retry{margin-top:14px;font-family:'IBM Plex Mono', monospace;font-size:12.5px;background:transparent;border:1px solid var(--deep);color:var(--deep);padding:9px 18px;border-radius:3px;cursor:pointer;}
-
 footer.note{max-width:760px;margin:36px auto 0;padding:0 20px;font-family:'IBM Plex Mono', monospace;font-size:11px;color:rgba(26,34,51,0.42);line-height:1.8;}
 </style>
 </head>
 <body>
-
 <header class="hero">
   <div class="hero-inner">
     <a class="back-link" href="index.html">← 科目選択に戻る</a>
@@ -89,9 +75,7 @@ footer.note{max-width:760px;margin:36px auto 0;padding:0 20px;font-family:'IBM P
     <div class="spectrum-labels"><span>A 力学</span><span>B 物質</span><span>C 波動</span><span>D 場</span><span>E 量子核</span></div>
   </div>
 </header>
-
 <nav class="chapters" id="chapterNav"></nav>
-
 <div class="wrap">
   <div class="type-tabs" id="typeTabs"></div>
   <div class="progress-row">
@@ -100,18 +84,14 @@ footer.note{max-width:760px;margin:36px auto 0;padding:0 20px;font-family:'IBM P
   </div>
   <div id="quizArea"></div>
 </div>
-
 <footer class="note">IB Physics HL公式集（2025年版シラバス Theme A〜E）に基づく。「意味」は公式が何を表すかを問い、「例題」は与えられた状況でどの公式を使うべきかを問う。</footer>
-
 <script>
 const QUESTION_BANK = {"A": {"label": "A. 力学（Space, time and motion）", "meaning": [{"formula": "v = u + at", "q": "この公式の意味として正しいものは？", "opts": ["初速度u、一定の加速度a、経過時間tから、t秒後の速度vを求める式", "初速度u、加速度a、経過時間tから、t秒後までの変位sを求める式", "初速度u、加速度a、変位sから、時間tを使わずに終端の速度vを求める式", "質量mと速度vの積として定義される運動量を表す式"], "a": 0, "ex": "時間tから「速度v」を求める式。同じSUVATでも「変位s」を求める式（s=ut+½at²）や、時間を使わない式（v²=u²+2as）と混同しやすい。"}, {"formula": "s = ut + ½at²", "q": "この公式の意味として正しいものは？", "opts": ["初速度u、加速度a、経過時間tから、t秒後までの変位sを求める式", "初速度u、加速度a、経過時間tから、t秒後の速度vを求める式", "初速度u、加速度a、変位sから、時間tを使わずに終端の速度vを求める式", "質量m、速度vの物体が持つ運動エネルギーを表す式"], "a": 0, "ex": "時間tから「変位s」を求める式。似た½の係数を持つ運動エネルギーの式（½mv²）と混同しないよう注意。"}, {"formula": "v² = u² + 2as", "q": "この公式の意味として正しいものは？", "opts": ["初速度u、加速度a、変位sから、時間tを使わずに終端の速度vを求める式", "初速度u、加速度a、経過時間tから、t秒後の速度vを求める式", "初速度u、加速度a、経過時間tから変位sを求める式", "質量mと速度vの積として定義される運動量を表す式"], "a": 0, "ex": "「時間tが与えられていない・求めなくてよい」場面で使う唯一のSUVAT公式。時間を使う他の2つの式と混同しやすい。"}, {"formula": "F = ma", "q": "この公式の意味として正しいものは？", "opts": ["質量mの物体に力Fが働くとき生じる加速度aとの関係を示すニュートンの第二法則", "質量mと速度vの積として定義される運動量を表す式", "力Fが時間Δtだけ働いたときの力積を、運動量の変化として表す式", "力Fが物体をθの角度で距離s移動させたときになす仕事を表す式"], "a": 0, "ex": "「瞬間の」力と加速度の関係。力積の式（FΔt=Δp、力×時間）と混同しないよう注意。"}, {"formula": "p = mv", "q": "この公式の意味として正しいものは？", "opts": ["質量mと速度vの積として定義される運動量を表す式", "質量m、速度vの物体が持つ運動エネルギーを表す式（速度の2乗を使う）", "力Fが時間Δtだけ働いたときの力積を表す式", "質量mの物体に力Fが働くときの加速度aとの関係を示す式"], "a": 0, "ex": "速度vの1乗を使う運動量の式。速度の2乗と½を使う運動エネルギーの式（½mv²）と混同しやすい。"}, {"formula": "E_k = ½mv²", "q": "この公式の意味として正しいものは？", "opts": ["質量m、速度vの物体が持つ運動エネルギーを表す式", "質量mと速度vの積として定義される運動量を表す式", "力Fが物体をθの角度で距離s移動させたときになす仕事を表す式", "初速度u、加速度a、経過時間tから変位sを求める式"], "a": 0, "ex": "速度の2乗と½を使う運動エネルギーの式。速度の1乗のみを使う運動量の式（p=mv）と混同しないよう注意。"}, {"formula": "W = Fs cosθ", "q": "この公式の意味として正しいものは？", "opts": ["力Fがθの角度で距離s物体を移動させたときになす仕事を表す式", "質量mと速度vの積として定義される運動量を表す式", "質量m、速度vの物体が持つ運動エネルギーを表す式", "力Fが時間Δtだけ働いたときの力積を表す式"], "a": 0, "ex": "力と「距離s」の積を使う仕事の式。力と「時間Δt」の積を使う力積の式（力積=FΔt）と混同しやすい。"}, {"formula": "Δp = FΔt", "q": "この公式の意味として正しいものは？", "opts": ["力Fが時間Δtだけ働いたときの運動量の変化Δp（力積）を表す式", "力Fが物体をθの角度で距離s移動させたときになす仕事を表す式", "質量mと速度vの積として定義される運動量そのものを表す式", "質量mの物体に力Fが働くときの加速度aとの関係を示す式"], "a": 0, "ex": "力積（＝運動量の変化）の式。運動量そのもの（p=mv）や、力と距離を使う仕事の式（W=Fscosθ）と混同しないこと。"}], "application": [{"formula": "", "q": "静止していた車が一定の加速度3.0 m/s²で5.0秒間加速した。5.0秒後の速度を求めたい。どの公式を使うべきか？", "opts": ["s = ut + ½at²", "v = u + at", "v² = u² + 2as", "E_k = ½mv²"], "a": 1, "ex": "求めたいのは「速度v」で、時間tも与えられているのでv=u+atを使う。"}, {"formula": "", "q": "上と同じ車（初速度0、加速度3.0 m/s²、加速時間5.0秒）が5.0秒間で進んだ距離（変位）を求めたい。どの公式を使うべきか？", "opts": ["v = u + at", "v² = u² + 2as", "s = ut + ½at²", "p = mv"], "a": 2, "ex": "求めたいのは「変位s」で、時間tが与えられているのでs=ut+½at²を使う。"}, {"formula": "", "q": "初速度0で加速度2.0 m/s²の物体が10mの距離を走ったときの終端の速度を求めたい（時間は与えられていない）。どの公式を使うべきか？", "opts": ["v = u + at", "s = ut + ½at²", "v² = u² + 2as", "F = ma"], "a": 2, "ex": "時間tが与えられておらず、求める必要もない場面。時間を含まないv²=u²+2asを使う。"}, {"formula": "", "q": "質量5.0kgの物体に力を加えたところ加速度2.0 m/s²が生じた。この力の大きさを求めたい。どの公式を使うべきか？", "opts": ["F = ma", "Δp = FΔt", "p = mv", "E_k = ½mv²"], "a": 0, "ex": "質量と加速度（瞬間の関係）から力を求めるのでF=maを使う。時間は与えられていないので力積の式は使えない。"}, {"formula": "", "q": "質量0.5kgのボールが速さ10 m/sで飛んでいる。このボールの運動量を求めたい。どの公式を使うべきか？", "opts": ["E_k = ½mv²", "p = mv", "F = ma", "W = Fs cosθ"], "a": 1, "ex": "「運動量」を求める設問なのでp=mvを使う。速度の2乗を使う運動エネルギーの式と混同しないこと。"}, {"formula": "", "q": "質量0.5kgの同じボール（速さ10 m/s）の運動エネルギーを求めたい。どの公式を使うべきか？", "opts": ["p = mv", "E_k = ½mv²", "Δp = FΔt", "W = Fs cosθ"], "a": 1, "ex": "「運動エネルギー」を求める設問なのでE_k=½mv²を使う。運動量の式（p=mv、速度の1乗のみ）と混同しないこと。"}, {"formula": "", "q": "20Nの力で物体を水平方向に5.0m引きずった（力の方向と移動方向は同じ）。このときになされた仕事を求めたい。どの公式を使うべきか？", "opts": ["Δp = FΔt", "p = mv", "W = Fs cosθ", "F = ma"], "a": 2, "ex": "力と「距離」からなされた仕事を求めるのでW=Fscosθを使う。時間は与えられていないので力積の式ではない。"}, {"formula": "", "q": "質量2.0kgの物体に10Nの力を0.5秒間加えた。このときの運動量の変化を求めたい。どの公式を使うべきか？", "opts": ["W = Fs cosθ", "F = ma", "Δp = FΔt", "E_k = ½mv²"], "a": 2, "ex": "力と「時間」から運動量の変化（力積）を求めるのでΔp=FΔtを使う。距離は与えられていないので仕事の式ではない。"}]}, "B": {"label": "B. 物質（Particulate nature of matter）", "meaning": [{"formula": "PV = nRT", "q": "この公式の意味として正しいものは？", "opts": ["理想気体の圧力P、体積V、物質量n、絶対温度Tの関係を示す状態方程式", "質量m、比熱cの物質の温度をΔT変化させるのに必要な熱量を表す式", "電流Iと電圧Vの積として電力Pを求める式", "抵抗Rを電圧Vと電流Iの比として定義するオームの法則"], "a": 0, "ex": "気体の圧力・体積・物質量・温度をまとめて扱う状態方程式。電気系の公式（P=IV, R=V/I）とは全く別の分野の式なので注意。"}, {"formula": "Q = mcΔT", "q": "この公式の意味として正しいものは？", "opts": ["質量m、比熱cの物質の「温度」をΔT変化させるのに必要な熱量Qを表す式", "質量mの物質が「状態変化（融解・蒸発など）」するときに必要な熱量Qを表す式", "理想気体の圧力・体積・物質量・絶対温度の関係を示す式", "系に加えられた熱量が内部エネルギー変化と仕事の和に等しいという式"], "a": 0, "ex": "「温度変化」を伴う場合の熱量の式。温度が変わらない「状態変化（融解・蒸発）」の熱量の式（Q=mL、比熱ではなく潜熱Lを使う）と混同しやすい。"}, {"formula": "Q = mL", "q": "この公式の意味として正しいものは？", "opts": ["質量mの物質が状態変化（融解・蒸発など）するときに必要な熱量Qを、比潜熱Lを用いて表す式（温度は変化しない）", "質量m、比熱cの物質の温度をΔT変化させるのに必要な熱量を表す式", "理想気体の圧力・体積・物質量・絶対温度の関係を示す式", "電流Iと電圧Vの積として電力Pを求める式"], "a": 0, "ex": "状態変化のときは温度が一定のまま熱が吸収・放出される。温度変化を伴うQ=mcΔTとは適用場面が異なる点が最大の混同ポイント。"}, {"formula": "R = V/I", "q": "この公式の意味として正しいものは？", "opts": ["抵抗Rを、電圧Vと電流Iの比として定義するオームの法則", "電流Iと電圧Vの積として電力Pを求める式", "質量m、比熱cの物質の温度をΔT変化させるのに必要な熱量を表す式", "理想気体の圧力・体積・物質量・絶対温度の関係を示す式"], "a": 0, "ex": "電圧と電流の「比」で抵抗を求める式。電圧と電流の「積」で電力を求める式（P=IV）と混同しないこと。"}, {"formula": "P = IV", "q": "この公式の意味として正しいものは？", "opts": ["電流Iと電圧Vの積として電力Pを求める式", "抵抗Rを電圧Vと電流Iの比として定義する式", "質量m、比熱cの物質の温度をΔT変化させるのに必要な熱量を表す式", "理想気体の圧力・体積・物質量・絶対温度の関係を示す式"], "a": 0, "ex": "電流と電圧の「積」で電力を求める式。電流と電圧の「比」で抵抗を求める式（R=V/I）と混同しないこと。"}, {"formula": "Q = ΔU + W", "q": "この公式の意味として正しいものは？", "opts": ["系に加えられた熱量Qが、内部エネルギーの変化ΔUと系がした仕事Wの和に等しいという熱力学第一法則", "質量m、比熱cの物質の温度をΔT変化させるのに必要な熱量を表す式", "電流Iと電圧Vの積として電力Pを求める式", "理想気体の圧力・体積・物質量・絶対温度の関係を示す式"], "a": 0, "ex": "エネルギー保存則（熱力学第一法則）。単なる熱量の式（Q=mcΔT）とは異なり、仕事Wと内部エネルギー変化ΔUの両方を含む点に注意。"}, {"formula": "R = R₁ + R₂（直列）", "q": "この公式の意味として正しいものは？", "opts": ["2つの抵抗を直列に接続したときの合成抵抗を求める式", "2つの抵抗を並列に接続したときの合成抵抗を求める式", "電流Iと電圧Vの積として電力Pを求める式", "抵抗Rを電圧Vと電流Iの比として定義する式"], "a": 0, "ex": "直列接続では抵抗を単純に足し合わせる。並列接続の合成抵抗（1/R=1/R₁+1/R₂の形、単純な足し算にならない）と混同しやすい。"}, {"formula": "P = I²R", "q": "この公式の意味として正しいものは？", "opts": ["抵抗Rに電流Iが流れているときの消費電力Pを、電流と抵抗から求める式", "抵抗Rに電圧Vがかかっているときの消費電力Pを、電圧と抵抗から求める式（P=V²/Rの形）", "電流Iと電圧Vの積として電力Pを求める式（P=IVの形）", "抵抗Rを電圧Vと電流Iの比として定義する式"], "a": 0, "ex": "電力の式にはP=IV、P=I²R、P=V²/Rの3通りの表し方があり、それぞれ使う変数（電流・電圧のどちらか、または両方）が異なる点で混同しやすい。"}], "application": [{"formula": "", "q": "密閉容器内の気体の物質量n、絶対温度Tが分かっているとき、圧力Pと体積Vの関係を求めたい。どの公式を使うべきか？", "opts": ["P = IV", "PV = nRT", "R = V/I", "Q = mcΔT"], "a": 1, "ex": "気体の圧力・体積・物質量・温度の関係なので理想気体の状態方程式を使う。"}, {"formula": "", "q": "2.0kgの水（比熱4200 J/(kg·K)）の温度を10K上昇させるのに必要な熱量を求めたい。どの公式を使うべきか？", "opts": ["Q = mL", "Q = mcΔT", "PV = nRT", "Q = ΔU + W"], "a": 1, "ex": "「温度変化」させるための熱量なのでQ=mcΔTを使う。状態変化ではないのでQ=mL（潜熱の式）は使えない。"}, {"formula": "", "q": "0℃の氷1.0kgをすべて0℃の水に変えるのに必要な熱量（融解熱）を求めたい。どの公式を使うべきか？", "opts": ["Q = mcΔT", "Q = mL", "PV = nRT", "R = V/I"], "a": 1, "ex": "温度は0℃のまま変化せず、状態（氷→水）だけが変わる場面なのでQ=mL（潜熱の式）を使う。温度変化がないのでQ=mcΔTのΔTが0になってしまい使えない。"}, {"formula": "", "q": "回路に6.0Vの電圧をかけたところ2.0Aの電流が流れた。この抵抗の値を求めたい。どの公式を使うべきか？", "opts": ["P = IV", "R = V/I", "Q = ΔU + W", "Q = mcΔT"], "a": 1, "ex": "電圧と電流から抵抗（比）を求めるオームの法則を使う。"}, {"formula": "", "q": "電熱線に4.0Aの電流が流れ、両端に10Vの電圧がかかっている。消費電力を求めたい。どの公式を使うべきか？", "opts": ["R = V/I", "Q = mcΔT", "PV = nRT", "P = IV"], "a": 3, "ex": "電流と電圧の「積」から電力を求める。抵抗を求める式（比）とは操作が逆になる。"}, {"formula": "", "q": "気体に100Jの熱を加えたところ、気体が外部に30Jの仕事をした。気体の内部エネルギーの変化を求めたい。どの公式を使うべきか？", "opts": ["Q = ΔU + W", "PV = nRT", "P = IV", "Q = mcΔT"], "a": 0, "ex": "熱・仕事・内部エネルギー変化の関係なので熱力学第一法則を使い、ΔU=Q-Wとして求める。"}, {"formula": "", "q": "抵抗10Ωと抵抗20Ωを直列に接続した回路の合成抵抗を求めたい。どの公式を使うべきか？", "opts": ["R = R₁ + R₂（直列）", "1/R = 1/R₁ + 1/R₂（並列）", "P = IV", "R = V/I"], "a": 0, "ex": "「直列」接続なので抵抗をそのまま足し合わせる式を使う。並列接続用の式（逆数の和）を使うと誤った値になる。"}, {"formula": "", "q": "抵抗5.0Ωに3.0Aの電流が流れているとき、消費電力を、電流と抵抗の値だけから求めたい（電圧の値は与えられていない）。どの公式を使うべきか？", "opts": ["P = IV（電圧が必要）", "P = I²R", "P = V²/R（電圧が必要）", "R = V/I（電圧が必要）"], "a": 1, "ex": "電圧の値が与えられていないので、電流と抵抗だけで計算できるP=I²Rを使う。他の式は電圧の値が必要になり、この設問の条件に合わない。"}]}, "C": {"label": "C. 波動（Wave behaviour）", "meaning": [{"formula": "v = fλ", "q": "この公式の意味として正しいものは？", "opts": ["波の速さvが振動数fと波長λの積で表されるという波の基本式", "周期Tと振動数fが逆数の関係にあることを示す式", "2つの波が強め合う干渉条件を経路差で表す式", "回折格子で明線が生じる条件を表す式"], "a": 0, "ex": "波の速さ・振動数・波長をつなぐ基本式。周期と振動数の関係式（T=1/f）とは扱う量が異なる。"}, {"formula": "T = 1/f", "q": "この公式の意味として正しいものは？", "opts": ["周期Tと振動数fが逆数の関係にあることを示す式", "波の速さが振動数と波長の積で表されるという式", "回折格子で明線が生じる条件を表す式", "音源が近づくときの音の振動数の変化を表す式"], "a": 0, "ex": "周期と振動数の逆数関係。波の速さの式（v=fλ）と混同しないこと。"}, {"formula": "nλ = d sinθ", "q": "この公式の意味として正しいものは？", "opts": ["回折格子において、明線（強め合いの点）が生じる条件をスリット間隔d・波長λ・回折角θで表す式", "2つの波源からの経路差が半波長の奇数倍になる、弱め合いの条件を表す式", "波の速さが振動数と波長の積で表されるという式", "周期Tと振動数fが逆数の関係にあることを示す式"], "a": 0, "ex": "回折格子特有の「明線」条件の式。同じ強め合いでも一般的な2点波源の経路差の式（経路差=nλ）とは、dやθを使う点で形が異なる。"}, {"formula": "経路差 = nλ（強め合い）", "q": "この公式の意味として正しいものは？", "opts": ["2つの波が強め合う（同位相で重なる）干渉条件を、波長の整数倍の経路差で表す式", "2つの波が弱め合う（逆位相で重なる）干渉条件を、波長の半整数倍の経路差で表す式", "波の速さが振動数と波長の積で表されるという式", "回折格子において明線が生じる条件を、スリット間隔と回折角で表す式"], "a": 0, "ex": "経路差が「波長の整数倍（0, λ, 2λ, …）」のとき強め合う。半波長分ズレる弱め合いの条件（経路差=(n+½)λ）と混同しやすい。"}, {"formula": "経路差 = (n+½)λ（弱め合い）", "q": "この公式の意味として正しいものは？", "opts": ["2つの波が弱め合う（逆位相で重なる）干渉条件を、波長の半整数倍の経路差で表す式", "2つの波が強め合う干渉条件を、波長の整数倍の経路差で表す式", "回折格子で明線が生じる条件を表す式", "波の速さが振動数と波長の積で表されるという式"], "a": 0, "ex": "経路差が「半波長の奇数倍（½λ, 3/2λ, …）」のとき弱め合う。強め合いの条件（経路差=nλ）と符号・端数の有無で混同しやすい。"}, {"formula": "f' = f・v/(v-u_s)", "q": "この公式の意味として正しいものは？", "opts": ["音源が観測者に「近づく」ときに聞こえる音の振動数が高くなる（ドップラー効果）ことを表す式", "音源が観測者から「遠ざかる」ときに聞こえる音の振動数が低くなることを表す式", "波の速さが振動数と波長の積で表されるという式", "回折格子で明線が生じる条件を表す式"], "a": 0, "ex": "分母が(v-u_s)、つまり音源の速さを引き算しているため、分母が小さくなりf'が大きくなる＝音源が「近づく」場合の式。分母を足し算する「遠ざかる」場合の式と混同しやすい。"}, {"formula": "f' = f・v/(v+u_s)", "q": "この公式の意味として正しいものは？", "opts": ["音源が観測者から「遠ざかる」ときに聞こえる音の振動数が低くなる（ドップラー効果）ことを表す式", "音源が観測者に「近づく」ときに聞こえる音の振動数が高くなることを表す式", "2つの波が強め合う干渉条件を表す式", "回折格子で明線が生じる条件を表す式"], "a": 0, "ex": "分母が(v+u_s)、つまり音源の速さを足し算しているため、分母が大きくなりf'が小さくなる＝音源が「遠ざかる」場合の式。近づく場合の式（分母は引き算）と符号を混同しやすい。"}, {"formula": "n₁sinθ₁ = n₂sinθ₂", "q": "この公式の意味として正しいものは？", "opts": ["光が異なる屈折率の媒質の境界に入射・屈折するときの、入射角と屈折角の関係を表すスネルの法則", "波の速さが振動数と波長の積で表されるという式", "回折格子で明線が生じる条件を表す式", "音源が近づくときの音の振動数の変化を表す式"], "a": 0, "ex": "屈折の法則。回折格子の式（角度θを使うが意味が異なる）と、どちらも「角度」を扱うため混同しやすい。"}], "application": [{"formula": "", "q": "波長0.5mの波が振動数2.0Hzで伝わっている。この波の速さを求めたい。どの公式を使うべきか？", "opts": ["v = fλ", "経路差 = nλ", "nλ = d sinθ", "T = 1/f"], "a": 0, "ex": "振動数と波長から速さを求める波の基本式を使う。"}, {"formula": "", "q": "ある波の振動数が50Hzであるとき、その周期を求めたい。どの公式を使うべきか？", "opts": ["経路差 = nλ", "T = 1/f", "f' = f・v/(v-u_s)", "v = fλ"], "a": 1, "ex": "振動数から周期を求める逆数の関係を使う。"}, {"formula": "", "q": "回折格子にレーザー光を当てたところ、特定の角度で明るい線（明線）が観測された。この明線の生じる条件を求めたい。どの公式を使うべきか？", "opts": ["経路差 = (n+½)λ（弱め合い）", "f' = f・v/(v-u_s)", "nλ = d sinθ", "T = 1/f"], "a": 2, "ex": "回折格子特有の明線（強め合い）条件式を使う。弱め合いの条件式ではないことに注意。"}, {"formula": "", "q": "2つのスピーカーから出た音が、ある地点で最も弱く聞こえている（弱め合っている）。このときの2つの音源からの距離の差（経路差）の条件を求めたい。どの公式を使うべきか？", "opts": ["経路差 = nλ（強め合い）", "経路差 = (n+½)λ（弱め合い）", "nλ = d sinθ", "v = fλ"], "a": 1, "ex": "「最も弱く」＝弱め合いなので、半波長の奇数倍の経路差の条件式を使う。整数倍（強め合い）の式と混同しないこと。"}, {"formula": "", "q": "救急車が観測者に向かって「近づいて」くるとき、サイレンの音がどう変化して聞こえるかを求めたい。どの公式を使うべきか？", "opts": ["f' = f・v/(v+u_s)（遠ざかる場合）", "f' = f・v/(v-u_s)（近づく場合）", "v = fλ", "nλ = d sinθ"], "a": 1, "ex": "音源が「近づく」場合は分母から音源の速さを引く形の式を使う。遠ざかる場合の式（分母に足す）と混同しないこと。"}, {"formula": "", "q": "救急車が観測者から「遠ざかって」いくとき、サイレンの音がどう変化して聞こえるかを求めたい。どの公式を使うべきか？", "opts": ["f' = f・v/(v-u_s)（近づく場合）", "f' = f・v/(v+u_s)（遠ざかる場合）", "経路差 = nλ", "T = 1/f"], "a": 1, "ex": "音源が「遠ざかる」場合は分母に音源の速さを足す形の式を使う。近づく場合の式と符号を逆にしないよう注意。"}, {"formula": "", "q": "光が空気中からガラス中へ進むとき、入射角と屈折角の関係を求めたい。どの公式を使うべきか？", "opts": ["n₁sinθ₁ = n₂sinθ₂", "nλ = d sinθ", "経路差 = nλ", "v = fλ"], "a": 0, "ex": "屈折率と角度の関係を求める設問なのでスネルの法則を使う。回折格子の式とは扱う現象が異なる。"}, {"formula": "", "q": "ある単一スリットではなく回折格子（多数のスリット）に光を当て、明線の間隔が広い低次の角度θを観測して波長λを求めたい（スリット間隔dは既知）。どの公式を使うべきか？", "opts": ["n₁sinθ₁ = n₂sinθ₂", "nλ = d sinθ", "経路差 = (n+½)λ", "f' = f・v/(v-u_s)"], "a": 1, "ex": "回折格子のスリット間隔dと回折角θから波長を求めるのでnλ=dsinθを使う。屈折の法則（媒質の境界）とは異なる場面。"}]}, "D": {"label": "D. 場（Fields）", "meaning": [{"formula": "F = Gm₁m₂/r²", "q": "この公式の意味として正しいものは？", "opts": ["2つの質量の間に働く万有引力の大きさを距離rを用いて表すニュートンの万有引力の法則", "質量Mの天体から距離rの地点における重力場の強さを表す式", "2つの電荷の間に働く静電気力の大きさを距離rを用いて表すクーロンの法則", "質量Mの天体から距離rの地点における重力による位置エネルギーを表す式"], "a": 0, "ex": "「2つの質量間に働く力」を表す式。1つの天体が作る「場の強さ」を表す式（g=GM/r²、質量が1つだけ）と混同しやすい。"}, {"formula": "g = GM/r²", "q": "この公式の意味として正しいものは？", "opts": ["質量Mの天体から距離rの地点における重力場の強さ（重力加速度）を表す式", "2つの質量の間に働く万有引力の大きさを表す式", "2つの電荷の間に働く静電気力の大きさを表す式", "質量Mの天体から距離rの地点における電場の強さを表す式"], "a": 0, "ex": "「1つの」質量Mが周囲に作る場の強さの式。「2つの」質量の間の力を表す式（F=Gm₁m₂/r²）と、質量が1つか2つかで混同しやすい。"}, {"formula": "F = kq₁q₂/r²", "q": "この公式の意味として正しいものは？", "opts": ["2つの電荷q₁, q₂の間に働く静電気力の大きさを、距離rを用いて表すクーロンの法則", "1つの点電荷Qが周囲に作る電場の強さを表す式", "2つの質量の間に働く万有引力の大きさを表す式", "1つの点電荷Qが周囲に作る電位を表す式"], "a": 0, "ex": "「2つの」電荷間に働く力の式。「1つの」電荷が作る電場の式（E=kQ/r²、電荷が1つだけ）と混同しやすい。"}, {"formula": "E = kQ/r²", "q": "この公式の意味として正しいものは？", "opts": ["1つの点電荷Qのまわり、距離rの地点における電場の強さEを表す式", "2つの電荷の間に働く静電気力の大きさを表す式", "1つの点電荷Qのまわり、距離rの地点における電位Vを表す式", "平行板コンデンサー内の一様な電場の強さを表す式"], "a": 0, "ex": "点電荷が作る「電場」の式でrの2乗に反比例する。同じく点電荷が作る「電位」の式（V=kQ/r、rの1乗に反比例）と指数の違いで混同しやすい。"}, {"formula": "V = kQ/r", "q": "この公式の意味として正しいものは？", "opts": ["1つの点電荷Qのまわり、距離rの地点における電位Vを表す式", "1つの点電荷Qのまわり、距離rの地点における電場の強さEを表す式", "平行板コンデンサー内の一様な電場の強さを表す式", "2つの電荷の間に働く静電気力の大きさを表す式"], "a": 0, "ex": "点電荷が作る「電位」の式でrの1乗に反比例する。同じく点電荷から作られる「電場」の式（E=kQ/r²、rの2乗に反比例）と混同しやすい。"}, {"formula": "E = V/d", "q": "この公式の意味として正しいものは？", "opts": ["平行板コンデンサー内の一様な電場の強さEを、電位差Vと極板間距離dから求める式", "1つの点電荷のまわりにできる、距離に応じて変化する電場の強さを表す式", "2つの電荷の間に働く静電気力の大きさを表す式", "1つの点電荷のまわりの電位を表す式"], "a": 0, "ex": "平行「板」間の一様な電場の式で、点電荷が作る電場の式（E=kQ/r²、距離の2乗に反比例し一様ではない）とは前提となる状況が異なる。"}, {"formula": "F = BIL sinθ", "q": "この公式の意味として正しいものは？", "opts": ["磁場B中を流れる電流Iが磁場から受ける力を、導線の長さLと角度θを用いて表す式", "磁場B中を運動する1個の荷電粒子が磁場から受ける力を、電荷qと速さvを用いて表す式", "質量Mの天体から距離rの地点における重力場の強さを表す式", "2つの電荷の間に働く静電気力の大きさを表す式"], "a": 0, "ex": "「電流（導線）」が磁場から受ける力の式。「1個の荷電粒子」が磁場から受ける力の式（F=qvBsinθ、電流Iではなく電荷qと速さvを使う）と混同しやすい。"}, {"formula": "F = qvB sinθ", "q": "この公式の意味として正しいものは？", "opts": ["磁場B中を速さvで運動する1個の荷電粒子（電荷q）が磁場から受ける力を表す式", "磁場B中を流れる電流Iが磁場から受ける力を、導線の長さLを用いて表す式", "2つの電荷の間に働く静電気力の大きさを表す式", "1つの点電荷が周囲に作る電場の強さを表す式"], "a": 0, "ex": "「1個の荷電粒子」が磁場から受ける力の式。「電流（導線全体）」が磁場から受ける力の式（F=BILsinθ、電荷qと速さvではなく電流Iと長さLを使う）と混同しやすい。"}], "application": [{"formula": "", "q": "地球と月の間に働く重力（引力）の大きさを、両者の質量と距離から求めたい。どの公式を使うべきか？", "opts": ["F = Gm₁m₂/r²", "g = GM/r²", "F = kq₁q₂/r²", "E = kQ/r²"], "a": 0, "ex": "「2つの質量」間の力を求めるのでF=Gm₁m₂/r²を使う。1つの天体だけの場の強さの式ではない。"}, {"formula": "", "q": "ある惑星の質量と、その表面からの距離が分かっているとき、その地点での重力加速度（場の強さ）を求めたい。どの公式を使うべきか？", "opts": ["F = Gm₁m₂/r²", "g = GM/r²", "F = kq₁q₂/r²", "V = kQ/r"], "a": 1, "ex": "「1つの」天体が作る場の強さを求めるのでg=GM/r²を使う。もう一方の質量が与えられていないので2質量間の力の式は使えない。"}, {"formula": "", "q": "2つの点電荷が真空中に置かれている。両者の間に働く静電気力の大きさを求めたい。どの公式を使うべきか？", "opts": ["E = kQ/r²", "F = kq₁q₂/r²", "V = kQ/r", "F = BIL sinθ"], "a": 1, "ex": "「2つの」電荷間の力を求めるのでF=kq₁q₂/r²を使う。1つの電荷が作る電場の式ではない。"}, {"formula": "", "q": "1つの点電荷Qから距離rの地点における電場の強さを求めたい（もう1つの電荷は考えない）。どの公式を使うべきか？", "opts": ["F = kq₁q₂/r²", "E = kQ/r²", "V = kQ/r", "E = V/d"], "a": 1, "ex": "「1つの」電荷が周囲に作る電場を求める設問。求めたいのは電場（E）であって電位（V）ではないので、rの1乗に反比例する電位の式と混同しないこと。"}, {"formula": "", "q": "同じ点電荷Qから距離rの地点における電位を求めたい。どの公式を使うべきか？", "opts": ["E = kQ/r²", "V = kQ/r", "F = kq₁q₂/r²", "E = V/d"], "a": 1, "ex": "求めたいのは「電位V」なのでV=kQ/rを使う。rの2乗に反比例する電場の式（E=kQ/r²）とは指数が異なる点に注意。"}, {"formula": "", "q": "平行板コンデンサーに電圧をかけたとき、極板間に生じる一様な電場の強さを求めたい。どの公式を使うべきか？", "opts": ["F = BIL sinθ", "E = kQ/r²", "F = Gm₁m₂/r²", "E = V/d"], "a": 3, "ex": "平行板間の一様な電場を求める設問。点電荷が作る（一様ではない）電場の式ではなく、平行板専用の式E=V/dを使う。"}, {"formula": "", "q": "磁場の中に、電流が流れる導線を置いたとき、導線が磁場から受ける力の大きさを求めたい。どの公式を使うべきか？", "opts": ["F = qvB sinθ", "F = BIL sinθ", "g = GM/r²", "E = V/d"], "a": 1, "ex": "「電流（導線）」が受ける力を求める設問なのでF=BILsinθを使う。1個の荷電粒子用の式（電荷qと速度vを使う）ではない。"}, {"formula": "", "q": "磁場の中を、1個の荷電粒子（電荷q）が速さvで運動している。この粒子が磁場から受ける力の大きさを求めたい。どの公式を使うべきか？", "opts": ["F = BIL sinθ", "F = qvB sinθ", "F = kq₁q₂/r²", "E = kQ/r²"], "a": 1, "ex": "「1個の粒子」が受ける力を求める設問なのでF=qvBsinθを使う。導線（電流I・長さL）用の式ではない。"}]}, "E": {"label": "E. 量子・原子核（Quantum and nuclear）", "meaning": [{"formula": "E = hf", "q": "この公式の意味として正しいものは？", "opts": ["光子1個が持つエネルギーEを、プランク定数hと振動数fの積として表す式", "質量とエネルギーが等価であることを示すアインシュタインの式", "運動量を持つ粒子が波としての性質を持つときの波長を表す式", "光電効果において放出される電子の最大運動エネルギーを表す式"], "a": 0, "ex": "光子1個のエネルギーの式。光電効果で放出される電子の最大運動エネルギーの式（Emax=hf-Φ、仕事関数Φを引く）と混同しないこと。"}, {"formula": "E = mc²", "q": "この公式の意味として正しいものは？", "opts": ["質量mとエネルギーEが等価であることを示すアインシュタインの式", "光子1個が持つエネルギーをプランク定数と振動数の積として表す式", "放射性崩壊において残っている原子核の数を時間の関数として表す式", "光電効果において放出される電子の最大運動エネルギーを表す式"], "a": 0, "ex": "質量とエネルギーの等価性を表す式。光子のエネルギーの式（E=hf、振動数fを使う）とは全く異なる文脈の式なので注意。"}, {"formula": "N = N₀e^(-λt)", "q": "この公式の意味として正しいものは？", "opts": ["放射性崩壊において、時間tが経過した後に残っている原子核の数Nを、崩壊定数λを用いて表す式", "波長λの光子が持つエネルギーを表す式（この式のλは波長を意味する）", "運動量を持つ粒子が波としての性質を持つときの波長を表す式", "質量とエネルギーが等価であることを示す式"], "a": 0, "ex": "この式のλは「崩壊定数」であり、波動分野で使う「波長」のλとは全く別の意味である点に要注意（同じ記号λが違う意味で使われる典型例）。"}, {"formula": "λ = ln2 / T₁/₂", "q": "この公式の意味として正しいものは？", "opts": ["崩壊定数λを、半減期T₁/₂から求める式", "放射性崩壊において、時間tが経過した後に残っている原子核の数を求める式", "光子の波長λを、運動量から求める式（λ=h/pと同じ意味）", "半減期T₁/₂を、時間tと残っている原子核の数から求める式"], "a": 0, "ex": "半減期T₁/₂から崩壊定数λを求める式。N=N₀e^(-λt)（時間経過後の個数を求める式）とは求める対象が異なる。ここでのλも波長ではなく崩壊定数を指す。"}, {"formula": "λ = h/p", "q": "この公式の意味として正しいものは？", "opts": ["運動量pを持つ粒子が波としての性質を持つときの波長λ（ド・ブロイ波長）を表す式", "光子1個が持つエネルギーをプランク定数と振動数の積として表す式", "放射性崩壊における崩壊定数を表す式", "光電効果において放出される電子の最大運動エネルギーを表す式"], "a": 0, "ex": "ド・ブロイ波長の式。ここでのλは「波長」を意味し、放射性崩壊の式で使われる「崩壊定数」のλとは意味が異なる点に注意。"}, {"formula": "E_max = hf - Φ", "q": "この公式の意味として正しいものは？", "opts": ["光電効果において、放出される電子の最大運動エネルギーを、入射光の振動数fと仕事関数Φから求める式", "光子1個が持つエネルギーを、プランク定数と振動数の積のみで表す式", "放射性崩壊において残っている原子核の数を表す式", "運動量を持つ粒子が波としての性質を持つときの波長を表す式"], "a": 0, "ex": "光子のエネルギーhfから仕事関数Φを引いた式。単なる光子のエネルギーの式（E=hf、Φを引かない）と混同しないこと。"}, {"formula": "hf₀ = Φ（閾値振動数）", "q": "この公式の意味として正しいものは？", "opts": ["光電効果が起こるためのぎりぎりの振動数（閾値振動数）f₀と仕事関数Φの関係を表す式", "光電効果で放出される電子の最大運動エネルギーを表す式", "光子1個のエネルギーを振動数から求める一般式", "放射性崩壊の崩壊定数を半減期から求める式"], "a": 0, "ex": "「ちょうど電子が飛び出し始める」境界条件（最大運動エネルギーが0になる場合）の式。最大運動エネルギーを求める一般の式（Emax=hf-Φ）の特別な場合（Emax=0）にあたる。"}, {"formula": "半減期T₁/₂", "q": "半減期の定義として正しいものは？", "opts": ["放射性物質の原子核の数が、元の半分になるまでにかかる時間", "放射性物質の原子核がすべて崩壊しきるまでにかかる時間", "崩壊定数λの値そのもの（時間の単位ではなく崩壊のしやすさを表す量）", "原子核が1個崩壊するのにかかる平均時間"], "a": 0, "ex": "半減期は「半分になる」時間であり、「すべて崩壊しきる」時間ではない（指数関数的減衰なので理論上ゼロにはならない）。崩壊定数λ（単位は1/時間）とも異なる量。"}], "application": [{"formula": "", "q": "振動数5.0×10^14 Hzの光子1個のエネルギーを求めたい。どの公式を使うべきか？", "opts": ["E = hf", "E_max = hf - Φ", "E = mc²", "λ = h/p"], "a": 0, "ex": "光子のエネルギーそのものを求める設問。仕事関数Φは与えられていないのでE=hfをそのまま使う。"}, {"formula": "", "q": "金属に振動数fの光を当てたところ電子が飛び出した（光電効果）。金属の仕事関数Φが分かっているとき、飛び出した電子の最大運動エネルギーを求めたい。どの公式を使うべきか？", "opts": ["E = hf", "E_max = hf - Φ", "hf₀ = Φ", "E = mc²"], "a": 1, "ex": "「最大運動エネルギー」を求める設問なので、仕事関数Φを引くEmax=hf-Φを使う。単なる光子のエネルギーの式（Φを引かない）では不十分。"}, {"formula": "", "q": "ある金属について、電子が飛び出し始める「ぎりぎりの」振動数（閾値振動数）を、仕事関数Φから求めたい。どの公式を使うべきか？", "opts": ["E_max = hf - Φ", "hf₀ = Φ", "E = hf", "λ = h/p"], "a": 1, "ex": "「ぎりぎり飛び出す＝最大運動エネルギーが0」となる特別な場合の式hf₀=Φを使う。一般の最大運動エネルギーの式をそのまま使うと変数が1つ多く求まらない。"}, {"formula": "", "q": "核反応で失われた質量から、放出されるエネルギーの大きさを求めたい。どの公式を使うべきか？", "opts": ["λ = h/p", "E = mc²", "N = N₀e^(-λt)", "E_max = hf - Φ"], "a": 1, "ex": "質量とエネルギーの等価性を使うのでE=mc²を使う。"}, {"formula": "", "q": "半減期の分かっているある放射性同位体について、一定時間後に残っている原子核の数を求めたい。どの公式を使うべきか？", "opts": ["λ = ln2/T₁/₂ のみを計算して終わりとする", "N = N₀e^(-λt)（λはλ=ln2/T₁/₂で求めてから代入）", "E = hf", "λ = h/p"], "a": 1, "ex": "「残っている個数」を求めるのが最終目標なので、まず半減期からλ=ln2/T₁/₂で崩壊定数を求め、それをN=N₀e^(-λt)に代入する必要がある。"}, {"formula": "", "q": "ある放射性同位体の半減期が分かっているとき、その崩壊定数λを求めたい。どの公式を使うべきか？", "opts": ["N = N₀e^(-λt)", "λ = ln2/T₁/₂", "λ = h/p", "E = mc²"], "a": 1, "ex": "半減期から崩壊定数を直接求めるにはλ=ln2/T₁/₂を使う。N=N₀e^(-λt)はλが既知の場合に個数を求める式であり、λを求める式ではない。"}, {"formula": "", "q": "加速された電子が波としての性質を示すとき、その波長を求めたい。どの公式を使うべきか？", "opts": ["E = mc²", "λ = h/p", "N = N₀e^(-λt)", "E_max = hf - Φ"], "a": 1, "ex": "「波長」を求める設問なのでド・ブロイ波長の式を使う。ここでのλは崩壊定数ではなく波長を意味する。"}, {"formula": "", "q": "ある放射性物質の量が、元の量の1/8になるまでにかかる時間を、半減期T₁/₂を用いて表したい。どう考えるべきか？", "opts": ["半減期が3回経過すれば1/2×1/2×1/2=1/8になるので、かかる時間は3T₁/₂である", "1/8という数値をそのままT₁/₂に掛けて0.125×T₁/₂とする", "半減期は1回しか意味を持たないため、1/8になる時間はT₁/₂のままである", "1/8になるまでの時間は求められない（半減期の考え方は整数倍にしか使えない）"], "a": 0, "ex": "半減期は「半分になる」ごとに1回分。1/8=(1/2)³なので半減期3回分の時間がかかる、という考え方が半減期の基本的な使い方。"}]}};
 const TYPE_META = {
   meaning:{label:"公式の意味", tag:"MEANING"},
   application:{label:"例題（どの公式？）", tag:"APPLICATION"}
 };
-
-let state = { chapter:"A", type:"meaning", idx:0, correctCount:0, answered:false, finished:false };
-
+let state = { chapter:"A", type:"meaning", idx:0, correctCount:0, answered:false, finished:false, selected:null, questions:[] };
 function renderChapterNav(){
   const nav = document.getElementById('chapterNav');
   nav.innerHTML = '';
@@ -123,7 +103,6 @@ function renderChapterNav(){
     nav.appendChild(chip);
   });
 }
-
 function renderTypeTabs(){
   const wrap = document.getElementById('typeTabs');
   wrap.innerHTML = '';
@@ -137,10 +116,24 @@ function renderTypeTabs(){
     wrap.appendChild(tab);
   });
 }
-
-function resetQuiz(){ state.idx=0; state.correctCount=0; state.answered=false; state.finished=false; }
-function currentQuestions(){ return QUESTION_BANK[state.chapter][state.type]; }
-
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function shuffleQuestion(q){
+  const order = shuffleArray(q.opts.map((_,i)=>i));
+  return { formula:q.formula, q:q.q, opts:order.map(i=>q.opts[i]), a:order.indexOf(q.a), ex:q.ex };
+}
+function resetQuiz(){
+  state.idx=0; state.correctCount=0; state.answered=false; state.finished=false; state.selected=null;
+  const base = QUESTION_BANK[state.chapter][state.type] || [];
+  state.questions = shuffleArray(base).map(shuffleQuestion);
+}
+function currentQuestions(){ return state.questions; }
 function renderProgress(){
   const qs = currentQuestions();
   const total = qs.length;
@@ -149,11 +142,9 @@ function renderProgress(){
   const pct = state.finished ? 100 : Math.round((state.idx/total)*100);
   document.getElementById('progressFill').style.width = pct+'%';
 }
-
 function renderQuiz(){
   const area = document.getElementById('quizArea');
   const qs = currentQuestions();
-
   if(state.finished){
     const pct = Math.round((state.correctCount/qs.length)*100);
     area.innerHTML = `
@@ -165,7 +156,6 @@ function renderQuiz(){
     renderProgress();
     return;
   }
-
   const q = qs[state.idx];
   const optsHtml = q.opts.map((opt,i)=>{
     let cls = 'option';
@@ -176,9 +166,7 @@ function renderQuiz(){
     }
     return `<button class="${cls}" onclick="selectOption(${i})"><span class="tag">${String.fromCharCode(65+i)}</span>${opt}</button>`;
   }).join('');
-
   const formulaBlock = state.type==='meaning' ? `<div class="formula-display">${q.formula}</div>` : '';
-
   area.innerHTML = `
     <div class="card">
       <div class="q-label">${TYPE_META[state.type].tag} — Q${state.idx+1}</div>
@@ -190,7 +178,6 @@ function renderQuiz(){
     </div>`;
   renderProgress();
 }
-
 function selectOption(i){
   if(state.answered) return;
   const q = currentQuestions()[state.idx];
@@ -199,15 +186,14 @@ function selectOption(i){
   if(i===q.a) state.correctCount++;
   renderQuiz();
 }
-
 function nextQuestion(){
   const qs = currentQuestions();
   if(state.idx+1 >= qs.length){ state.finished = true; }
   else { state.idx++; state.answered=false; state.selected=null; }
   renderQuiz();
 }
-
 function render(){ renderChapterNav(); renderTypeTabs(); renderQuiz(); }
+resetQuiz();
 render();
 </script>
 </body>
